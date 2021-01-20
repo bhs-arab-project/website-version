@@ -1,0 +1,17 @@
+html {
+  scroll-behavior: smooth;
+}
+
+/* .progress-image {
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  display: block;
+  text-align: center;
+} */
+
+.gambar {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
