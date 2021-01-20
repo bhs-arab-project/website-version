@@ -28,10 +28,11 @@ import "assets/demo/nucleo-icons-page-styles.css?v=1.4.0";
 import Index from "views/Index.js";
 import NucleoIcons from "views/NucleoIcons.js";
 import LoginPage from "views/examples/LoginPage.js";
-import Materi from "views/examples/MateriPage.js";
+import BabPage from "views/examples/BabPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import SignUp from "./views/examples/SignUpPage.js";
 import DetailBab from "./views/index-sections/Bab-detail.js";
+import Materi from "./views/index-sections/materi.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -55,12 +56,14 @@ ReactDOM.render(
           render={(props) => <LoginPage {...props} />}
         />
 
-        <Route path="/bab" render={(props) => <Materi {...props} />} />
+        <Route path="/bab" render={(props) => <BabPage {...props} />} />
 
         <Route
           path="/detail-bab"
           render={(props) => <DetailBab {...props} />}
         />
+
+        <Route path="/materi" render={(props) => <Materi {...props} />} />
 
         <Redirect to="/login-page" />
         <Redirect from="/" to="/login-page" />

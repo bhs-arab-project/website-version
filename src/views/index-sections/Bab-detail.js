@@ -1,16 +1,7 @@
 import React from "react";
 
 // reactstrap components
-import {
-  Button,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col,
-} from "reactstrap";
+import { Button, Container } from "reactstrap";
 
 // core components
 import ExamplesNavbar from "../../components/Navbars/ExamplesNavbar.js";
@@ -60,7 +51,9 @@ function LandingPage() {
                   </div>
                 </div>
                 <div className="col-md-2 col-xs-1 col-sm-1 px-1 text-right d-inline">
-                  <Button color="info">Mulai belajar</Button>
+                  <Button color="info" href="/materi">
+                    Mulai belajar
+                  </Button>
                 </div>
               </div>
             </div>
