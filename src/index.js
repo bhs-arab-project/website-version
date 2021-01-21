@@ -33,6 +33,7 @@ import ProfilePage from "views/examples/ProfilePage.js";
 import SignUp from "./views/examples/SignUpPage.js";
 import DetailBab from "./views/index-sections/Bab-detail.js";
 import Materi from "./views/index-sections/materi.js";
+import NotFound from "views/index-sections/notFound.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -64,6 +65,8 @@ ReactDOM.render(
         />
 
         <Route path="/materi" render={(props) => <Materi {...props} />} />
+
+        <Route path="*" render={(props) => <NotFound {...props} />} />
 
         <Redirect to="/login-page" />
         <Redirect from="/" to="/login-page" />

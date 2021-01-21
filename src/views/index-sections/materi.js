@@ -10,6 +10,7 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import Button from "reactstrap/lib/Button";
 
 function MateriPage() {
   return (
@@ -47,13 +48,14 @@ function MateriPage() {
           </ul>
         </nav>
 
-        <div className="konten">
-          <nav className="baratas navbar-expand-lg navbar-light bg-light">
-            <button type="button" id="sidebarCollapse" className="btn btn-info">
-              <i className="fa fa-align-justify"></i> <span></span>
+        <div class="konten">
+          <nav class="baratas navbar-expand-lg navbar-light bg-light">
+            <button type="button" id="sidebarCollapse" class="btn btn-info">
+              <i class="fa fa-align-justify"></i> <span>Menu</span>
             </button>
+
             <button
-              class="navbar-toggler"
+              class="navbar-toggler float-right mt-2"
               type="button"
               data-toggle="collapse"
               data-target="#navbarNav"
@@ -63,19 +65,27 @@ function MateriPage() {
             >
               <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">
-                    Home <span class="sr-only">(current)</span>
+                  <a class="nav-link" href="/bab">
+                    <i class="now-ui-icons files_single-copy-04"></i>{" "}
+                    <span>Bab Materi</span>
+                  </a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="/profil-page">
+                    <i class="now-ui-icons users_single-02"></i>{" "}
+                    <span>Profil</span>
                   </a>
                 </li>
               </ul>
             </div>
           </nav>
 
-          <div className="konten-bungkus">
-            <h2>Muqodimmah</h2>
+          <div class="konten-bungkus">
+            <h2>Collapsible Sidebar Using Bootstrap 4</h2>
 
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
@@ -96,7 +106,38 @@ function MateriPage() {
               sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
 
-            <div className="line"></div>
+            <div class="line"></div>
+            <h2>Collapsible Sidebar Using Bootstrap 4</h2>
+
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+            <div class="line"></div>
+            <div className="text-right  d-flex justify-content-between">
+              <Button color="info">
+                <i class="now-ui-icons arrows-1_minimal-left"></i> Materi
+                Sebelumnya
+              </Button>
+              <Button color="info">
+                Lanjut Materi{" "}
+                <i class="now-ui-icons arrows-1_minimal-right"></i>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

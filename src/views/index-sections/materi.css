@@ -23,6 +23,9 @@ a:focus {
   border-radius: 0;
   margin-bottom: 40px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0px;
+  width: 100%;
 }
 .baratas-btn {
   box-shadow: none;
@@ -38,7 +41,7 @@ a:focus {
   display: flex;
   width: 100%;
   align-items: stretch;
-  position: relative;
+  /* position: relative; */
 }
 #sidebar {
   min-width: 250px;
@@ -58,8 +61,8 @@ a:focus {
 #sidebar ul.components {
   padding: 20px 0px;
   border-bottom: 1px solid #47748b;
-  background: #005086;
-  min-height: 100vh;
+  /* background: #005086; */
+  /* min-height: 100vh; */
 }
 #sidebar ul p {
   padding: 10px;
@@ -120,7 +123,8 @@ a.download:hover {
   transition: all 0.3s;
 }
 .konten-bungkus {
-  padding: 15px;
+  padding: 25px;
+  margin-top: 20vh;
 }
 
 @media (maz-width: 768px) {

@@ -94,7 +94,7 @@ function IndexNavbar() {
                   // }}
                 >
                   <i className="now-ui-icons files_single-copy-04"></i>
-                  <p>Materi</p>
+                  <span>Bab Materi</span>
                 </NavLink>
               </NavItem>
 

@@ -45,7 +45,7 @@ function LandingPageHeader() {
                   className="rounded-circle align-self-center"
                   src={require("assets/img/muslim.png")}
                 ></img>
-                <p>Ahmad kodir</p>
+                <div>Ahmad kodir</div>
               </div>
               <div class="media-body text-left">
                 <h1 className="title">Nahwu</h1>
