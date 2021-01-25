@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "reactstrap/lib/Button";
 import "./notFound.css";
 
 const NotFound = () => {
@@ -7,10 +8,21 @@ const NotFound = () => {
       <div id="notfound">
         <div class="notfound">
           <div class="notfound-404">
-            <h1>Oops!</h1>
-            <h2>404 - The Page can't be found</h2>
+            <img
+              alt="..."
+              className="rounded"
+              src={require("assets/img/pnf.png")}
+            ></img>
+            <h1>Duhh!</h1>
+            <h2>404 - Halamannya ga ketemu nih</h2>
           </div>
-          <a href="/index">Go TO Homepage</a>
+          <img
+            width="50rem"
+            alt="..."
+            className="rounded"
+            src={require("assets/img/brand-logo.png")}
+          ></img>
+          <Button href="/index">Balik ke HomePage</Button>
         </div>
       </div>
     </React.Fragment>

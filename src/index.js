@@ -69,7 +69,6 @@ ReactDOM.render(
         <Route path="*" render={(props) => <NotFound {...props} />} />
 
         <Redirect to="/login-page" />
-        <Redirect from="/" to="/login-page" />
       </Switch>
     </Switch>
   </BrowserRouter>,
