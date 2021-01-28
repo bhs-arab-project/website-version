@@ -25,7 +25,7 @@ function Tabs() {
                 <CardBody className="ml-2">
                   <CardTitle className="pt-0">
                     <span class="badge badge-success float-right mt-2">
-                      beginner
+                      pemula
                     </span>
                     <h3>NAHWU</h3>
                   </CardTitle>
@@ -84,7 +84,7 @@ function Tabs() {
                     </Col>
                     <Col xs="auto">
                       <Button
-                        color="primary"
+                        color="info"
                         className="float-right"
                         href="/detail-bab"
                       >
@@ -99,7 +99,7 @@ function Tabs() {
               <Card>
                 <CardBody className="ml-2">
                   <CardTitle className="pt-0">
-                    <span class="badge badge-info float-right mt-2">
+                    <span class="badge badge-warning float-right mt-2">
                       menengah
                     </span>
                     <h3>SHARAF</h3>
@@ -158,7 +158,7 @@ function Tabs() {
                       ></img>
                     </Col>
                     <Col xs="auto">
-                      <Button color="primary" className="float-right">
+                      <Button color="info" className="float-right">
                         mulai belajar
                       </Button>
                     </Col>
@@ -170,8 +170,8 @@ function Tabs() {
               <Card>
                 <CardBody className="ml-2">
                   <CardTitle className="pt-0">
-                    <span class="badge badge-info float-right mt-2">
-                      menengah
+                    <span class="badge badge-danger float-right mt-2">
+                      ahli
                     </span>
                     <h3>PERCAKAPAN</h3>
                   </CardTitle>
@@ -229,7 +229,7 @@ function Tabs() {
                       ></img>
                     </Col>
                     <Col xs="auto">
-                      <Button color="primary" className="float-right">
+                      <Button color="info" className="float-right">
                         mulai belajar
                       </Button>
                     </Col>
@@ -301,7 +301,7 @@ function Tabs() {
                     </Col>
 
                     <Col xs="auto">
-                      <Button color="primary" className="float-right">
+                      <Button color="info" className="float-right">
                         mulai belajar
                       </Button>
                     </Col>

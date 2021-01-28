@@ -29,7 +29,7 @@ import Home from "./home.js";
 import NucleoIcons from "template/NucleoIcons.js";
 import LoginPage from "auth/LoginPage";
 import BabPage from "./user/murid/Bab-page";
-import ProfilePage from "./user/murid/Profile-page";
+import ProfilePage from "./user/Profile-page";
 import SignUp from "./auth/SignUpPage.js";
 import DetailBab from "./user/murid/Bab-detail.js";
 import Materi from "./user/murid/materi.js";
@@ -50,7 +50,7 @@ ReactDOM.render(
           render={(props) => <ProfilePage {...props} />}
         />
 
-        <Route path="/signup" render={(props) => <SignUp {...props} />} />
+        <Route path="/sign-up" render={(props) => <SignUp {...props} />} />
 
         <Route
           path="/login-page"
