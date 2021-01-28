@@ -36,6 +36,7 @@ function ProfilePage() {
           </Container>
           {/* <PaginationSection /> */}
           <Container>
+            <i className="now-ui-icons objects_diamond "></i>
             <h2>Sertifikat</h2>
             <Row>
               <Col md="6" xl="4">

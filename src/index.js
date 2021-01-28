@@ -25,7 +25,7 @@ import "assets/scss/now-ui-kit.scss?v=1.4.0";
 import "assets/demo/demo.css?v=1.4.0";
 import "assets/demo/nucleo-icons-page-styles.css?v=1.4.0";
 // pages for this kit
-import Index from "template/Index.js";
+import Home from "template/home.js";
 import NucleoIcons from "template/NucleoIcons.js";
 import LoginPage from "auth/LoginPage";
 import BabPage from "./user/murid/Bab-page";
@@ -39,7 +39,7 @@ ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Switch>
-        <Route path="/index" render={(props) => <Index {...props} />} />
+        <Route path="/index" render={(props) => <Home {...props} />} />
         <Route
           path="/nucleo-icons"
           render={(props) => <NucleoIcons {...props} />}
