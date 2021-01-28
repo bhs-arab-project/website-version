@@ -13,7 +13,7 @@ import DarkFooter from "components/Footers/DarkFooter.js";
 // import Images from "./index-sections/Images.js";
 // import BasicElements from "./index-sections/BasicElements.js";
 // import Navbars from "./index-sections/Navbars.js";
-import Tabs from "../murid/components/List-materi.js";
+import Tabs from "../user/murid/List-materi.js";
 import Pagination from "./index-sections/Pagination.js";
 // import Notifications from "./index-sections/Notifications.js";
 // import Typography from "./index-sections/Typography.js";

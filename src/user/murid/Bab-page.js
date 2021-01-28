@@ -3,7 +3,7 @@ import React from "react";
 // core components
 import LandingPageHeader from "components/Headers/LandingPageHeader.js";
 import DefaultFooter from "components/Footers/DefaultFooter.js";
-import ListMateri from "murid/components/List-materi";
+import ListMateri from "user/murid/List-materi";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 
 function LandingPage() {
