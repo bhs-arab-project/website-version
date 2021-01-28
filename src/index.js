@@ -25,8 +25,8 @@ import "assets/scss/now-ui-kit.scss?v=1.4.0";
 import "assets/demo/demo.css?v=1.4.0";
 import "assets/demo/nucleo-icons-page-styles.css?v=1.4.0";
 // pages for this kit
-import Index from "views/Index.js";
-import NucleoIcons from "views/NucleoIcons.js";
+import Index from "template/Index.js";
+import NucleoIcons from "template/NucleoIcons.js";
 import LoginPage from "murid/auth/LoginPage";
 import BabPage from "murid/components/Bab-page";
 import ProfilePage from "murid/components/Profile-page";

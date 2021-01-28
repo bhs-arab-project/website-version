@@ -4,15 +4,11 @@ import React from "react";
 import { Button, Container } from "reactstrap";
 
 // core components
-import ExamplesNavbar from "../../components/Navbars/ExamplesNavbar.js";
 import BabDetailHeader from "components/Headers/BabDetailHeader.js";
 import DefaultFooter from "../../components/Footers/DefaultFooter";
-import Tabs from "./List-materi";
 import IndexNavbar from "../../components/Navbars/IndexNavbar";
 
 function LandingPage() {
-  const [firstFocus, setFirstFocus] = React.useState(false);
-  const [lastFocus, setLastFocus] = React.useState(false);
   React.useEffect(() => {
     document.body.classList.add("landing-page");
     document.body.classList.add("sidebar-collapse");

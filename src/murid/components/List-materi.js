@@ -1,15 +1,19 @@
-import { HTML5_FMT } from "moment";
 import React from "react";
 
 // reactstrap components
-import { Card, CardBody, Container, Row, Col, CardTitle } from "reactstrap";
-import Button from "reactstrap/lib/Button";
+import {
+  Card,
+  CardBody,
+  Container,
+  Row,
+  Col,
+  CardTitle,
+  Button,
+} from "reactstrap";
 
 // core components
 
 function Tabs() {
-  const [iconPills, setIconPills] = React.useState("1");
-  const [pills, setPills] = React.useState("1");
   return (
     <>
       <div className="section section-tabs">

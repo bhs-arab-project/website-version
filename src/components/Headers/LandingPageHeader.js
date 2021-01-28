@@ -1,9 +1,7 @@
-import ExamplesNavbar from "../Navbars/ExamplesNavbar";
-import IndexNavbar from "../Navbars/IndexNavbar";
 import React from "react";
 
 // reactstrap components
-import { Button, Container } from "reactstrap";
+import { Container } from "reactstrap";
 
 // core components
 

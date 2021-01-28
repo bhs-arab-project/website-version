@@ -1,4 +1,3 @@
-import TransparentFooter from "components/Footers/TransparentFooter";
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar";
 import React from "react";
 import { Link } from "react-router-dom";

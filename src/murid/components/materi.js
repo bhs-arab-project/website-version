@@ -1,16 +1,7 @@
 import React from "react";
 import "./materi.css";
-import { Link } from "react-router-dom";
 
-import {
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  NavItem,
-  NavLink,
-} from "reactstrap";
-import Button from "reactstrap/lib/Button";
+import { Button } from "reactstrap";
 
 function MateriPage() {
   return (
@@ -23,18 +14,22 @@ function MateriPage() {
 
           <ul className="list-unstyled components">
             <li>
+              {/* eslint-disable-next-line */}
               <a href="#">Pengenalan 1</a>
             </li>
             <div className="line"></div>
             <li>
+              {/* eslint-disable-next-line */}
               <a href="#">Pengenalan 2</a>
             </li>
             <div className="line"></div>
             <li>
+              {/* eslint-disable-next-line */}
               <a href="#">Pengenalan 3</a>
             </li>
             <div className="line"></div>
             <li>
+              {/* eslint-disable-next-line */}
               <a href="#">Pengenalan 4</a>
             </li>
           </ul>
