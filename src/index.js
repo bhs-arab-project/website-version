@@ -27,13 +27,13 @@ import "assets/demo/nucleo-icons-page-styles.css?v=1.4.0";
 // pages for this kit
 import Index from "views/Index.js";
 import NucleoIcons from "views/NucleoIcons.js";
-import LoginPage from "views/examples/LoginPage.js";
-import BabPage from "views/examples/BabPage.js";
-import ProfilePage from "views/examples/ProfilePage.js";
-import SignUp from "./views/examples/SignUpPage.js";
-import DetailBab from "./views/index-sections/Bab-detail.js";
-import Materi from "./views/index-sections/materi.js";
-import NotFound from "views/index-sections/notFound.js";
+import LoginPage from "murid/auth/LoginPage";
+import BabPage from "murid/components/Bab-page";
+import ProfilePage from "murid/components/Profile-page";
+import SignUp from "./murid/auth/SignUpPage.js";
+import DetailBab from "./murid/components/Bab-detail.js";
+import Materi from "./murid/components/materi.js";
+import NotFound from "components/NotFound/notFound";
 
 ReactDOM.render(
   <BrowserRouter>

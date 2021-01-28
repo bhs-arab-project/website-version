@@ -16,7 +16,7 @@ import {
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import LandingPageHeader from "components/Headers/LandingPageHeader.js";
 import DefaultFooter from "components/Footers/DefaultFooter.js";
-import Tabs from "views/index-sections/Tabs";
+import ListMateri from "murid/components/List-materi";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 
 function LandingPage() {
@@ -38,7 +38,7 @@ function LandingPage() {
       <IndexNavbar />
       <div className="wrapper">
         <LandingPageHeader />
-        <Tabs />
+        <ListMateri />
         <DefaultFooter />
       </div>
     </>

@@ -7,7 +7,7 @@ import { Button, Container } from "reactstrap";
 import ExamplesNavbar from "../../components/Navbars/ExamplesNavbar.js";
 import BabDetailHeader from "components/Headers/BabDetailHeader.js";
 import DefaultFooter from "../../components/Footers/DefaultFooter";
-import Tabs from "../index-sections/Tabs";
+import Tabs from "./List-materi";
 import IndexNavbar from "../../components/Navbars/IndexNavbar";
 
 function LandingPage() {
