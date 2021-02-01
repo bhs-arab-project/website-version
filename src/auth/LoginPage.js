@@ -50,7 +50,7 @@ function LoginPage() {
               <Card className="card-login card-plain">
                 <Form action="" className="form" method="">
                   <CardHeader className="text-center">
-                    <h2>Ahlan Wa Sahlan</h2>
+                    <h2>Selamat Datang</h2>
                     {/* <div className="logo-container">
                       <img
                         alt="..."
@@ -96,6 +96,15 @@ function LoginPage() {
                       ></Input>
                     </InputGroup>
                   </CardBody>
+                  <h6>
+                    <a
+                      className="link"
+                      href="/forgot-password"
+                      // onClick={(e) => e.preventDefault()}
+                    >
+                      Lupa Password ?
+                    </a>
+                  </h6>
                   <CardFooter className="text-center">
                     <Button
                       block
@@ -110,7 +119,7 @@ function LoginPage() {
                     <h6>
                       <a
                         className="link"
-                        href="/signup"
+                        href="/sign-up"
                         // onClick={(e) => e.preventDefault()}
                       >
                         Daftar disini

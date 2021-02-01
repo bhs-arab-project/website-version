@@ -39,7 +39,7 @@ function IndexHeader() {
               className="n-logo"
               src={require("assets/img/now-logo.png")}
             ></img> */}
-            <h1>ahlan wa sahlan Khafidh!</h1>
+            <h1>Selamat Datang Faiz!</h1>
             <h3>كيف حالك؟</h3>
           </div>
           <h6 className="category category-absolute">Scroll ke bawah</h6>

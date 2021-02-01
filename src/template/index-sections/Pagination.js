@@ -20,25 +20,13 @@ function PaginationSection() {
             <div class="media-body">
               <h4>Progres Materi</h4>
               <div className="progress-container">
-                <span className="progress-badge">BAB SHARAF</span>
+                <span className="progress-badge">BAB PERCAKAPAN</span>
                 <Progress max="100" value="25">
                   <span className="progress-value">25%</span>
                 </Progress>
               </div>
               <div className="progress-container">
-                <span className="progress-badge">BAB SHARAF</span>
-                <Progress max="100" value="25">
-                  <span className="progress-value">25%</span>
-                </Progress>
-              </div>
-              <div className="progress-container">
-                <span className="progress-badge">BAB SHARAF</span>
-                <Progress max="100" value="25">
-                  <span className="progress-value">25%</span>
-                </Progress>
-              </div>
-              <div className="progress-container">
-                <span className="progress-badge">BAB SHARAF</span>
+                <span className="progress-badge">BAB MUFRADAT</span>
                 <Progress max="100" value="25">
                   <span className="progress-value">25%</span>
                 </Progress>

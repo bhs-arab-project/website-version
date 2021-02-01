@@ -69,7 +69,7 @@ function LandingPage() {
                     </div>
                     <div className="col-md-5 col-xs-4 col-sm-5 mt-3">
                       <p className="category text-black">
-                        Materi 1 - Pengenalan
+                        Materi 2 - Kaidah Nahwu
                       </p>
                     </div>
                   </div>

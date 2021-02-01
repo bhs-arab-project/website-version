@@ -38,8 +38,8 @@ function ProfilePageHeader() {
           <div className="photo-container">
             <img alt="..." src={require("assets/img/muslim.png")}></img>
           </div>
-          <h3 className="title">Khafidh Fuadi</h3>
-          <p className="category">Student</p>
+          <h3 className="title">Faiz</h3>
+          <p className="category">Pelajar</p>
           <div className="content">
             <div className="social-description">
               <h2>4</h2>

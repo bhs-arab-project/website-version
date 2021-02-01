@@ -28,6 +28,7 @@ import "assets/demo/nucleo-icons-page-styles.css?v=1.4.0";
 import Home from "./home.js";
 import NucleoIcons from "template/NucleoIcons.js";
 import LoginPage from "auth/LoginPage";
+import ForgotPassword from "auth/forgotPassword";
 import BabPage from "./user/murid/Bab-page";
 import ProfilePage from "./user/Profile-page";
 import SignUp from "./auth/SignUpPage.js";
@@ -55,6 +56,11 @@ ReactDOM.render(
         <Route
           path="/login-page"
           render={(props) => <LoginPage {...props} />}
+        />
+
+        <Route
+          path="/forgot-password"
+          render={(props) => <ForgotPassword {...props} />}
         />
 
         <Route path="/bab" render={(props) => <BabPage {...props} />} />

@@ -79,38 +79,45 @@ function MateriPage() {
           </nav>
 
           <div class="konten-bungkus">
-            <h2>Collapsible Sidebar Using Bootstrap 4</h2>
+            <h2>Pengenalan</h2>
 
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <p class="text-konten">
+              Bismillah… Segala puji hanyalah milik Allah. Shalawat serta salam
+              semoga senantiasa tercurah kepada Rasulullah, beserta keluarga dan
+              para shahabat beliau, serta orang-orang yang mengikuti jalan
+              beragama mereka dengan baik. Wa ba’du : Allah Ta’ala berfirman,
+              إِنَّا أَنْزَلْنَاهُ قُرْآنًا عَرَبِيًّا لَعَلَّكُمْ تَعْقِلُونَ
+              “Sesungguhnya Kami menurunkannya berupa Al Quran yang berbahasa
+              Arab, agar kamu memahaminya” (QS.Yusuf : 2) Bahasa arab adalah
+              bahasa Al Qur’an. Bahasa yang dipilih oleh Allah Ta’ala sebagai
+              bahasa pengantar untuk menyampaikan agama-Nya kepada umat manusia.
+              Allah Ta’ala juga memilih Rasul pilihan-Nya sebagai penutup para
+              rasul dari bangsa arab. Beliau sampaikan sunnah-sunnah beliau
+              dengan bahasa arab. Sehingga seluruh sumber hukum syari’at, yakni
+              Al Qur’an dan As Sunnah, berbahasa arab. Sehingga mempelajari
+              bahasa arab menjadi suatu kebutuhan yang tak terelakkan. Oleh
+              sebab itu, para salaf dahulu memberi wejangan agar kita mau
+              belajar bahasa arab. ‘Umar bin Khaththab radhiyallahu ‘anhu
+              menulis surat kepada Abu Musa Al Asy’ariy radhiyallahu ‘anhuma
+              yang berisi, “Amma ba’du, (Wahai Abu Musa) Pahamilah sunnah Nabi,
+              dan dalamilah bahasa arab!” (dinukil dari Al Atsar Al ‘Arabiyyah
+              li Diraasatil Lughah Al ‘Arabiyyah, hal. 9, Maktabah Syamilah)
             </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
 
-            <div class="line"></div>
-            <h2>Collapsible Sidebar Using Bootstrap 4</h2>
+            <div class="line mb-2"></div>
+            <h2>Apa itu Ilmu Nahwu?</h2>
 
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <p className="text-konten">
+              Dari deskripsi di atas, sedikit tergambar apa itu ilmu nahwu. Ilmu
+              nahwu adalah ilmu tentang kaidah-kaidah mengetahui
+              kedudukan/jabatan suatu kata dalam kalimat, mengetahui
+              bentuk/harakat huruf akhirnya, dan perubahannya. Maka yang dibahas
+              di ilmu nahwu adalah bagian akhir suatu kata saja, apakah berubah
+              ataukah tidak akan berubah. Jika harus berubah, bagaimana
+              perubahannya? Contoh : Muhammadun (مُحَمَّدٌ) Kapan dibaca
+              “Muhammadun”? Kapan “Muhammadan”? Kapan “Muhammadin”? Itu dibahas
+              di nahwu. Sedangkan kenapa depannya dibaca “Muhammad”? Tidak
+              “Mahimmud” misalnya? Itu dibahas di ilmu sharaf.
             </p>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do

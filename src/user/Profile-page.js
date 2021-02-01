@@ -7,6 +7,7 @@ import { Button, Container, Row, Col } from "reactstrap";
 import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
 import DefaultFooter from "components/Footers/DefaultFooter.js";
 import IndexNavbar from "components/Navbars/IndexNavbar";
+import PaginationSection from "./../template/index-sections/Pagination";
 
 function ProfilePage() {
   // const [pills, setPills] = React.useState("2");
@@ -34,9 +35,8 @@ function ProfilePage() {
               </Button>
             </div>
           </Container>
-          {/* <PaginationSection /> */}
+          <PaginationSection />
           <Container>
-            <i className="now-ui-icons objects_diamond "></i>
             <h2>Sertifikat</h2>
             <Row>
               <Col md="6" xl="4">
