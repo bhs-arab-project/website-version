@@ -10,11 +10,9 @@ import IndexHeader from "components/Headers/IndexHeader.js";
 import DarkFooter from "components/Footers/DarkFooter.js";
 
 // sections for this page
-// import Images from "./index-sections/Images.js";
-// import BasicElements from "./index-sections/BasicElements.js";
 // import Navbars from "./index-sections/Navbars.js";
-import Tabs from "./user/murid/List-materi.js";
-import Pagination from "./template/index-sections/Pagination.js";
+import Tabs from "./murid/ListMateri.js";
+import Pagination from "../template/index-sections/Pagination.js";
 // import Notifications from "./index-sections/Notifications.js";
 // import Typography from "./index-sections/Typography.js";
 // import Javascript from "./index-sections/Javascript.js";
@@ -24,7 +22,9 @@ import Pagination from "./template/index-sections/Pagination.js";
 // import SignUp from "../murid/auth/SignUpPage.js";
 // import Examples from "./index-sections/Examples.js";
 // import Download from "./index-sections/Download.js";
-import "./styles.css";
+import "../styles.css";
+import Images from "template/index-sections/Quote.js";
+import Quote from "template/index-sections/Quote.js";
 
 function Index() {
   React.useEffect(() => {
@@ -44,8 +44,7 @@ function Index() {
       <div className="wrapper">
         <IndexHeader />
         <div className="main">
-          {/* <Images /> */}
-          <Pagination />
+          <Quote />
           <Tabs />
           {/* <BasicElements /> */}
           {/* <Navbars /> */}

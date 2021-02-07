@@ -6,47 +6,12 @@ function MateriPage() {
   return (
     <>
       <div className="bungkus">
-        <nav id="sidebar">
-          <div className="sidebar-header">
-            <h3>Materi 1 - Pengenalan</h3>
-          </div>
-
-          <ul className="list-unstyled components">
-            <li>
-              {/* eslint-disable-next-line */}
-              <a href="#">Pengenalan 1</a>
-            </li>
-            <div className="line"></div>
-            <li>
-              {/* eslint-disable-next-line */}
-              <a href="#">Pengenalan 2</a>
-            </li>
-            <div className="line"></div>
-            <li>
-              {/* eslint-disable-next-line */}
-              <a href="#">Pengenalan 3</a>
-            </li>
-            <div className="line"></div>
-            <li>
-              {/* eslint-disable-next-line */}
-              <a href="#">Pengenalan 4</a>
-            </li>
-          </ul>
-
-          <ul className="list-unstyled CTAs">
-            <li>
-              <a href="/index" className="download">
-                Kembali ke Home
-              </a>
-            </li>
-          </ul>
-        </nav>
-
         <div class="konten">
           <nav class="baratas navbar-expand-lg navbar-light bg-light">
-            <button type="button" id="sidebarCollapse" class="btn btn-info">
+            {/* <button type="button" id="sidebarCollapse" class="btn btn-info">
               <i class="fa fa-align-justify"></i> <span>Menu</span>
-            </button>
+            </button> */}
+            <h3>Materi 1</h3>
 
             <button
               class="navbar-toggler float-right mt-2"

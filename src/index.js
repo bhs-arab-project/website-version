@@ -17,7 +17,7 @@
 */
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import App from "./app";
 
 // styles for this kit
 import "assets/css/bootstrap.min.css";
@@ -25,58 +25,25 @@ import "assets/scss/now-ui-kit.scss?v=1.4.0";
 import "assets/demo/demo.css?v=1.4.0";
 import "assets/demo/nucleo-icons-page-styles.css?v=1.4.0";
 // pages for this kit
-import Home from "./home.js";
-import NucleoIcons from "template/NucleoIcons.js";
-import LoginPage from "auth/LoginPage";
-import ForgotPassword from "auth/forgotPassword";
-import BabPage from "./user/murid/Bab-page";
-import ProfilePage from "./user/Profile-page";
-import SignUp from "./auth/SignUpPage.js";
-import DetailBab from "./user/murid/Bab-detail.js";
-import Materi from "./user/murid/materi.js";
-import NotFound from "components/NotFound/notFound";
+import { createStore, applyMiddleware, compose } from "redux";
+import { Provider } from "react-redux";
+import reducer from "./reducers";
+import thunk from "redux-thunk";
+
+const store = createStore(
+  reducer,
+  compose(
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+);
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Switch>
-        <Route path="/index" render={(props) => <Home {...props} />} />
-        <Route
-          path="/nucleo-icons"
-          render={(props) => <NucleoIcons {...props} />}
-        />
-
-        <Route
-          path="/profile-page"
-          render={(props) => <ProfilePage {...props} />}
-        />
-
-        <Route path="/sign-up" render={(props) => <SignUp {...props} />} />
-
-        <Route
-          path="/login-page"
-          render={(props) => <LoginPage {...props} />}
-        />
-
-        <Route
-          path="/forgot-password"
-          render={(props) => <ForgotPassword {...props} />}
-        />
-
-        <Route path="/bab" render={(props) => <BabPage {...props} />} />
-
-        <Route
-          path="/detail-bab"
-          render={(props) => <DetailBab {...props} />}
-        />
-
-        <Route path="/materi" render={(props) => <Materi {...props} />} />
-
-        <Route path="*" render={(props) => <NotFound {...props} />} />
-
-        <Redirect to="/login-page" />
-      </Switch>
-    </Switch>
-  </BrowserRouter>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+    ,
+  </React.StrictMode>,
   document.getElementById("root")
 );

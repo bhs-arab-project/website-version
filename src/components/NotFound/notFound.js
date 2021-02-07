@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Button from "reactstrap/lib/Button";
 import "./notFound.css";
 
@@ -22,7 +23,9 @@ const NotFound = () => {
             className="rounded"
             src={require("assets/img/brand-logo.png")}
           ></img>
-          <Button href="/index">Balik ke HomePage</Button>
+          <Link to="/" className="notFoundLink ">
+            <Button color="primary">Balik ke HomePage</Button>
+          </Link>
         </div>
       </div>
     </React.Fragment>

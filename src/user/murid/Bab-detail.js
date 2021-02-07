@@ -1,30 +1,77 @@
 import React from "react";
-
-// reactstrap components
 import { Button, Container } from "reactstrap";
-
-// core components
-import BabDetailHeader from "components/Headers/BabDetailHeader.js";
 import DefaultFooter from "../../components/Footers/DefaultFooter";
 import IndexNavbar from "../../components/Navbars/IndexNavbar";
+import { API_URL } from "utils/constants";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-function LandingPage() {
+const BabDetail = () => {
+  let { id } = useParams();
+  let [detailLesson, setDetailLesson] = React.useState([]);
+
   React.useEffect(() => {
-    document.body.classList.add("landing-page");
-    document.body.classList.add("sidebar-collapse");
-    document.documentElement.classList.remove("nav-open");
-    window.scrollTo(0, 0);
-    document.body.scrollTop = 0;
-    return function cleanup() {
-      document.body.classList.remove("landing-page");
-      document.body.classList.remove("sidebar-collapse");
-    };
-  }, []);
+    getLessonDetail();
+  }, [id]);
+
+  const getLessonDetail = async () => {
+    axios
+      .get(`${API_URL}pelajaran/${id}`)
+      .then((response) => {
+        setDetailLesson(response.data);
+        console.log("detail lesson", response.data);
+      })
+      .catch((error) => {
+        const response = error.response;
+        console.log(response.data.errors);
+      });
+  };
+
+  let pageHeader = React.createRef();
+
   return (
-    <>
+    <div>
       <IndexNavbar />
       <div className="wrapper">
-        <BabDetailHeader />
+        <div className="page-header page-header-small">
+          <div
+            className="page-header-image"
+            style={{
+              backgroundImage:
+                "url(" + require("assets/img/bab-detail-bg.png") + ")",
+            }}
+            ref={pageHeader}
+          ></div>
+          <div className="content-center">
+            <Container>
+              <div class="media">
+                <div className="align-self-center mr-4 mt-5 ">
+                  <img
+                    width="100rem"
+                    alt="..."
+                    className="rounded-circle align-self-center"
+                    src={require("assets/img/muslim.png")}
+                  ></img>
+                  <div>{detailLesson.guru}</div>
+                </div>
+                <div class="media-body text-left">
+                  <h1 className="title"> {detailLesson.pelajaran}</h1>
+                  <div style={{ fontSize: "0.9rem" }}>
+                    {detailLesson.deskripsi}
+                  </div>
+                </div>
+              </div>
+              {/* <Row>
+              <Col sm="2">
+
+              </Col>
+              <Col className="text-left">
+              
+              </Col>
+            </Row> */}
+            </Container>
+          </div>
+        </div>
         <Container className="mt-4">
           <div class="card rounded">
             <div class="card-body">
@@ -109,8 +156,8 @@ function LandingPage() {
         </Container>
         <DefaultFooter />
       </div>
-    </>
+    </div>
   );
-}
+};
 
-export default LandingPage;
+export default BabDetail;

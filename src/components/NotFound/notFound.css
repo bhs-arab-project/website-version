@@ -70,7 +70,7 @@ body {
   right: 0;
 }
 
-.notfound a {
+.notfound a Link.notFoundLink {
   font-family: "Montserrat", sans-serif;
   display: inline-block;
   font-weight: 700;
@@ -84,7 +84,7 @@ body {
   transition: 0.2s all;
 }
 
-.notfound a:hover {
+.notfound a:hover Link.notFoundLink {
   color: #ff6300;
   background: #211b19;
 }

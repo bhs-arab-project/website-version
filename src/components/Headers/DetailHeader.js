@@ -1,3 +1,4 @@
+import IndexNavbar from "components/Navbars/IndexNavbar";
 import React from "react";
 
 // reactstrap components
@@ -5,7 +6,7 @@ import { Container } from "reactstrap";
 
 // core components
 
-function LandingPageHeader() {
+function DetailHeader(props) {
   let pageHeader = React.createRef();
 
   React.useEffect(() => {
@@ -23,21 +24,19 @@ function LandingPageHeader() {
   });
   return (
     <>
+      <IndexNavbar />
       <div className="page-header page-header-small">
         <div
           className="page-header-image"
           style={{
-            backgroundImage:
-              "url(" + require("assets/img/bab-header.jpg") + ")",
+            backgroundImage: "url(" + props.img + ")",
           }}
           ref={pageHeader}
         ></div>
         <div className="content-center">
           <Container>
-            <h1 className="title">BAB MATERI</h1>
-            <div className="text-center">
-              pilih bab materi dibawah untuk mempelajarinya!
-            </div>
+            <h1 className="title">{props.header}</h1>
+            <div className="text-center">{props.subHeader}</div>
           </Container>
         </div>
       </div>
@@ -45,4 +44,4 @@ function LandingPageHeader() {
   );
 }
 
-export default LandingPageHeader;
+export default DetailHeader;

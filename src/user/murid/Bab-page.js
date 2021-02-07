@@ -1,9 +1,9 @@
 import React from "react";
 
 // core components
-import LandingPageHeader from "components/Headers/LandingPageHeader.js";
+import DetailHeader from "components/Headers/DetailHeader.js";
 import DefaultFooter from "components/Footers/DefaultFooter.js";
-import ListMateri from "user/murid/List-materi";
+import ListMateri from "user/murid/ListMateri";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 
 function LandingPage() {
@@ -20,9 +20,12 @@ function LandingPage() {
   }, []);
   return (
     <>
-      <IndexNavbar />
       <div className="wrapper">
-        <LandingPageHeader />
+        <DetailHeader
+          header="BAB MATERI"
+          subHeader="pilih bab materi di bawah untuk mempelajarinya!"
+          img={require("assets/img/bab-header.jpg")}
+        />
         <ListMateri />
         <DefaultFooter />
       </div>
