@@ -50,7 +50,7 @@ function LoginPage() {
               <Card className="card-login card-plain">
                 <Form action="" className="form" method="">
                   <CardHeader className="text-center">
-                    <h2>Selamat Datang</h2>
+                    <h2>Login..</h2>
                     {/* <div className="logo-container">
                       <img
                         alt="..."
@@ -61,7 +61,7 @@ function LoginPage() {
                   <CardBody>
                     <InputGroup
                       className={
-                        "no-border input-lg" +
+                        "no-border input-md" +
                         (firstFocus ? " input-group-focus" : "")
                       }
                     >
@@ -79,13 +79,13 @@ function LoginPage() {
                     </InputGroup>
                     <InputGroup
                       className={
-                        "no-border input-lg" +
+                        "no-border input-md" +
                         (lastFocus ? " input-group-focus" : "")
                       }
                     >
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="now-ui-icons text_caps-small"></i>
+                          <i className="now-ui-icons ui-1_lock-circle-open"></i>
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
@@ -96,15 +96,6 @@ function LoginPage() {
                       ></Input>
                     </InputGroup>
                   </CardBody>
-                  <h6>
-                    <a
-                      className="link"
-                      href="/forgot-password"
-                      // onClick={(e) => e.preventDefault()}
-                    >
-                      Lupa Password ?
-                    </a>
-                  </h6>
                   <CardFooter className="text-center">
                     <Button
                       block
@@ -112,11 +103,11 @@ function LoginPage() {
                       color="info"
                       href="/"
                       // onClick={(e) => e.preventDefault()}
-                      size="lg"
+                      size="md"
                     >
                       Masuk
                     </Button>
-                    <h6>
+                    <p>
                       <a
                         className="link"
                         href="/sign-up"
@@ -124,7 +115,16 @@ function LoginPage() {
                       >
                         Daftar disini
                       </a>
-                    </h6>
+                    </p>
+                    <p>
+                    <a
+                      className="link"
+                      href="/forgot-password"
+                      // onClick={(e) => e.preventDefault()}
+                    >
+                      Lupa Password ?
+                    </a>
+                  </p>
                     {/* <div className="pull-left"></div>
                     <div className="pull-right">
                       <h6>
