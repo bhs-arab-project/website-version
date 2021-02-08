@@ -42,7 +42,10 @@ class App extends Component {
               path="/detail-bab/:id"
               render={(props) => <DetailBab {...props} />}
             />
-            <Route path="/materi" render={(props) => <Materi {...props} />} />
+            <Route
+              path="/materi/:id"
+              render={(props) => <Materi {...props} />}
+            />
             {/* end route pelajar */}
             {/* start route Guru */}
             <Route exact path="/guru" render={(props) => <TeacherHome />} />

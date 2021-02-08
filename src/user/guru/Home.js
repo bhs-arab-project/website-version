@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import ShowAllLesson from "./ShowAllLesson";
 import { connect } from "react-redux";
 import { getLessonList } from "../actions/lessonAction";
+import BasicElements from "template/index-sections/BasicElements";
 class HomeTeacher extends Component {
   componentDidMount() {
     this.props.dispatch(getLessonList());
@@ -17,6 +18,7 @@ class HomeTeacher extends Component {
           img={require("assets/img/my-bab.jpg")}
         />
         <ShowAllLesson />
+        <BasicElements />
         <DefaultFooter />
       </div>
     );
