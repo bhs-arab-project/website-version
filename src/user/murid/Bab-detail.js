@@ -5,37 +5,47 @@ import IndexNavbar from "../../components/Navbars/IndexNavbar";
 import { API_URL } from "utils/constants";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import DetailLesson from "./../guru/CRUDLesson/DetailLesson";
-import Spinner from "reactstrap/lib/Spinner";
+import { BulletList } from "react-content-loader";
+import AvatarWithText from "../../components/loader/loaderAvatarWithText";
+
+const MyBulletListLoader = () => <BulletList />;
 
 const BabDetail = () => {
   let { id } = useParams();
   let [detailLesson, setDetailLesson] = React.useState([]);
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
 
-  React.useEffect(async () => {
-    setLoad(true);
-
+  async function fetchData() {
     axios
       .get(`${API_URL}pelajaran/${id}`)
       .then((response) => {
+        setLoad(false);
         setDetailLesson(response.data);
-        console.log("detail lesson", response.data);
       })
       .catch((error) => {
         let message = error.response;
         console.log(message.data.errors);
       });
+  }
 
-    setLoad(false);
+  React.useEffect(() => {
+    setLoad(true);
+    fetchData();
   }, [id]);
 
   let pageHeader = React.createRef();
-  // const data = detailLesson.chapter;
+
+  function isEmpty(x) {
+    for (var i in x) {
+      return false;
+    }
+    return true;
+  }
+  // const detailLesson = this;
   return (
     <div>
       <IndexNavbar />
-      <div className="wrapper">
+      <div className="wrapper allButFooter">
         <div className="page-header page-header-small">
           <div
             className="page-header-image"
@@ -47,40 +57,33 @@ const BabDetail = () => {
           ></div>
           <div className="content-center">
             <Container>
-              <div class="media">
-                <div className="align-self-center mr-4 mt-5 ">
-                  <img
-                    width="100rem"
-                    alt="..."
-                    className="rounded-circle align-self-center"
-                    src={require("assets/img/muslim.png")}
-                  ></img>
-                  <div>{detailLesson.guru}</div>
-                </div>
-                <div class="media-body text-left">
-                  <h1 className="title"> {detailLesson.pelajaran}</h1>
-                  <div style={{ fontSize: "0.9rem" }}>
-                    {detailLesson.deskripsi}
+              {load === false ? (
+                <div class="media">
+                  <div className="align-self-center mr-4 mt-5 ">
+                    <img
+                      width="100rem"
+                      alt="..."
+                      className="rounded-circle align-self-center"
+                      src={require("assets/img/muslim.png")}
+                    ></img>
+                    <div>{detailLesson.guru}</div>
+                  </div>
+                  <div class="media-body text-left">
+                    <h1 className="title"> {detailLesson.pelajaran}</h1>
+                    <div style={{ fontSize: "0.9rem" }}>
+                      {detailLesson.deskripsi}
+                    </div>
                   </div>
                 </div>
-              </div>
-              {/* <Row>
-              <Col sm="2">
-
-              </Col>
-              <Col className="text-left">
-              
-              </Col>
-            </Row> */}
+              ) : (
+                AvatarWithText()
+              )}
             </Container>
           </div>
         </div>
         <Container className="mt-4">
-          {load ? (
-            <Spinner></Spinner>
-          ) : (
+          {load === false ? (
             detailLesson?.chapter?.map((list, index) => {
-              console.log(list);
               return (
                 <div class="card rounded" key={index}>
                   <div class="card-body">
@@ -101,7 +104,7 @@ const BabDetail = () => {
                         </div>
                       </div>
                       <div className="col-md-2 col-xs-1 col-sm-1 px-1 text-right d-inline">
-                        <Link to={`materi/${list.id}`}>
+                        <Link to={`/materi/${list.id}`}>
                           <Button color="info">Mulai belajar</Button>
                         </Link>
                       </div>
@@ -110,10 +113,12 @@ const BabDetail = () => {
                 </div>
               );
             })
+          ) : (
+            <MyBulletListLoader />
           )}
         </Container>
-        <DefaultFooter />
       </div>
+      <DefaultFooter />
     </div>
   );
 };

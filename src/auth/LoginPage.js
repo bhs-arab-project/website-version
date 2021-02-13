@@ -1,6 +1,7 @@
-import React from "react";
-
-// reactstrap components
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
+import TransparentFooter from "components/Footers/TransparentFooter.js";
 import {
   Button,
   Card,
@@ -15,14 +16,27 @@ import {
   Container,
   Col,
 } from "reactstrap";
+import { Link } from "react-router-dom";
+import Spinner from "reactstrap/lib/Spinner";
 
-// core components
-import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
-import TransparentFooter from "components/Footers/TransparentFooter.js";
+async function loginUser(credentials) {
+  return fetch("https://absensi-project.herokuapp.com/api/v1/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
 
-function LoginPage() {
+export default function LoginPage({ setToken }) {
   const [firstFocus, setFirstFocus] = React.useState(false);
   const [lastFocus, setLastFocus] = React.useState(false);
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [loggedIn, setLoggedIn] = useState();
+
   React.useEffect(() => {
     document.body.classList.add("login-page");
     document.body.classList.add("sidebar-collapse");
@@ -34,9 +48,22 @@ function LoginPage() {
       document.body.classList.remove("sidebar-collapse");
     };
   }, []);
+
+  const submitH = async (e) => {
+    e.preventDefault();
+
+    setLoggedIn("logging in");
+    const token = await loginUser({
+      email,
+      password,
+    });
+    setToken(token);
+  };
+
   return (
     <>
       <ExamplesNavbar />
+
       <div className="page-header clear-filter" filter-color="blue">
         <div
           className="page-header-image"
@@ -48,15 +75,9 @@ function LoginPage() {
           <Container>
             <Col className="ml-auto mr-auto" md="6" xl="4">
               <Card className="card-login card-plain">
-                <Form action="" className="form" method="">
+                <Form action="" className="form" method="" onSubmit={submitH}>
                   <CardHeader className="text-center">
                     <h2>Login..</h2>
-                    {/* <div className="logo-container">
-                      <img
-                        alt="..."
-                        src={require("assets/img/now-logo.png")}
-                      ></img>
-                    </div> */}
                   </CardHeader>
                   <CardBody>
                     <InputGroup
@@ -73,8 +94,10 @@ function LoginPage() {
                       <Input
                         placeholder="Email"
                         type="text"
+                        onInput={(e) => setEmail(e.target.value)}
                         onFocus={() => setFirstFocus(true)}
                         onBlur={() => setFirstFocus(false)}
+                        required
                       ></Input>
                     </InputGroup>
                     <InputGroup
@@ -91,40 +114,37 @@ function LoginPage() {
                       <Input
                         placeholder="Password"
                         type="password"
+                        onInput={(e) => setPassword(e.target.value)}
                         onFocus={() => setLastFocus(true)}
                         onBlur={() => setLastFocus(false)}
+                        required
                       ></Input>
                     </InputGroup>
                   </CardBody>
                   <CardFooter className="text-center">
-                    <Button
-                      block
-                      className="btn-round"
-                      color="info"
-                      href="/"
-                      // onClick={(e) => e.preventDefault()}
-                      size="md"
-                    >
-                      Masuk
-                    </Button>
-                    <p>
-                      <a
-                        className="link"
-                        href="/sign-up"
+                    {loggedIn === "logging in" ? (
+                      <Spinner></Spinner>
+                    ) : (
+                      <Button
+                        block
+                        className="btn-round"
+                        color="info"
                         // onClick={(e) => e.preventDefault()}
+                        size="md"
                       >
+                        Masuk
+                      </Button>
+                    )}
+                    <p>
+                      <a href="/sign-up" className="link">
                         Daftar disini
                       </a>
                     </p>
                     <p>
-                    <a
-                      className="link"
-                      href="/forgot-password"
-                      // onClick={(e) => e.preventDefault()}
-                    >
-                      Lupa Password ?
-                    </a>
-                  </p>
+                      <a className="link" href="/forgot-password">
+                        Lupa Password ?
+                      </a>
+                    </p>
                     {/* <div className="pull-left"></div>
                     <div className="pull-right">
                       <h6>
@@ -148,5 +168,6 @@ function LoginPage() {
     </>
   );
 }
-
-export default LoginPage;
+LoginPage.propTypes = {
+  setToken: PropTypes.func.isRequired,
+};

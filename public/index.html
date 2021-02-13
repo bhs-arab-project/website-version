@@ -53,6 +53,9 @@
       href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
     />
 
+    <link rel="stylesheet" type="text/css" href="path/to/notifications.css">
+
+
     <title>Belajar Arab Online</title>
   </head>
   <body>
@@ -94,32 +97,22 @@ var quotes = [
 { arab: "العِلْمُ بِلَا عَمَلٍ كَالشَّجَرِ بِلَا ثَـمَرٍ", arti: "Ilmu tanpa amal, seperti pohon tanpa buah.", latin:"al-‘ilmu bilaa ‘amalin, kasy-syajari bilaa tsamarin" },
 { arab: "اُطْلُبِ العِلْمَ مِنَ الـمَهْدِ إِلَى اللَّحْدِ", arti: "Tuntutlah ilmu dari sejak di buaian sampai liang lahat.", latin:"uthlubil-‘ilma manal-mahdi ilal-lahdi" },
 { arab: "العِلْمُ يُؤْتَى وَلَا يَأْتِي", arti: "Ilmu itu didatangi, dan tidak datang (dengan sendirinya).", latin:"al-‘ilmu yu`taa wa laa ya`tii" },
-{ arab: "", arti: "Sesungguhnya yang takut kepada Allah di antara hamba-hamba-Nya, hanyalah para ulama (orang-orang yang berilmu)", latin:"" },
 { arab: "مَنْ سَلَكَ طَرِيْقًا يَلْتَمِسُ فِيْهِ عِلْمًا، سَهَّلَ اللهُ لَهُ بِهِ طَرِيْقًا إِلَى الْجَنَّةِ", arti: "Barang siapa yang berjalan untuk mencari ilmu, Allah akan memudahkan dirinya jalan menuju surga.", latin:"Man salaka thoriqon yaltamisu fihi i’lman sahhallahu bihi thoriqon ilal jannah" },
 { arab: "مَنْ يُرِدِ اللَّهُ بِهِ خَيْرًا يُفَقِّهْهُ فِى الدِّينِ", arti: "Barang siapa yang Allah kehendaki kebaikan, maka Allah akan memahamkan dia tentang ilmu agama.", latin:"“Man yuridillahi khaoyron yufaqihhu fiddiin”" },
 { arab: "ذَا مَاتَ الْإِنْسَانُ انْقَطَعَ عَمَلُهُ إِلَّا مِنْ ثَلَاثٍ: صَدَقَةٍ جَارِيَةٍ، أَوْ عِلْمٍ يُنْتَفَعُ بِهِ، أَوْ وَلَدٍ صَالِحٍ يَدْعُو لَهُ", arti: "Jika seorang manusia meninggal, terputuslah amalnya, kecuali tiga hal: sedekah jariyah, ilmu yang bermanfaat, dan anak shalih yang berdoa untuknya", latin:"Idzaa maatalinsaan anqothoa’ a’maluhu illa min tsalatsin; shodaqotin jaariyah, auw i’lmin yuntfu’bihi, auw waladin sholihin yadu’u lahu" },
-{ arab: "Tholibul ilmi faridhotan a’la kulli muslimin", arti: "Menuntut ilmu itu wajib atas setiap Muslim", latin:"Tholibul ilmi faridhotan a’la kulli muslimin" },
 
 
 ];
-
-window.onload = function showquote() {
+function showquote() {
   var q = quotes.length;
-  // var whichquote=Math.round(Math.random()*(q-1));      // Logical error...
   var whichquote = quotes[Math.round(Math.random() * (q - 1))]; // ... fixed.
-  console.log(whichquote, "quotes");
-  /*
-     I've moved the quote selection logic into the showquote function.
-     Again, it allows for more flexibilty: now you could theoretically call
-     showquote multiple times (maybe through setTimeout for example) and
-     end up with a different random quote+image each time.
-  */
 
   document.getElementById("latin").innerHTML = whichquote.latin;
   document.getElementById("arab").innerHTML = whichquote.arab;
   document.getElementById("arti").innerHTML = whichquote.arti;
 }
 showquote();
+setInterval(showquote, 15000);
 </script>
 
 </html>

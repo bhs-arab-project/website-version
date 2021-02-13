@@ -61,48 +61,7 @@ a:focus {
   align-items: stretch;
   /* position: relative; */
 }
-#sidebar {
-  min-width: 250px;
-  max-width: 250px;
-  background: #005086;
-  color: #fff;
-  transition: all 0.3s;
-}
-#sidebar.active {
-  margin-left: -250px;
-}
-#sidebar .sidebar-header {
-  padding: 20px;
-  background: #005086;
-}
 
-#sidebar ul.components {
-  padding: 20px 0px;
-  border-bottom: 1px solid #47748b;
-  /* background: #005086; */
-  /* min-height: 100vh; */
-}
-#sidebar ul p {
-  padding: 10px;
-  font-size: 1.1em;
-  display: block;
-  color: #fff;
-}
-#sidebar ul li a {
-  padding: 10px;
-  font-size: 1.1em;
-  display: block;
-}
-#sidebar ul li a:hover {
-  color: #fff;
-  background: #318fb5;
-}
-#sidebar ul li.active > a,
-a[aria-expanded="true"] {
-  color: #fff;
-
-  background: #318fb5;
-}
 a[data-toggle="collapse"] {
   position: relative;
 }
@@ -149,4 +108,8 @@ a.download:hover {
   #sidebarCollapse span {
     display: none;
   }
+}
+
+.allButFooter {
+  min-height: calc(100vh - 40px);
 }

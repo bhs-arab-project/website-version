@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 // reactstrap components
 import {
   Collapse,
@@ -16,6 +16,8 @@ import {
 } from "reactstrap";
 
 function IndexNavbar() {
+  const history = useHistory();
+
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   React.useEffect(() => {
@@ -37,6 +39,12 @@ function IndexNavbar() {
       window.removeEventListener("scroll", updateNavbarColor);
     };
   });
+
+  function handleLogout() {
+    sessionStorage.clear();
+    window.location.href = "/";
+  }
+
   return (
     <>
       {collapseOpen ? (
@@ -51,15 +59,17 @@ function IndexNavbar() {
       <Navbar className={"fixed-top " + navbarColor} expand="lg" color="info">
         <Container>
           <div className="navbar-translate">
-            <NavbarBrand href="/index" id="navbar-brand">
-              <img
-                width="50rem"
-                alt="..."
-                className="rounded mr-1"
-                src={require("assets/img/brand-logo.png")}
-              ></img>
-              belajar Arab
-            </NavbarBrand>
+            <Link to="/">
+              <NavbarBrand id="navbar-brand">
+                <img
+                  width="50rem"
+                  alt="..."
+                  className="rounded mr-1"
+                  src={require("assets/img/brand-logo.png")}
+                ></img>
+                Al-Qolam
+              </NavbarBrand>
+            </Link>
 
             <button
               className="navbar-toggler navbar-toggler"
@@ -82,18 +92,12 @@ function IndexNavbar() {
           >
             <Nav navbar>
               <NavItem>
-                <NavLink
-                  href="/bab"
-                  // onClick={(e) => {
-                  //   e.preventDefault();
-                  //   document
-                  //     .getElementById("download-section")
-                  //     .scrollIntoView();
-                  // }}
-                >
-                  <i className="now-ui-icons files_single-copy-04"></i>
-                  <span>Bab Materi</span>
-                </NavLink>
+                <Link to="/bab" className="text-decoration-none">
+                  <NavLink>
+                    <i className="now-ui-icons files_single-copy-04"></i>
+                    <span>Bab Materi</span>
+                  </NavLink>
+                </Link>
               </NavItem>
 
               <UncontrolledDropdown nav>
@@ -115,7 +119,7 @@ function IndexNavbar() {
                     detail profil
                   </DropdownItem>
 
-                  <DropdownItem to="/index" tag={Link}>
+                  <DropdownItem to="/" onClick={handleLogout} tag={Link}>
                     <i
                       className="now-ui-icons arrows-1_minimal-right
 "

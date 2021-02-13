@@ -14,20 +14,10 @@ function DefaultFooter() {
           <nav>
             <ul>
               <li>
-                <a
-                  href="https://www.creative-tim.com?ref=nukr-dark-footer"
-                  target="_blank"
-                >
-                  Instagram
-                </a>
+                <a href="#">Instagram</a>
               </li>
               <li>
-                <a
-                  href="http://presentation.creative-tim.com?ref=nukr-dark-footer"
-                  target="_blank"
-                >
-                  Website
-                </a>
+                <a href="#">Website</a>
               </li>
               {/* <li>
               <a

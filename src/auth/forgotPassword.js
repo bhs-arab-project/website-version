@@ -92,7 +92,7 @@ function LoginPage() {
                     <p>
                       <a
                         className="link"
-                        href="/login-page"
+                        href="/"
                         // onClick={(e) => e.preventDefault()}
                       >
                         Kembali Ke Login

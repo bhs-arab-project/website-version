@@ -1,5 +1,3 @@
-import React from "react";
-
 // reactstrap components
 import {
   Button,
@@ -20,9 +18,53 @@ import {
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import TransparentFooter from "components/Footers/TransparentFooter.js";
 
-function LoginPage() {
-  const [firstFocus, setFirstFocus] = React.useState(false);
-  const [lastFocus, setLastFocus] = React.useState(false);
+import React, { useState } from "react";
+import axios from "axios";
+import Spinner from "reactstrap/lib/Spinner";
+import { Redirect } from "react-router";
+import {
+  NotificationManager,
+  NotificationContainer,
+} from "react-notifications";
+
+export default function SignUpPage() {
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  let bodyFormData = new FormData();
+  bodyFormData.set("name", name);
+  bodyFormData.set("email", email);
+  bodyFormData.set("password", password);
+
+  const success = () => {
+    return <div>ok</div>;
+  };
+
+  const handleSubmit = async (e) => {
+    setLoggedIn(true);
+
+    axios({
+      method: "post",
+      url: "https://absensi-project.herokuapp.com/api/v1/register",
+      data: bodyFormData,
+      config: { headers: { "Content-Type": "multipart/form-data" } },
+    })
+      .then(function (response) {
+        setLoggedIn(false);
+        window.location = "/";
+        //handle success
+        console.log(response);
+      })
+      .catch(function (response) {
+        setLoggedIn(false);
+        console.log(response);
+      });
+
+    e.preventDefault();
+  };
+
   React.useEffect(() => {
     document.body.classList.add("login-page");
     document.body.classList.add("sidebar-collapse");
@@ -34,6 +76,8 @@ function LoginPage() {
       document.body.classList.remove("sidebar-collapse");
     };
   }, []);
+
+
   return (
     <>
       <ExamplesNavbar />
@@ -46,64 +90,58 @@ function LoginPage() {
         ></div>
         <div className="content">
           <Container>
+            <NotificationContainer />
+
             <Col className="ml-auto mr-auto" md="6" xl="4">
               <Card className="card-login card-plain">
-                <Form action="" className="form" method="">
+                <Form className="form" onSubmit={handleSubmit}>
                   <CardHeader className="text-center">
                     <h2>Register..</h2>
-                    {/* <div className="logo-container">
-                      <img
-                        alt="..."
-                        src={require("assets/img/now-logo.png")}
-                      ></img>
-                    </div> */}
                   </CardHeader>
                   <CardBody>
-                  {/* input Nama depan dan belakang */}
-                  <form>
-                    <div class="form-row">
-                      <div class="from-group col-md-6">
-                      <InputGroup
-                      className={
-                        "no-border input-lg" +
-                        (firstFocus ? " input-group-focus" : "")
-                      }
-                    >
+                    {/* input Nama depan dan belakang */}
+                    {/* <form>
+                        <div class="form-row">
+                          <div class="from-group col-md-6">
+                            <InputGroup className={"no-border input-lg"}>
+                              <InputGroupAddon addonType="prepend">
+                                <InputGroupText>
+                                  <i className="now-ui-icons users_single-02"></i>
+                                </InputGroupText>
+                              </InputGroupAddon>
+                              <Input
+                                placeholder="First Name"
+                                type="text"
+                                // autofocus
+                              ></Input>
+                            </InputGroup>
+                          </div>
+                          <div class="col">
+                            <InputGroup className={"no-border input-lg"}>
+                              <Input
+                                placeholder="Last Name"
+                                type="text"
+                                // autofocus
+                              ></Input>
+                            </InputGroup>
+                          </div>
+                        </div>
+                      </form> */}
+                    {/* akhir tag nama depan dan belakang */}
+                    <InputGroup className={"no-border input-md"}>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
-                          <i className="now-ui-icons users_single-02"></i>
+                          <i className="now-ui-icons users_circle-08"></i>
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
-                        placeholder="First Name"
+                        placeholder="Nama"
                         type="text"
+                        onInput={(e) => setName(e.target.value)}
                         autofocus
                       ></Input>
                     </InputGroup>
-                      </div>
-                      <div class="col">
-                      <InputGroup
-                      className={
-                        "no-border input-lg" +
-                        (firstFocus ? " input-group-focus" : "")
-                      }
-                    >
-                      <Input
-                        placeholder="Last Name"
-                        type="text"
-                        autofocus
-                      ></Input>
-                    </InputGroup>
-                      </div>
-                    </div>
-                  </form>
-                      {/* akhir tag nama depan dan belakang */}
-                    <InputGroup
-                      className={
-                        "no-border input-md" +
-                        (firstFocus ? " input-group-focus" : "")
-                      }
-                    >
+                    <InputGroup className={"no-border input-md"}>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons users_circle-08"></i>
@@ -111,16 +149,12 @@ function LoginPage() {
                       </InputGroupAddon>
                       <Input
                         placeholder="Email"
-                        type="text"
+                        type="email"
+                        onInput={(e) => setEmail(e.target.value)}
                         autofocus
                       ></Input>
                     </InputGroup>
-                    <InputGroup
-                      className={
-                        "no-border input-md" +
-                        (lastFocus ? " input-group-focus" : "")
-                      }
-                    >
+                    <InputGroup className={"no-border input-md"}>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons ui-1_lock-circle-open"></i>
@@ -129,42 +163,34 @@ function LoginPage() {
                       <Input
                         placeholder="Password"
                         type="password"
+                        onInput={(e) => setPassword(e.target.value)}
                         autofocus
                       ></Input>
                     </InputGroup>
                   </CardBody>
                   <CardFooter className="text-center">
-                    <Button
-                      block
-                      className="btn-round"
-                      color="info"
-                      href="/index"
-                      // onClick={(e) => e.preventDefault()}
-                      size="md"
-                    >
-                      Buat Akun
-                    </Button>
+                    {loggedIn === true ? (
+                      <Spinner></Spinner>
+                    ) : (
+                      <Button
+                        block
+                        className="btn-round"
+                        color="info"
+                        // onClick={(e) => e.preventDefault()}
+                        size="md"
+                      >
+                        Daftar
+                      </Button>
+                    )}
                     <p>
                       <a
                         className="link"
-                        href="/login-page"
+                        href="/"
                         // onClick={(e) => e.preventDefault()}
                       >
-                        Sudah Punya Akun?
+                        Sudah Punya Akun? Login
                       </a>
                     </p>
-                    {/* <div className="pull-left"></div>
-                    <div className="pull-right">
-                      <h6>
-                        <a
-                          className="link"
-                          href="#pablo"
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          Need Help?
-                        </a>
-                      </h6>
-                    </div> */}
                   </CardFooter>
                 </Form>
               </Card>
@@ -176,5 +202,3 @@ function LoginPage() {
     </>
   );
 }
-
-export default LoginPage;

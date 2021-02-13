@@ -1,9 +1,5 @@
-/*eslint-disable*/
 import React from "react";
-
-// reactstrap components
 import { Container } from "reactstrap";
-// core components
 
 function IndexHeader() {
   let pageHeader = React.createRef();
@@ -22,6 +18,9 @@ function IndexHeader() {
     }
   });
 
+  const user = sessionStorage.getItem("token");
+  const userName = JSON.parse(user);
+
   return (
     <>
       <div className="page-header clear-filter" filter-color="blue">
@@ -34,12 +33,10 @@ function IndexHeader() {
         ></div>
         <Container>
           <div className="content-center brand text-left">
-            {/* <img
-              alt="..."
-              className="n-logo"
-              src={require("assets/img/now-logo.png")}
-            ></img> */}
-            <h1>Selamat Datang Faiz!</h1>
+            <h1>
+              Selamat Datang{" "}
+              <span className="text-capitalize">{userName?.user?.name}</span>!
+            </h1>
             <h3>كيف حالك؟</h3>
           </div>
           <h6 className="category category-absolute">Scroll ke bawah</h6>
