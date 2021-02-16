@@ -24,35 +24,29 @@ export default function CreateLesson() {
   const [pelajaran, setPelajaran] = useState();
   const [kesulitan, setKesulitan] = useState("mudah");
   const [deskripsi, setDeskripsi] = useState();
-  const [namaGuru, setNamaGuru] = useState();
-  const [guruId, setGuruId] = useState();
-  const [jumlahMateri, setjumlahMateri] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
 
   let bodyFormData = new FormData();
   bodyFormData.set("pelajaran", pelajaran);
   bodyFormData.set("kesulitan", kesulitan);
   bodyFormData.set("deskripsi", deskripsi);
-  bodyFormData.set("guru", namaGuru);
-  bodyFormData.set("teacher_id", guruId);
-  bodyFormData.set("jumlah_materi", jumlahMateri);
-
-  function handleInputChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  console.log("nameGuru", namaGuru);
+  bodyFormData.set("guru", guruToken?.user?.name);
+  bodyFormData.set("user_id", JSON.stringify(guruToken?.user?.id));
 
   const handleSubmit = async (e) => {
     setLoggedIn(true);
 
     axios({
       method: "post",
-      url: "https://data-beta.herokuapp.com/api/pelajaran",
+      url: "http://10.0.0.160:8000/api/pelajaran",
       data: bodyFormData,
-      config: { headers: { "Content-Type": "multipart/form-data" } },
+      config: {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Accept: "application/json",
+          Authorization: "Bearer" + guruToken?.token?.token,
+        },
+      },
     })
       .then(function (response) {
         setLoggedIn(false);
@@ -79,25 +73,11 @@ export default function CreateLesson() {
         <Container>
           <BackComponent />
           <br />
-          <div>
+          <div clasName="mt-2">
             <h2>Buat Pelajaran</h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>
               <Row>
-                <FormGroup>
-                  <Input
-                    disabled
-                    value={(e) => setNamaGuru(guruToken?.user?.name)}
-                  ></Input>
-                </FormGroup>
-                <FormGroup>
-                  <Input
-                    hidden
-                    type="text"
-                    onInput={(e) => setGuruId(e.target.value)}
-                    value={guruToken?.user?.id}
-                  ></Input>
-                </FormGroup>
                 <Col lg="5" sm="10">
                   <FormGroup>
                     <Label>Nama Pelajaran</Label>
@@ -159,17 +139,6 @@ export default function CreateLesson() {
                 </Row>
               </Row>
               <Col>
-                <Col lg="5" sm="10">
-                  <FormGroup>
-                    <Label>Jumlah Materi</Label>
-                    <Input
-                      defaultValue=""
-                      placeholder="Jumlah Materi"
-                      type="number"
-                      onInput={(e) => setjumlahMateri(e.target.value)}
-                    ></Input>
-                  </FormGroup>
-                </Col>
                 <FormGroup>
                   <Label>Deskripsi Pelajaran</Label>
                   <textarea

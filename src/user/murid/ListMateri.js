@@ -28,8 +28,9 @@ const ListMateri = () => {
         setLesson(response.data);
       })
       .catch((error) => {
+        setLoad(false);
         let message = error.response;
-        console.log(message);
+        return message;
       });
   }
 

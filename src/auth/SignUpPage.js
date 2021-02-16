@@ -38,16 +38,16 @@ export default function SignUpPage() {
   bodyFormData.set("email", email);
   bodyFormData.set("password", password);
 
-  const success = () => {
-    return <div>ok</div>;
-  };
+  for (var pair of bodyFormData.entries()) {
+    console.log(pair[0] + ", " + pair[1]);
+  }
 
   const handleSubmit = async (e) => {
     setLoggedIn(true);
 
     axios({
       method: "post",
-      url: "https://absensi-project.herokuapp.com/api/v1/register",
+      url: "http://10.0.0.160:8000/api/register",
       data: bodyFormData,
       config: { headers: { "Content-Type": "multipart/form-data" } },
     })
@@ -76,7 +76,6 @@ export default function SignUpPage() {
       document.body.classList.remove("sidebar-collapse");
     };
   }, []);
-
 
   return (
     <>

@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 import Spinner from "reactstrap/lib/Spinner";
 
 async function loginUser(credentials) {
-  return fetch("https://absensi-project.herokuapp.com/api/v1/login", {
+  return fetch("http://10.0.0.160:8000/api/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
