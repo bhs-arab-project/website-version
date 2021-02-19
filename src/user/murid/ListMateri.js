@@ -20,9 +20,18 @@ const ListMateri = () => {
   const [load, setLoad] = useState(true);
   let [lesson, setLesson] = React.useState([]);
 
+  const user = sessionStorage.getItem("token");
+  const userid = JSON.parse(user);
+
+  const access_token = userid?.token?.token;
+
   async function fetchData() {
     axios
-      .get(`${API_URL}pelajaran`)
+      .get(`${API_URL}pelajaran`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
       .then((response) => {
         setLoad(false);
         setLesson(response.data);

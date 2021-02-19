@@ -22,11 +22,14 @@ function ProfilePage() {
       document.body.classList.remove("sidebar-collapse");
     };
   }, []);
+
+  const user = sessionStorage.getItem("token");
+  const userName = JSON.parse(user);
   return (
     <>
       <IndexNavbar />
       <div className="wrapper">
-        <ProfilePageHeader />
+        <ProfilePageHeader name={userName?.user?.name} />
         <div className="section">
           <Container>
             <div className="button-container">

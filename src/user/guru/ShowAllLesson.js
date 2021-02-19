@@ -17,9 +17,15 @@ const ShowAllLesson = () => {
   const user = sessionStorage.getItem("token");
   const userid = JSON.parse(user);
 
+  const access_token = userid?.token?.token;
+
   async function fetchData() {
     axios
-      .get(`${API_URL}pelajaran`)
+      .get(`${API_URL}pelajaran`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
       .then((response) => {
         setLoad(false);
         setListTable(response.data);
@@ -33,16 +39,24 @@ const ShowAllLesson = () => {
   function deleteContact(id) {
     // Issue DELETE request
     axios
-      .delete(`https://jsonplaceholder.typicode.com/pelajaran/${id}`)
+      .delete(`${API_URL}pelajaran/${id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
       .then(() => {
         // Issue GET request after item deleted to get updated list
         // that excludes user of id
-        return axios.get(`https://jsonplaceholder.typicode.com/pelajaran`);
+        return axios.get(`${API_URL}pelajaran`, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
       })
       .then((res) => {
         // Update pelajaran in state as per-usual
-        const pelajaran = res.data;
-        this.setState({ pelajaran });
+        const listTable = res.data;
+        this.setState({ listTable });
       });
   }
 
@@ -98,7 +112,7 @@ const ShowAllLesson = () => {
                               {list.tingkatan}
                             </span>
                           </td>
-                          {list.teacher_id == userid?.user?.id ? (
+                          {list.user_id == userid?.user?.id ? (
                             <td class="td-actions text-center">
                               <Link to={`/detail-lesson/${list.id}`}>
                                 <button
@@ -125,6 +139,15 @@ const ShowAllLesson = () => {
                               >
                                 <i class="now-ui-icons ui-1_simple-remove"></i>{" "}
                                 Hapus
+                              </button>
+                              <button
+                                type="button"
+                                rel="tooltip"
+                                class="btn btn-warning"
+                                onClick={() => deleteContact(list.id)}
+                              >
+                                <i class="now-ui-icons ui-1_simple-add"></i>{" "}
+                                Tambah Materi
                               </button>
                             </td>
                           ) : (

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import TransparentFooter from "components/Footers/TransparentFooter.js";
+
 import {
   Button,
   Card,
@@ -18,9 +19,10 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Spinner from "reactstrap/lib/Spinner";
+import { API_URL } from "utils/constants";
 
 async function loginUser(credentials) {
-  return fetch("http://10.0.0.160:8000/api/login", {
+  return fetch(`${API_URL}login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

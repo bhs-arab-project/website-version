@@ -20,6 +20,8 @@ import EditLesson from "./user/guru/CRUDLesson/EditLesson";
 import DetailLesson from "./user/guru/CRUDLesson/DetailLesson";
 
 import useToken from "./auth/useToken";
+import { Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
 
 function App() {
   const { token, setToken } = useToken();
@@ -34,32 +36,44 @@ function App() {
     return <LoginPage setToken={setToken} />;
   }
 
+  const options = {
+    position: "top right",
+    timeout: 5000,
+    offset: "30px",
+    transition: "scale",
+    containerStyle: {
+      zIndex: 100,
+    },
+  };
+
   return (
     <div>
-      <BrowserRouter>
-        <Switch>
-          //pelajar
-          <Route exact path="/" render={() => <Home />} />
-          <Route path="/nucleo-icons" render={() => <NucleoIcons />} />
-          <Route path="/profile-page" render={() => <ProfilePage />} />
-          <Route path="/bab" render={() => <BabPage />} />
-          <Route path="/detail-bab/:id" render={() => <DetailBab />} />
-          <Route path="/materi/:id" render={() => <Materi />} />
-          {/* end route pelajar */}
-          {/* start route Guru */}
-          <Route exact path="/guru" render={() => <TeacherHome />} />
-          <Route exact path="/my-lesson" render={() => <MyLesson />} />
-          <Route path="/create-lesson" render={() => <CreateLesson />} />
-          <Route path="/edit-lesson/:id" render={() => <EditLesson />} />
-          <Route path="/detail-lesson/:id" render={() => <DetailLesson />} />
-          {/* end route Guru */}
-          <Route path="/sign-up" render={() => <SignUp />} />
-          {/* <Route path="/login-page" render={() => <LoginPage />} /> */}
-          <Route path="/forgot-password" render={() => <ForgotPassword />} />
-          <Route path="*" render={() => <NotFound />} />
-          <Redirect to="/login-page" />
-        </Switch>
-      </BrowserRouter>
+      <AlertProvider template={AlertTemplate} {...options}>
+        <BrowserRouter>
+          <Switch>
+            //pelajar
+            <Route exact path="/" render={() => <Home />} />
+            <Route path="/nucleo-icons" render={() => <NucleoIcons />} />
+            <Route path="/profile-page" render={() => <ProfilePage />} />
+            <Route path="/bab" render={() => <BabPage />} />
+            <Route path="/detail-bab/:id" render={() => <DetailBab />} />
+            <Route path="/materi/:id" render={() => <Materi />} />
+            {/* end route pelajar */}
+            {/* start route Guru */}
+            <Route exact path="/guru" render={() => <TeacherHome />} />
+            <Route exact path="/my-lesson" render={() => <MyLesson />} />
+            <Route path="/create-lesson" render={() => <CreateLesson />} />
+            <Route path="/edit-lesson/:id" render={() => <EditLesson />} />
+            <Route path="/detail-lesson/:id" render={() => <DetailLesson />} />
+            {/* end route Guru */}
+            <Route path="/sign-up" render={() => <SignUp />} />
+            <Route path="/login-page" render={() => <LoginPage />} />
+            <Route path="/forgot-password" render={() => <ForgotPassword />} />
+            <Route path="*" render={() => <NotFound />} />
+            <Redirect to="/login-page" />
+          </Switch>
+        </BrowserRouter>
+      </AlertProvider>
     </div>
   );
 }

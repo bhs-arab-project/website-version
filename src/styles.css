@@ -16,7 +16,7 @@ html {
   height: auto;
 }
 
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+@import "https://fonts.googleapis.com/css?family=Montserrat:400,700,200";
 body {
   /* font-family: "Poppins", sans-serif; */
   background: #fafafa;
@@ -112,4 +112,9 @@ a.download:hover {
 
 .allButFooter {
   min-height: calc(100vh - 40px);
+}
+
+.alertError {
+  text-transform: capitalize;
+  font-family: "Montserrat";
 }

@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import BackComponent from "./BackComponent";
 import { Form } from "react-bootstrap";
 import axios from "axios";
-
 // reactstrap components
 import {
   Button,
@@ -16,10 +15,16 @@ import {
   Col,
 } from "reactstrap";
 import Spinner from "reactstrap/lib/Spinner";
+import { API_URL } from "utils/constants";
+import { useHistory } from "react-router-dom";
+import { useAlert } from "react-alert";
 
 export default function CreateLesson() {
+  const history = useHistory();
+  const alert = useAlert();
   const guru = sessionStorage.getItem("token");
   const guruToken = JSON.parse(guru);
+  const access_token = guruToken?.token?.token;
 
   const [pelajaran, setPelajaran] = useState();
   const [kesulitan, setKesulitan] = useState("mudah");
@@ -28,29 +33,34 @@ export default function CreateLesson() {
 
   let bodyFormData = new FormData();
   bodyFormData.set("pelajaran", pelajaran);
-  bodyFormData.set("kesulitan", kesulitan);
+  bodyFormData.set("tingkatan", kesulitan);
   bodyFormData.set("deskripsi", deskripsi);
   bodyFormData.set("guru", guruToken?.user?.name);
   bodyFormData.set("user_id", JSON.stringify(guruToken?.user?.id));
+
+  for (var pair of bodyFormData.entries()) {
+    console.log(pair[0] + ", " + pair[1]);
+  }
 
   const handleSubmit = async (e) => {
     setLoggedIn(true);
 
     axios({
       method: "post",
-      url: "http://10.0.0.160:8000/api/pelajaran",
+      url: `${API_URL}pelajaran`,
       data: bodyFormData,
-      config: {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Accept: "application/json",
-          Authorization: "Bearer" + guruToken?.token?.token,
-        },
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
       },
     })
       .then(function (response) {
         setLoggedIn(false);
-        window.location = "/guru";
+        alert.success(
+          <div className="alertError">Berhasil membuat pelajaran!</div>
+        );
+        history.push("/guru");
         //handle success
         console.log(response);
       })
