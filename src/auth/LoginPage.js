@@ -59,6 +59,20 @@ export default function LoginPage({ setToken }) {
       password,
     });
     setToken(token);
+
+    const user = sessionStorage.getItem("token");
+    const userJson = JSON.parse(user);
+    const roleUser = userJson?.user?.role;
+
+    console.log(roleUser, "login");
+
+    if (roleUser === "user") {
+      window.location = "/";
+    } else if (roleUser === "teacher") {
+      window.location = "/guru";
+    } else {
+      window.location = "/admin";
+    }
   };
 
   return (

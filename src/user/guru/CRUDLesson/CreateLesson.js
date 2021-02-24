@@ -89,7 +89,7 @@ export default function CreateLesson() {
           <BackComponent />
           <br />
           <div clasName="mt-2">
-            <h2>Buat Pelajaran</h2>
+            <h2>Buat Pelajaran Baru</h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>
               <Row>

@@ -21,6 +21,7 @@ import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
+import BackComponent from "../CRUDLesson/BackComponent";
 
 export default function CreateMateri() {
   const history = useHistory();
@@ -116,7 +117,8 @@ export default function CreateMateri() {
         <Container>
           <br />
           <div clasName="mt-2">
-            <h2>Buat Materi</h2>
+            <BackComponent />
+            <h2>Buat Materi Baru</h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>
               <Row>

@@ -13,7 +13,7 @@ function MateriPage() {
   const user = sessionStorage.getItem("token");
   const userid = JSON.parse(user);
   const access_token = userid?.token?.token;
-  const roleUser = userid?.token?.role[0];
+  const roleUser = userid?.user?.role;
 
   async function fetchDataMateri() {
     axios
@@ -45,19 +45,6 @@ function MateriPage() {
       {load === false ? (
         <div className="bungkus">
           <div class="konten">
-            {roleUser === "user" ? (
-              <Link to={`/bab-detail/${id}`}>
-                <Button>Kembali</Button>
-              </Link>
-            ) : roleUser === "teacher" ? (
-              <Link to={`/detail-lesson/${id}`}>
-                <Button>Kembali</Button>
-              </Link>
-            ) : (
-              <Link to={`/bab-detail/${id}`}>
-                <Button>Kembali</Button>
-              </Link>
-            )}
             <nav class="baratas navbar-expand-lg navbar-light bg-light">
               <button
                 class="navbar-toggler float-right mt-2"
@@ -92,12 +79,26 @@ function MateriPage() {
                 </ul>
               </div>
             </nav>
-
             <div class="konten-bungkus">
               <h2>{materi?.judul_bab}</h2>
               <p>{materi?.materi}</p>
               <div class="line "></div>
               <div className="text-right  d-flex justify-content-between tombol-navigasi">
+                {roleUser === "user" ? (
+                  <Link to={`/detail-bab/${id}`}>
+                    <Button color="danger">
+                      <i class="now-ui-icons arrows-1_minimal-left"></i> Kembali
+                      Ke Detail Bab
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link to={`/detail-lesson/${id}`}>
+                    <Button color="danger">
+                      <i class="now-ui-icons arrows-1_minimal-left"></i> Kembali
+                      Ke Detail Bab
+                    </Button>
+                  </Link>
+                )}
                 <Button color="info">
                   <i class="now-ui-icons arrows-1_minimal-left"></i> Materi
                   Sebelumnya

@@ -48,20 +48,29 @@ const ShowAllLesson = () => {
     }).then((willDelete) => {
       if (willDelete) {
         axios
-          .delete(`${API_URL}pelajaran/${id}`, {
+          .delete(`${API_URL}pelajadran/${id}`, {
             headers: {
               Authorization: `Bearer ${access_token}`,
             },
           })
           .then((res) => {
             swal({
-              title: "Done!",
+              title: "Berhasil!",
               text: "Pelajaran Terhapus!",
               icon: "success",
               timer: 2000,
               button: false,
             }).then(() => {
               fetchData();
+            });
+          })
+          .catch(() => {
+            swal({
+              title: "Gagal!",
+              text: "Gagal Menghapus, Silahkan Coba Lagi",
+              icon: "error",
+              timer: 2000,
+              button: false,
             });
           });
       }
