@@ -14,7 +14,12 @@ function DefaultFooter() {
           <nav>
             <ul>
               <li>
-                <a href="#">Instagram</a>
+                <a
+                  href="https://github.com/orgs/bhs-arab-project/"
+                  target="_blank"
+                >
+                  GitHub
+                </a>
               </li>
               <li>
                 <a href="#">Website</a>
@@ -30,14 +35,7 @@ function DefaultFooter() {
             </ul>
           </nav>
           <div className="copyright" id="copyright">
-            © {new Date().getFullYear()}, Coded with{" "}
-            <a
-              href="https://www.creative-tim.com?ref=nukr-dark-footer"
-              target="_blank"
-            >
-              Love
-            </a>
-            .
+            CopyRight © {new Date().getFullYear()}, Second Team{" "}
           </div>
         </Container>
       </footer>

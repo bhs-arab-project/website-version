@@ -8,6 +8,12 @@ import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
 import DefaultFooter from "components/Footers/DefaultFooter.js";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import PaginationSection from "./../template/index-sections/Pagination";
+import IndexNavbarGuru from "components/Navbars/IndexNavbarGuru";
+import IndexNavbarAdmin from "components/Navbars/IndexNavbarAdmin";
+const user = sessionStorage.getItem("token");
+const userJson = JSON.parse(user);
+const roleUser = userJson?.user?.role;
+const userName = userJson?.user?.name;
 
 function ProfilePage() {
   // const [pills, setPills] = React.useState("2");
@@ -23,13 +29,17 @@ function ProfilePage() {
     };
   }, []);
 
-  const user = sessionStorage.getItem("token");
-  const userName = JSON.parse(user);
   return (
     <>
-      <IndexNavbar />
+      {roleUser === "user" ? (
+        <IndexNavbar />
+      ) : roleUser === "teacher" ? (
+        <IndexNavbarGuru />
+      ) : (
+        <IndexNavbarAdmin />
+      )}
       <div className="wrapper">
-        <ProfilePageHeader name={userName?.user?.name} />
+        <ProfilePageHeader name={userName} roleUser={roleUser} />
         <div className="section">
           <Container>
             <div className="button-container">

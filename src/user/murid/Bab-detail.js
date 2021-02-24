@@ -14,34 +14,34 @@ const BabDetail = () => {
   let { id } = useParams();
   let [detailLesson, setDetailLesson] = React.useState([]);
   const [load, setLoad] = useState(true);
+  const user = sessionStorage.getItem("token");
+  const userid = JSON.parse(user);
+  const access_token = userid?.token?.token;
 
   async function fetchData() {
     axios
-      .get(`${API_URL}pelajaran/${id}`)
+      .get(`${API_URL}pelajaran/${id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
       .then((response) => {
         setLoad(false);
         setDetailLesson(response.data);
       })
       .catch((error) => {
         let message = error.response;
-        console.log(message.data.errors);
+        console.log(message);
       });
   }
 
   React.useEffect(() => {
     setLoad(true);
     fetchData();
+    // eslint-disable-next-line
   }, [id]);
 
   let pageHeader = React.createRef();
-
-  function isEmpty(x) {
-    for (var i in x) {
-      return false;
-    }
-    return true;
-  }
-  // const detailLesson = this;
   return (
     <div>
       <IndexNavbar />
@@ -82,6 +82,8 @@ const BabDetail = () => {
           </div>
         </div>
         <Container className="mt-4">
+          <h4>Materi Yang Tersedia</h4>
+
           {load === false ? (
             detailLesson?.chapter?.map((list, index) => {
               return (

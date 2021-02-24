@@ -1,4 +1,6 @@
 import IndexNavbar from "components/Navbars/IndexNavbar";
+import IndexNavbarAdmin from "components/Navbars/IndexNavbarAdmin";
+import IndexNavbarGuru from "components/Navbars/IndexNavbarGuru";
 import React from "react";
 
 // reactstrap components
@@ -8,23 +10,31 @@ import { Container } from "reactstrap";
 
 function DetailHeader(props) {
   let pageHeader = React.createRef();
-
-  React.useEffect(() => {
-    if (window.innerWidth > 991) {
-      const updateScroll = () => {
-        let windowScrollTop = window.pageYOffset / 3;
-        pageHeader.current.style.transform =
-          "translate3d(0," + windowScrollTop + "px,0)";
-      };
-      window.addEventListener("scroll", updateScroll);
-      return function cleanup() {
-        window.removeEventListener("scroll", updateScroll);
-      };
-    }
-  });
+  const user = sessionStorage.getItem("token");
+  const userJson = JSON.parse(user);
+  const roleUser = userJson?.user?.role;
+  // React.useEffect(() => {
+  //   if (window.innerWidth > 991) {
+  //     const updateScroll = () => {
+  //       let windowScrollTop = window.pageYOffset / 3;
+  //       pageHeader.current.style.transform =
+  //         "translate3d(0," + windowScrollTop + "px,0)";
+  //     };
+  //     window.addEventListener("scroll", updateScroll);
+  //     return function cleanup() {
+  //       window.removeEventListener("scroll", updateScroll);
+  //     };
+  //   }
+  // });
   return (
     <>
-      <IndexNavbar />
+      {roleUser === "user" ? (
+        <IndexNavbar />
+      ) : roleUser === "teacher" ? (
+        <IndexNavbarGuru />
+      ) : (
+        <IndexNavbarAdmin />
+      )}
       <div className="page-header page-header-small">
         <div
           className="page-header-image"

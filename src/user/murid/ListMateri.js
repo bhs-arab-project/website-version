@@ -46,6 +46,7 @@ const ListMateri = () => {
   React.useEffect(() => {
     setLoad(true);
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -92,7 +93,7 @@ const ListMateri = () => {
                               <span>
                                 {" "}
                                 :{" "}
-                                {pelajaran.chapter.length == 0 ? (
+                                {pelajaran.chapter.length === 0 ? (
                                   <span className="text-danger">
                                     Tidak Ada Materi
                                   </span>

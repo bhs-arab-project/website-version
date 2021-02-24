@@ -12,10 +12,10 @@ function DarkFooter() {
           <ul>
             <li>
               <a
-                href="https://www.creative-tim.com?ref=nukr-dark-footer"
+                href="https://github.com/orgs/bhs-arab-project/"
                 target="_blank"
               >
-                Instagram
+                GitHub
               </a>
             </li>
             <li>
@@ -37,14 +37,7 @@ function DarkFooter() {
           </ul>
         </nav>
         <div className="copyright" id="copyright">
-          © {new Date().getFullYear()}, Coded with{" "}
-          <a
-            href="https://www.creative-tim.com?ref=nukr-dark-footer"
-            target="_blank"
-          >
-            Love
-          </a>
-          .
+          CopyRight © {new Date().getFullYear()}, Second Team{" "}
         </div>
       </Container>
     </footer>

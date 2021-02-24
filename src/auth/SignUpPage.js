@@ -23,20 +23,19 @@ import axios from "axios";
 import Spinner from "reactstrap/lib/Spinner";
 import { useAlert } from "react-alert";
 import { API_URL } from "utils/constants";
-import { useHistory } from "react-router-dom";
 
 export default function SignUpPage() {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
-  const history = useHistory();
   const alert = useAlert();
 
   let bodyFormData = new FormData();
   bodyFormData.set("name", name);
   bodyFormData.set("email", email);
   bodyFormData.set("password", password);
+  bodyFormData.set("role", "user");
 
   // for (var pair of bodyFormData.entries()) {
   //   console.log(pair[0] + ", " + pair[1]);
@@ -57,20 +56,19 @@ export default function SignUpPage() {
         alert.success(
           <div className="alertError">Berhasil Registrasi, silahkan login</div>
         );
-        history.push("/login-page");
 
         //handle success
         console.log(response);
       })
       .catch(function (response) {
         setLoggedIn(false);
-        if (response == "Error: Request failed with status code 404") {
+        if (response === "Error: Request failed with status code 404") {
           alert.error(
             <div className="alertError">
               Gagal Registrasi, silahkan coba lagi, 404 error
             </div>
           );
-        } else if (response == "Error: Request failed with status code 500") {
+        } else if (response === "Error: Request failed with status code 500") {
           alert.error(
             <div className="alertError">
               Gagal Registrasi, silahkan coba lagi, 500 error

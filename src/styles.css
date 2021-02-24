@@ -117,4 +117,5 @@ a.download:hover {
 .alertError {
   text-transform: capitalize;
   font-family: "Montserrat";
+  position: relative;
 }

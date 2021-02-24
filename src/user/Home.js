@@ -12,7 +12,6 @@ import DarkFooter from "components/Footers/DarkFooter.js";
 // sections for this page
 // import Navbars from "./index-sections/Navbars.js";
 import Tabs from "./murid/ListMateri.js";
-import Pagination from "../template/index-sections/Pagination.js";
 // import Notifications from "./index-sections/Notifications.js";
 // import Typography from "./index-sections/Typography.js";
 // import Javascript from "./index-sections/Javascript.js";
@@ -23,7 +22,6 @@ import Pagination from "../template/index-sections/Pagination.js";
 // import Examples from "./index-sections/Examples.js";
 // import Download from "./index-sections/Download.js";
 import "../styles.css";
-import Images from "template/index-sections/Quote.js";
 import Quote from "template/index-sections/Quote.js";
 
 function Index() {

@@ -9,6 +9,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Col from "reactstrap/lib/Col";
 import Button from "reactstrap/lib/Button";
+import swal from "sweetalert";
 
 const ShowAllLesson = () => {
   const [load, setLoad] = useState(true);
@@ -16,7 +17,6 @@ const ShowAllLesson = () => {
 
   const user = sessionStorage.getItem("token");
   const userid = JSON.parse(user);
-
   const access_token = userid?.token?.token;
 
   async function fetchData() {
@@ -36,33 +36,42 @@ const ShowAllLesson = () => {
       });
   }
 
-  function deleteContact(id) {
-    // Issue DELETE request
-    axios
-      .delete(`${API_URL}pelajaran/${id}`, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      })
-      .then(() => {
-        // Issue GET request after item deleted to get updated list
-        // that excludes user of id
-        return axios.get(`${API_URL}pelajaran`, {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        });
-      })
-      .then((res) => {
-        // Update pelajaran in state as per-usual
-        const listTable = res.data;
-        this.setState({ listTable });
-      });
+  async function deleteLesson(id) {
+    // e.preventDefault();
+    swal({
+      title: "Menghapus Pelajaran",
+      text: "Apakah Kamu Yakin Untuk Menghapus Pelajaran?",
+      icon: "warning",
+      buttons: true,
+
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios
+          .delete(`${API_URL}pelajaran/${id}`, {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          })
+          .then((res) => {
+            swal({
+              title: "Done!",
+              text: "Pelajaran Terhapus!",
+              icon: "success",
+              timer: 2000,
+              button: false,
+            }).then(() => {
+              fetchData();
+            });
+          });
+      }
+    });
   }
 
   React.useEffect(() => {
     setLoad(true);
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -79,6 +88,11 @@ const ShowAllLesson = () => {
                   Buat Pelajaran
                 </Button>
               </Link>
+              <Link to={`/create-chapter`}>
+                <Button color="info" className="float-right">
+                  Buat Materi
+                </Button>
+              </Link>
             </Col>
             <table class="table table-hover">
               <thead>
@@ -93,7 +107,9 @@ const ShowAllLesson = () => {
               </thead>
               {load === false
                 ? listTable?.map((list, index) => {
-                    return (
+                    return list?.length === 0 ? (
+                      <span>hsius</span>
+                    ) : (
                       <tbody>
                         <tr>
                           <td class="text-center">{index + 1}</td>
@@ -112,7 +128,7 @@ const ShowAllLesson = () => {
                               {list.tingkatan}
                             </span>
                           </td>
-                          {list.user_id == userid?.user?.id ? (
+                          {list.user_id === userid?.user?.id ? (
                             <td class="td-actions text-center">
                               <Link to={`/detail-lesson/${list.id}`}>
                                 <button
@@ -123,31 +139,24 @@ const ShowAllLesson = () => {
                                   <i class="now-ui-icons travel_info"></i> Lihat
                                 </button>
                               </Link>
-                              <button
-                                type="button"
-                                rel="tooltip"
-                                class="btn btn-success"
-                              >
-                                <i class="now-ui-icons ui-2_settings-90"></i>{" "}
-                                Edit
-                              </button>
+                              <Link to={`/edit-lesson/${list.id}`}>
+                                <button
+                                  type="button"
+                                  rel="tooltip"
+                                  class="btn btn-success"
+                                >
+                                  <i class="now-ui-icons ui-2_settings-90"></i>{" "}
+                                  Edit
+                                </button>
+                              </Link>
                               <button
                                 type="button"
                                 rel="tooltip"
                                 class="btn btn-danger"
-                                onClick={() => deleteContact(list.id)}
+                                onClick={() => deleteLesson(list.id)}
                               >
                                 <i class="now-ui-icons ui-1_simple-remove"></i>{" "}
                                 Hapus
-                              </button>
-                              <button
-                                type="button"
-                                rel="tooltip"
-                                class="btn btn-warning"
-                                onClick={() => deleteContact(list.id)}
-                              >
-                                <i class="now-ui-icons ui-1_simple-add"></i>{" "}
-                                Tambah Materi
                               </button>
                             </td>
                           ) : (

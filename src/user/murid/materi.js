@@ -3,7 +3,6 @@ import { Button } from "reactstrap";
 import { API_URL } from "utils/constants";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import Spinner from "reactstrap/lib/Spinner";
 import ResponsiveArticle from "components/loader/loaderMateri";
 
 function MateriPage() {
@@ -11,9 +10,18 @@ function MateriPage() {
   let [materi, setMateri] = React.useState([]);
   const [load, setLoad] = useState(false);
 
-  async function fetchData() {
+  const user = sessionStorage.getItem("token");
+  const userid = JSON.parse(user);
+  const access_token = userid?.token?.token;
+  const roleUser = userid?.token?.role[0];
+
+  async function fetchDataMateri() {
     axios
-      .get(`${API_URL}bab/${id}`)
+      .get(`${API_URL}bab/${id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
       .then((response) => {
         setLoad(false);
         let materiData = response.data;
@@ -28,13 +36,28 @@ function MateriPage() {
 
   React.useEffect(() => {
     setLoad(true);
-    fetchData();
+    fetchDataMateri();
+    // eslint-disable-next-line
   }, [id]);
+
   return (
     <>
       {load === false ? (
         <div className="bungkus">
           <div class="konten">
+            {roleUser === "user" ? (
+              <Link to={`/bab-detail/${id}`}>
+                <Button>Kembali</Button>
+              </Link>
+            ) : roleUser === "teacher" ? (
+              <Link to={`/detail-lesson/${id}`}>
+                <Button>Kembali</Button>
+              </Link>
+            ) : (
+              <Link to={`/bab-detail/${id}`}>
+                <Button>Kembali</Button>
+              </Link>
+            )}
             <nav class="baratas navbar-expand-lg navbar-light bg-light">
               <button
                 class="navbar-toggler float-right mt-2"
@@ -51,10 +74,14 @@ function MateriPage() {
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                   <li class="nav-item mt-2">
-                    <Link to="/bab" className="text-decoration-none">
-                      <i class="now-ui-icons files_single-copy-04 text-black"></i>{" "}
-                      <span className="text-black">Bab Materi</span>
-                    </Link>
+                    {roleUser === "user" ? (
+                      <Link to="/bab" className="text-decoration-none">
+                        <i class="now-ui-icons files_single-copy-04 text-black"></i>{" "}
+                        <span className="text-black">Bab Materi</span>
+                      </Link>
+                    ) : (
+                      <span></span>
+                    )}
                   </li>
                   <li class="nav-item mt-2">
                     <Link to="/profile-page" className="text-decoration-none">
@@ -68,13 +95,8 @@ function MateriPage() {
 
             <div class="konten-bungkus">
               <h2>{materi?.judul_bab}</h2>
-
-              {materi?.theory?.map((pelajaran, index) => {
-                return <p>{pelajaran.materi}</p>;
-              })}
-
+              <p>{materi?.materi}</p>
               <div class="line "></div>
-
               <div className="text-right  d-flex justify-content-between tombol-navigasi">
                 <Button color="info">
                   <i class="now-ui-icons arrows-1_minimal-left"></i> Materi

@@ -1,10 +1,9 @@
 import React from "react";
 
 // core components
-import DetailHeader from "components/Headers/DetailHeader.js";
 import DefaultFooter from "components/Footers/DefaultFooter.js";
 import ListMateri from "user/murid/ListMateri";
-import IndexNavbar from "components/Navbars/IndexNavbar";
+import DetailHeader from "components/Headers/DetailHeader.js";
 
 function LandingPage() {
   React.useEffect(() => {

@@ -9,13 +9,11 @@ import {
   UncontrolledDropdown,
   NavbarBrand,
   Navbar,
-  NavItem,
-  NavLink,
   Nav,
   Container,
 } from "reactstrap";
 
-function IndexNavbar() {
+function IndexNavbarGuru() {
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [collapseOpen, setCollapseOpen] = React.useState(false);
   React.useEffect(() => {
@@ -57,7 +55,7 @@ function IndexNavbar() {
       <Navbar className={"fixed-top " + navbarColor} expand="lg" color="info">
         <Container>
           <div className="navbar-translate">
-            <Link to="/">
+            <Link to="/guru">
               <NavbarBrand id="navbar-brand">
                 <img
                   width="50rem"
@@ -89,15 +87,6 @@ function IndexNavbar() {
             navbar
           >
             <Nav navbar>
-              <NavItem>
-                <Link to="/bab" className="text-decoration-none">
-                  <NavLink>
-                    <i className="now-ui-icons files_single-copy-04"></i>
-                    <span>Bab Materi</span>
-                  </NavLink>
-                </Link>
-              </NavItem>
-
               <UncontrolledDropdown nav>
                 <DropdownToggle
                   caret
@@ -134,4 +123,4 @@ function IndexNavbar() {
   );
 }
 
-export default IndexNavbar;
+export default IndexNavbarGuru;

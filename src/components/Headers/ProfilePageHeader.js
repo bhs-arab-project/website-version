@@ -39,7 +39,11 @@ function ProfilePageHeader(props) {
             <img alt="..." src={require("assets/img/muslim.png")}></img>
           </div>
           <h3 className="title">{props.name}</h3>
-          <p className="category">Pelajar</p>
+          {props.roleUser === "teacher" ? (
+            <p className="category">Pengajar</p>
+          ) : (
+            <p className="category">{props.roleUser}</p>
+          )}
           <div className="content">
             <div className="social-description">
               <h2>4</h2>

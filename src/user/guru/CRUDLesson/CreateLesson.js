@@ -66,6 +66,11 @@ export default function CreateLesson() {
       })
       .catch(function (response) {
         setLoggedIn(false);
+        alert.error(
+          <div className="alertError">
+            Gagal membuat pelajaran Silahkan Coba Lagi
+          </div>
+        );
         console.log(response);
       });
 

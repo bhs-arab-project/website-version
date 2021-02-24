@@ -17,19 +17,8 @@ import {
   Container,
   Col,
 } from "reactstrap";
-import { Link } from "react-router-dom";
 import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
-
-async function loginUser(credentials) {
-  return fetch(`${API_URL}login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(credentials),
-  }).then((data) => data.json());
-}
 
 export default function LoginPage({ setToken }) {
   const [firstFocus, setFirstFocus] = React.useState(false);
@@ -50,6 +39,16 @@ export default function LoginPage({ setToken }) {
       document.body.classList.remove("sidebar-collapse");
     };
   }, []);
+
+  async function loginUser(credentials) {
+    return fetch(`${API_URL}login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    }).then((data) => data.json());
+  }
 
   const submitH = async (e) => {
     e.preventDefault();
@@ -164,8 +163,8 @@ export default function LoginPage({ setToken }) {
               </Card>
             </Col>
           </Container>
+          <TransparentFooter />
         </div>
-        <TransparentFooter />
       </div>
     </>
   );

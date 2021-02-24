@@ -1,14 +1,14 @@
 import React from "react";
 
 // reactstrap components
-import { Container, Row, Col } from "reactstrap";
+import { Container } from "reactstrap";
 
 // core components
 
 function Quote() {
   return (
     <>
-      <div className="section ">
+      <div className="section">
         <Container>
           <blockquote class="blockquote text-center text-info border-0">
             <p id="arab"></p>

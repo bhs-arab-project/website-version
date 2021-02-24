@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import DetailHeader from "components/Headers/DetailHeader.js";
 import DefaultFooter from "components/Footers/DefaultFooter";
 import BackComponent from "./BackComponent";
-import DetailHeader from "components/Headers/DetailHeader";
+
 export default class EditLesson extends Component {
   state = {};
   render() {
