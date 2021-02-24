@@ -21,7 +21,6 @@ import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
-import BackComponent from "../CRUDLesson/BackComponent";
 
 export default function CreateMateri() {
   const history = useHistory();
@@ -117,8 +116,7 @@ export default function CreateMateri() {
         <Container>
           <br />
           <div clasName="mt-2">
-            <BackComponent />
-            <h2>Buat Materi Baru</h2>
+            <h2>Buat Materi</h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>
               <Row>
@@ -164,7 +162,9 @@ export default function CreateMateri() {
                   <FormGroup>
                     <Label>Judul Materi</Label>
                     <Input
-                      defaultValue=""
+                      required
+                      oninvalid="Judul Materi Harus di isi"
+                      onvalid="this.setCustomValidity('')"
                       placeholder="Judul Materi"
                       type="text"
                       onInput={(e) => setJudulMateri(e.target.value)}
@@ -176,6 +176,9 @@ export default function CreateMateri() {
                 <FormGroup>
                   <Label>Materi</Label>
                   <textarea
+                    required
+                    oninvalid="Materi Harus di isi"
+                    onvalid="this.setCustomValidity('')"
                     onInput={(e) => setMateri(e.target.value)}
                     class="form-control"
                     rows="10"

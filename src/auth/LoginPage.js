@@ -19,6 +19,7 @@ import {
 } from "reactstrap";
 import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
+import { useHistory } from "react-router-dom";
 
 export default function LoginPage({ setToken }) {
   const [firstFocus, setFirstFocus] = React.useState(false);
@@ -27,6 +28,8 @@ export default function LoginPage({ setToken }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loggedIn, setLoggedIn] = useState();
+
+  const history = useHistory();
 
   React.useEffect(() => {
     document.body.classList.add("login-page");
@@ -66,12 +69,17 @@ export default function LoginPage({ setToken }) {
 
     console.log(roleUser, "login");
 
+    const url = "http://localhost:3000/";
+
     if (roleUser === "user") {
-      window.location = "/";
+      window.location.href = `${url}`;
     } else if (roleUser === "teacher") {
-      window.location = "/guru";
+      window.location.href = `${url}guru`;
+    } else if (roleUser === "admin") {
+      window.location.href = `${url}admin`;
     } else {
-      window.location = "/admin";
+      console.log("sjsk");
+      window.location.href = `${url}`;
     }
   };
 
