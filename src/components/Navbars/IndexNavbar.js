@@ -43,6 +43,10 @@ function IndexNavbar() {
     window.location.href = "/";
   }
 
+  const user = localStorage.getItem("token");
+  const userName = JSON.parse(user);
+  const role = userName?.user?.role;
+
   return (
     <>
       {collapseOpen ? (
@@ -89,14 +93,16 @@ function IndexNavbar() {
             navbar
           >
             <Nav navbar>
-              <NavItem>
-                <Link to="/bab" className="text-decoration-none">
-                  <NavLink>
-                    <i className="now-ui-icons files_single-copy-04"></i>
-                    <span>Bab Materi</span>
-                  </NavLink>
-                </Link>
-              </NavItem>
+              {role === "user" ? (
+                <NavItem>
+                  <Link to="/bab" className="text-decoration-none">
+                    <NavLink>
+                      <i className="now-ui-icons files_single-copy-04"></i>
+                      <span>Bab Materi</span>
+                    </NavLink>
+                  </Link>
+                </NavItem>
+              ) : null}
 
               <UncontrolledDropdown nav>
                 <DropdownToggle

@@ -7,7 +7,7 @@ const BackComponent = () => {
   return (
     <Row>
       <Col>
-        <Link to="/guru">
+        <Link to="/">
           <button type="button" rel="tooltip" class="btn btn-danger">
             <i class="now-ui-icons arrows-1_minimal-left"></i> Kembali
           </button>

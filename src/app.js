@@ -3,7 +3,6 @@ import React from "react";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./user/Home.js";
-import TeacherHome from "./user/guru/Home";
 import NucleoIcons from "template/NucleoIcons.js";
 import LoginPage from "auth/LoginPage";
 import ForgotPassword from "auth/forgotPassword";
@@ -22,7 +21,7 @@ import useToken from "./auth/useToken";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import CreateMateri from "./user/guru/CRUDMateri/CreateMateri";
-import CreateTeacher from "user/guru/createTeacher.js";
+import CreateTeacher from "user/admin/createTeacher.js";
 
 function App() {
   const { token, setToken } = useToken();
@@ -78,9 +77,9 @@ function App() {
       <AlertProvider template={AlertTemplate} {...options}>
         <BrowserRouter>
           <Switch>
-            <RoleBasedRouting exact path="/" component={Home} roles="user" />
+            <Route exact path="/" component={Home} />
 
-            {/* pelajar */}
+            {/* start User Route */}
             <Route exact path="/nucleo-icons" component={NucleoIcons} />
 
             <RoleBasedRouting
@@ -96,15 +95,10 @@ function App() {
               roles="user"
             />
 
-            {/* end route pelajar */}
+            {/* end User route */}
 
-            {/* start route Guru */}
-            <RoleBasedRouting
-              exact
-              path="/guru"
-              component={TeacherHome}
-              roles="teacher"
-            />
+            {/* start Teacher route */}
+
             <RoleBasedRouting
               exact
               path="/create-lesson"
@@ -134,7 +128,9 @@ function App() {
               roles="teacher"
             />
 
-            {/* end route Guru */}
+            {/* end Teacher route */}
+            {/* start Admin route */}
+            {/* end Admin Route */}
             <Route path="/sign-up" render={() => <SignUp />} />
             <Route path="/login-page" render={() => <LoginPage />} />
             <Route

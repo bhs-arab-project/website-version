@@ -17,7 +17,7 @@ import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
-import BackComponent from "./CRUDLesson/BackComponent";
+import BackComponent from "../guru/CRUDLesson/BackComponent";
 
 export default function CreateTeacher() {
   const [name, setName] = useState();
@@ -48,9 +48,7 @@ export default function CreateTeacher() {
       .then(function (response) {
         setLoggedIn(false);
 
-        alert.success(
-          <div className="alertError">Berhasil Registrasi Guru!</div>
-        );
+        alert.success(<div className="notif">Berhasil Registrasi Guru!</div>);
 
         //handle success
         console.log(response);
@@ -59,18 +57,18 @@ export default function CreateTeacher() {
         setLoggedIn(false);
         if (response === "Error: Request failed with status code 404") {
           alert.error(
-            <div className="alertError">
+            <div className="notif">
               Gagal Registrasi, silahkan coba lagi, 404 error
             </div>
           );
         } else if (response === "Error: Request failed with status code 500") {
           alert.error(
-            <div className="alertError">
+            <div className="notif">
               Gagal Registrasi, silahkan coba lagi, 500 error
             </div>
           );
         }
-        // alert.error(<div className="alertError">Gagal Registrasi</div>);
+        // alert.error(<div className="notif">Gagal Registrasi</div>);
         console.log("error", response);
       });
 

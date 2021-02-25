@@ -1,6 +1,4 @@
 import IndexNavbar from "components/Navbars/IndexNavbar";
-import IndexNavbarAdmin from "components/Navbars/IndexNavbarAdmin";
-import IndexNavbarGuru from "components/Navbars/IndexNavbarGuru";
 import React from "react";
 
 // reactstrap components
@@ -28,13 +26,7 @@ function DetailHeader(props) {
   // });
   return (
     <>
-      {roleUser === "user" ? (
-        <IndexNavbar />
-      ) : roleUser === "teacher" ? (
-        <IndexNavbarGuru />
-      ) : (
-        <IndexNavbarAdmin />
-      )}
+      <IndexNavbar />
       <div className="page-header page-header-small">
         <div
           className="page-header-image"

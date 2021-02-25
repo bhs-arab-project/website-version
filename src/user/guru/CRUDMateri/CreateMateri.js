@@ -94,7 +94,7 @@ export default function CreateMateri() {
     })
       .then(function (response) {
         setLoggedIn(false);
-        alert.success(<div className="alertError">Berhasil membuat Bab!</div>);
+        alert.success(<div className="notif">Berhasil membuat Bab!</div>);
         history.push("/guru");
         //handle success
         console.log(response);
@@ -102,7 +102,7 @@ export default function CreateMateri() {
       .catch(function (response) {
         setLoggedIn(false);
         alert.error(
-          <div className="alertError">Gagal membuat Bab Silahkan Coba Lagi</div>
+          <div className="notif">Gagal membuat Bab Silahkan Coba Lagi</div>
         );
         console.log(response);
       });

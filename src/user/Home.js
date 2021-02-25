@@ -23,6 +23,11 @@ import Tabs from "./murid/ListMateri.js";
 // import Download from "./index-sections/Download.js";
 import "../styles.css";
 import Quote from "template/index-sections/Quote.js";
+import ShowAllTeacher from "user/admin/showAllTeacher";
+import DetailHeader from "./../components/Headers/DetailHeader";
+import ShowAllLesson from "./guru/ShowAllLesson.js";
+import DefaultFooter from "components/Footers/DefaultFooter.js";
+import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 
 function Index() {
   React.useEffect(() => {
@@ -36,28 +41,34 @@ function Index() {
       document.body.classList.remove("sidebar-collapse");
     };
   });
+  const user = localStorage.getItem("token");
+  const userName = JSON.parse(user);
+  const role = userName?.user?.role;
   return (
     <>
       <IndexNavbar />
-      <div className="wrapper">
-        <IndexHeader />
-        <div className="main">
-          <Quote />
-          <Tabs />
-          {/* <BasicElements /> */}
-          {/* <Navbars /> */}
-          {/* <Notifications /> */}
-          {/* <Typography /> */}
-          {/* <Javascript /> */}
-          {/* <Carousel /> */}
-          {/* <NucleoIcons /> */}
-          {/* <CompleteExamples /> */}
-          {/* <SignUp /> */}
-          {/* <Examples /> */}
-          {/* <Download /> */}
+      {role === "user" ? (
+        <div className="wrapper">
+          <IndexHeader />
+          <div className="main">
+            <Quote />
+            <Tabs />
+          </div>
+          <DarkFooter />
         </div>
-        <DarkFooter />
-      </div>
+      ) : role === "teacher" ? (
+        <div className="wrapper">
+          <IndexHeader />
+          <ShowAllLesson />
+          <DefaultFooter />
+        </div>
+      ) : (
+        <div className="wrapper">
+          <IndexHeader />
+          <ShowAllTeacher />
+          <DefaultFooter />
+        </div>
+      )}
     </>
   );
 }

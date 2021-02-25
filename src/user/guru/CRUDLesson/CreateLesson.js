@@ -57,17 +57,15 @@ export default function CreateLesson() {
     })
       .then(function (response) {
         setLoggedIn(false);
-        alert.success(
-          <div className="alertError">Berhasil membuat pelajaran!</div>
-        );
-        history.push("/guru");
+        alert.success(<div className="notif">Berhasil membuat pelajaran!</div>);
+        history.push("/");
         //handle success
         console.log(response);
       })
       .catch(function (response) {
         setLoggedIn(false);
         alert.error(
-          <div className="alertError">
+          <div className="notif">
             Gagal membuat pelajaran Silahkan Coba Lagi
           </div>
         );

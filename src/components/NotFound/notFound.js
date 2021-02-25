@@ -26,23 +26,9 @@ const NotFound = () => {
             className="rounded"
             src={require("assets/img/brand-logo.png")}
           ></img>
-          {roleUser === "user" ? (
-            <Link to="/" className="notFoundLink">
-              <Button color="primary">Kembali ke Beranda</Button>
-            </Link>
-          ) : roleUser === "teacher" ? (
-            <Link to="/guru" className="notFoundLink">
-              <Button color="primary">Kembali ke Beranda</Button>
-            </Link>
-          ) : roleUser === "admin" ? (
-            <Link to="/admin" className="notFoundLink">
-              <Button color="primary">Kembali ke Beranda</Button>
-            </Link>
-          ) : (
-            <Link to="/" className="notFoundLink">
-              <Button color="primary">Kembali ke Beranda</Button>
-            </Link>
-          )}
+          <Link to="/" className="notFoundLink">
+            <Button color="primary">Kembali ke Beranda</Button>
+          </Link>
         </div>
       </div>
     </React.Fragment>

@@ -54,7 +54,7 @@ export default function SignUpPage() {
         setLoggedIn(false);
 
         alert.success(
-          <div className="alertError">Berhasil Registrasi, silahkan login</div>
+          <div className="notif">Berhasil Registrasi, silahkan login</div>
         );
 
         //handle success
@@ -62,21 +62,19 @@ export default function SignUpPage() {
       })
       .catch(function (response) {
         setLoggedIn(false);
-        if (response === "Error: Request failed with status code 404") {
+        console.log("error", response);
+        if (response === "Error: Network Error at createError") {
           alert.error(
-            <div className="alertError">
+            <div className="notif">Tidak ada koneksi internet, coba lagi</div>
+          );
+        } else if (response === "Error: Request failed with status code 404") {
+          alert.error(
+            <div className="notif">
               Gagal Registrasi, silahkan coba lagi, 404 error
             </div>
           );
-        } else if (response === "Error: Request failed with status code 500") {
-          alert.error(
-            <div className="alertError">
-              Gagal Registrasi, silahkan coba lagi, 500 error
-            </div>
-          );
         }
-        // alert.error(<div className="alertError">Gagal Registrasi</div>);
-        console.log("error", response);
+        // alert.error(<div className="notif">Gagal Registrasi</div>);
       });
 
     e.preventDefault();

@@ -63,24 +63,22 @@ export default function LoginPage({ setToken }) {
     });
     setToken(token);
 
-    const user = localStorage.getItem("token");
-    const userJson = JSON.parse(user);
-    const roleUser = userJson?.user?.role;
+    // const user = localStorage.getItem("token");
+    // const userJson = JSON.parse(user);
+    // const roleUser = userJson?.user?.role;
 
-    console.log(roleUser, "login");
+    // const url = "http://localhost:3000/";
 
-    const url = "http://localhost:3000/";
-
-    if (roleUser === "user") {
-      window.location.href = `${url}`;
-    } else if (roleUser === "teacher") {
-      window.location.href = `${url}guru`;
-    } else if (roleUser === "admin") {
-      window.location.href = `${url}admin`;
-    } else {
-      console.log("sjsk");
-      window.location.href = `${url}`;
-    }
+    // if (roleUser === "user") {
+    //   window.location.href = `${url}`;
+    // } else if (roleUser === "teacher") {
+    //   window.location.href = `${url}guru`;
+    // } else if (roleUser === "admin") {
+    //   window.location.href = `${url}admin`;
+    // } else {
+    //   console.log("sjsk");
+    //   window.location.href = `${url}`;
+    // }
   };
 
   return (

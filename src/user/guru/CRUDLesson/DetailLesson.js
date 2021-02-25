@@ -10,7 +10,6 @@ import DefaultFooter from "components/Footers/DefaultFooter";
 import Button from "reactstrap/lib/Button";
 import Col from "reactstrap/lib/Col";
 import swal from "sweetalert";
-import IndexNavbarGuru from "components/Navbars/IndexNavbarGuru";
 
 const MyBulletListLoader = () => <BulletList />;
 
@@ -88,7 +87,7 @@ const DetailLesson = () => {
   // const detailLesson = this;
   return (
     <div>
-      <IndexNavbarGuru />
+      <IndexNavbar />
       <div className="wrapper allButFooter">
         <DetailHeader
           header={detailLesson.pelajaran}

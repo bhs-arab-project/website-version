@@ -8,8 +8,6 @@ import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
 import DefaultFooter from "components/Footers/DefaultFooter.js";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import PaginationSection from "./../template/index-sections/Pagination";
-import IndexNavbarGuru from "components/Navbars/IndexNavbarGuru";
-import IndexNavbarAdmin from "components/Navbars/IndexNavbarAdmin";
 const user = localStorage.getItem("token");
 const userJson = JSON.parse(user);
 const roleUser = userJson?.user?.role;
@@ -31,13 +29,7 @@ function ProfilePage() {
 
   return (
     <>
-      {roleUser === "user" ? (
-        <IndexNavbar />
-      ) : roleUser === "teacher" ? (
-        <IndexNavbarGuru />
-      ) : (
-        <IndexNavbarAdmin />
-      )}
+      <IndexNavbar />
       <div className="wrapper">
         <ProfilePageHeader name={userName} roleUser={roleUser} />
         <div className="section">
