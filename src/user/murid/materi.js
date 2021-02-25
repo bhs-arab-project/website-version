@@ -4,6 +4,7 @@ import { API_URL } from "utils/constants";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import ResponsiveArticle from "components/loader/loaderMateri";
+import ReactHtmlParser from "react-html-parser";
 
 function MateriPage() {
   let { id } = useParams();
@@ -39,6 +40,9 @@ function MateriPage() {
     fetchDataMateri();
     // eslint-disable-next-line
   }, [id]);
+
+  const materiKonten = materi?.materi;
+  console.log(materiKonten, "ss");
 
   return (
     <>
@@ -80,8 +84,9 @@ function MateriPage() {
               </div>
             </nav>
             <div class="konten-bungkus">
-              <h2>{materi?.judul_bab}</h2>
-              <p>{materi?.materi}</p>
+              <h1>{materi?.judul_bab}</h1>
+              <hr />
+              <span>{ReactHtmlParser(materi?.materi)}</span>
               <div class="line "></div>
               <div className="text-right  d-flex justify-content-between tombol-navigasi">
                 {roleUser === "user" ? (
@@ -99,14 +104,14 @@ function MateriPage() {
                     </Button>
                   </Link>
                 )}
-                <Button color="info">
+                {/* <Button color="info">
                   <i class="now-ui-icons arrows-1_minimal-left"></i> Materi
                   Sebelumnya
                 </Button>
                 <Button color="info">
                   Lanjut Materi{" "}
                   <i class="now-ui-icons arrows-1_minimal-right"></i>
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>

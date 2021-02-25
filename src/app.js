@@ -80,12 +80,7 @@ function App() {
             <RoleBasedRouting exact path="/" component={Home} roles="user" />
 
             {/* pelajar */}
-            <RoleBasedRouting
-              exact
-              path="/nucleo-icons"
-              component={NucleoIcons}
-              roles="user"
-            />
+            <Route exact path="/nucleo-icons" component={NucleoIcons} />
 
             <RoleBasedRouting
               exact
@@ -108,24 +103,18 @@ function App() {
               path="/guru"
               component={TeacherHome}
               roles="teacher"
-              token={accessToken}
-              nameUser={nameUser}
-              idUser={idUser}
             />
             <RoleBasedRouting
               exact
               path="/create-lesson"
               component={CreateLesson}
               roles="teacher"
-              token={accessToken}
-              idUser={idUser}
             />
             <RoleBasedRouting
               exact
               path="/create-chapter"
               component={CreateMateri}
               roles="teacher"
-              token={accessToken}
             />
             <RoleBasedRouting
               exact
@@ -147,7 +136,6 @@ function App() {
               path="/profile-page"
               component={ProfilePage}
               userRole={roleUser}
-              nameUser={nameUser}
             />
             <Route exact path="/materi/:id" component={Materi} />
             <Route path="/forgot-password" render={() => <ForgotPassword />} />

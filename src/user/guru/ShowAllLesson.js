@@ -48,7 +48,7 @@ const ShowAllLesson = () => {
     }).then((willDelete) => {
       if (willDelete) {
         axios
-          .delete(`${API_URL}pelajadran/${id}`, {
+          .delete(`${API_URL}pelajaran/${id}`, {
             headers: {
               Authorization: `Bearer ${access_token}`,
             },
@@ -67,7 +67,7 @@ const ShowAllLesson = () => {
           .catch(() => {
             swal({
               title: "Gagal!",
-              text: "Gagal Menghapus, Silahkan Coba Lagi",
+              text: "Gagal Menghapus Pelajaran, Silahkan Coba Lagi",
               icon: "error",
               timer: 2000,
               button: false,
@@ -94,12 +94,12 @@ const ShowAllLesson = () => {
             <Col>
               <Link to="/create-lesson">
                 <Button color="info" className="float-right">
-                  Buat Pelajaran
+                  <i class="now-ui-icons ui-1_simple-add"></i> Buat Pelajaran
                 </Button>
               </Link>
               <Link to={`/create-chapter`}>
-                <Button color="info" className="float-right">
-                  Buat Materi
+                <Button color="success" className="float-right">
+                  <i class="now-ui-icons ui-1_simple-add"></i> Buat Materi
                 </Button>
               </Link>
             </Col>

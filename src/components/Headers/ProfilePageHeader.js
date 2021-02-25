@@ -21,6 +21,11 @@ function ProfilePageHeader(props) {
       };
     }
   });
+
+  const user = sessionStorage.getItem("token");
+  const userJson = JSON.parse(user);
+  const lessonLength = userJson?.user?.lesson?.length;
+  console.log(lessonLength);
   return (
     <>
       <div
@@ -44,16 +49,27 @@ function ProfilePageHeader(props) {
           ) : (
             <p className="category">{props.roleUser}</p>
           )}
-          <div className="content">
-            <div className="social-description">
-              <h2>4</h2>
-              <p>Sertifikat</p>
+          {props.roleUser === "user" ? (
+            <div className="content">
+              <div className="social-description">
+                <h2>{lessonLength}</h2>
+                <p>Sertifikat</p>
+              </div>
+              <div className="social-description">
+                <h2>5</h2>
+                <p>Progres Materi</p>
+              </div>
             </div>
-            <div className="social-description">
-              <h2>5</h2>
-              <p>Progres Materi</p>
+          ) : props.roleUser === "teacher" ? (
+            <div className="content">
+              <div className="social-description">
+                <h2>jak</h2>
+                <p>Pelajaran yang di Buat</p>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="content"></div>
+          )}
         </Container>
       </div>
     </>

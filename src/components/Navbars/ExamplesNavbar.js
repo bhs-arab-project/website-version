@@ -11,6 +11,7 @@ import {
   Nav,
   Container,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 function ExamplesNavbar() {
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
@@ -84,12 +85,14 @@ function ExamplesNavbar() {
             </DropdownMenu>
           </UncontrolledDropdown>
           <div className="navbar-translate">
-            <NavbarBrand
-              href="https://demos.creative-tim.com/now-ui-kit-react/index?ref=nukr-examples-navbar"
-              target="_blank"
-              id="navbar-brand"
-            >
-              Belajar arab
+            <NavbarBrand id="navbar-brand">
+              <img
+                width="50rem"
+                alt="..."
+                className="rounded mr-1"
+                src={require("assets/img/brand-logo.png")}
+              ></img>
+              Al-Qolam
             </NavbarBrand>
 
             <button

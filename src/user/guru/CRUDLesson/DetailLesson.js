@@ -10,6 +10,7 @@ import DefaultFooter from "components/Footers/DefaultFooter";
 import Button from "reactstrap/lib/Button";
 import Col from "reactstrap/lib/Col";
 import swal from "sweetalert";
+import IndexNavbarGuru from "components/Navbars/IndexNavbarGuru";
 
 const MyBulletListLoader = () => <BulletList />;
 
@@ -62,13 +63,22 @@ const DetailLesson = () => {
           })
           .then((res) => {
             swal({
-              title: "Done!",
+              title: "Berhasil!",
               text: "Materi Terhapus!",
               icon: "success",
               timer: 2000,
               button: false,
             }).then(() => {
               fetchData();
+            });
+          })
+          .catch(() => {
+            swal({
+              title: "Gagal!",
+              text: "Gagal Menghapus Materi, Silahkan Coba Lagi",
+              icon: "error",
+              timer: 2000,
+              button: false,
             });
           });
       }
@@ -78,7 +88,7 @@ const DetailLesson = () => {
   // const detailLesson = this;
   return (
     <div>
-      <IndexNavbar />
+      <IndexNavbarGuru />
       <div className="wrapper allButFooter">
         <DetailHeader
           header={detailLesson.pelajaran}

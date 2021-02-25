@@ -21,6 +21,10 @@ import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
+import BackComponent from "../CRUDLesson/BackComponent";
+import { Tooltip } from "reactstrap";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export default function CreateMateri() {
   const history = useHistory();
@@ -38,8 +42,9 @@ export default function CreateMateri() {
   const [load, setLoad] = useState(false);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const [tooltipOpen, setTooltipOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
   async function fetchData() {
     axios
@@ -116,6 +121,7 @@ export default function CreateMateri() {
         <Container>
           <br />
           <div clasName="mt-2">
+            <BackComponent />
             <h2>Buat Materi</h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>
@@ -141,11 +147,26 @@ export default function CreateMateri() {
                                 {list.pelajaran}
                               </DropdownItem>
                             ) : (
-                              <DropdownItem disabled>
-                                <span className="text-danger">
-                                  {list.pelajaran} (bukan pelajaran anda)
-                                </span>
-                              </DropdownItem>
+                              <div>
+                                <div id="DisabledAutoHideExample">
+                                  <DropdownItem
+                                    className="text-danger"
+                                    disabled
+                                  >
+                                    {list.pelajaran}
+                                  </DropdownItem>
+                                </div>
+                                {/* <p>Somewhere in here is a <span style={{textDecoration: "underline", color:"blue"}} href="#" id="TooltipExample">tooltip</span>.</p> */}
+                                <Tooltip
+                                  placement="right"
+                                  isOpen={tooltipOpen}
+                                  target="DisabledAutoHideExample"
+                                  toggle={toggleTooltip}
+                                  className="text-danger"
+                                >
+                                  Bukan Pelajaran Anda
+                                </Tooltip>
+                              </div>
                             );
                           })
                         ) : (
@@ -175,16 +196,17 @@ export default function CreateMateri() {
               <Col>
                 <FormGroup>
                   <Label>Materi</Label>
-                  <textarea
-                    required
-                    oninvalid="Materi Harus di isi"
-                    onvalid="this.setCustomValidity('')"
-                    onInput={(e) => setMateri(e.target.value)}
-                    class="form-control"
-                    rows="10"
-                  ></textarea>
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={materi}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setMateri(data);
+                    }}
+                  />
                 </FormGroup>
               </Col>
+
               <div>
                 {loggedIn === true ? (
                   <Spinner></Spinner>
