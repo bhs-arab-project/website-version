@@ -20,7 +20,7 @@ const ListMateri = () => {
   const [load, setLoad] = useState(true);
   let [lesson, setLesson] = React.useState([]);
 
-  const user = sessionStorage.getItem("token");
+  const user = localStorage.getItem("token");
   const userid = JSON.parse(user);
 
   const access_token = userid?.token?.token;
@@ -51,7 +51,7 @@ const ListMateri = () => {
 
   return (
     <div>
-      <div className="section section-tabs">
+      <div className="section section-tabs text-capitalize">
         <Container>
           <h2>Mulai belajar - ابدا بالتعلم</h2>
           <Row className="d-flex justify-space-between">
@@ -62,7 +62,15 @@ const ListMateri = () => {
                       <Card>
                         <CardBody className="ml-2">
                           <CardTitle className="pt-0">
-                            <span class="badge badge-warning float-right mt-2">
+                            <span
+                              class={` badge float-right  mt-2 ${
+                                pelajaran.tingkatan === "mudah"
+                                  ? "badge-success"
+                                  : pelajaran.tingkatan === "menengah"
+                                  ? "badge-warning"
+                                  : "badge-danger"
+                              }`}
+                            >
                               {pelajaran.tingkatan}
                             </span>
                             <h3>{pelajaran.pelajaran}</h3>
@@ -105,7 +113,7 @@ const ListMateri = () => {
                             <Col xs="auto">
                               <Link to={`detail-bab/${pelajaran.id}`}>
                                 <Button color="info" className="float-right">
-                                  mulai belajar
+                                  Mulai belajar
                                 </Button>
                               </Link>
                             </Col>

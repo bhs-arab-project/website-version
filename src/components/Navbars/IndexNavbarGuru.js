@@ -37,7 +37,7 @@ function IndexNavbarGuru() {
   });
 
   function handleLogout() {
-    sessionStorage.clear();
+    localStorage.clear();
     window.location.href = "/";
   }
 

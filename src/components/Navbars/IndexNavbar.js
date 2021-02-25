@@ -39,7 +39,7 @@ function IndexNavbar() {
   });
 
   function handleLogout() {
-    sessionStorage.clear();
+    localStorage.clear();
     window.location.href = "/";
   }
 

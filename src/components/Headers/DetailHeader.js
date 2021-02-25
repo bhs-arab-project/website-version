@@ -10,7 +10,7 @@ import { Container } from "reactstrap";
 
 function DetailHeader(props) {
   let pageHeader = React.createRef();
-  const user = sessionStorage.getItem("token");
+  const user = localStorage.getItem("token");
   const userJson = JSON.parse(user);
   const roleUser = userJson?.user?.role;
   // React.useEffect(() => {

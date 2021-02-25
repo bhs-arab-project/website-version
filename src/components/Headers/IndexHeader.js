@@ -18,7 +18,7 @@ function IndexHeader() {
     }
   });
 
-  const user = sessionStorage.getItem("token");
+  const user = localStorage.getItem("token");
   const userName = JSON.parse(user);
 
   return (

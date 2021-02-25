@@ -11,7 +11,7 @@ function MateriPage() {
   let [materi, setMateri] = React.useState([]);
   const [load, setLoad] = useState(false);
 
-  const user = sessionStorage.getItem("token");
+  const user = localStorage.getItem("token");
   const userid = JSON.parse(user);
   const access_token = userid?.token?.token;
   const roleUser = userid?.user?.role;
@@ -40,9 +40,6 @@ function MateriPage() {
     fetchDataMateri();
     // eslint-disable-next-line
   }, [id]);
-
-  const materiKonten = materi?.materi;
-  console.log(materiKonten, "ss");
 
   return (
     <>
@@ -86,24 +83,25 @@ function MateriPage() {
             <div class="konten-bungkus">
               <h1>{materi?.judul_bab}</h1>
               <hr />
-              <span>{ReactHtmlParser(materi?.materi)}</span>
+              <p>{ReactHtmlParser(materi?.materi)}</p>
               <div class="line "></div>
               <div className="text-right  d-flex justify-content-between tombol-navigasi">
                 {roleUser === "user" ? (
-                  <Link to={`/detail-bab/${id}`}>
+                  <Link to={`/bab`}>
                     <Button color="danger">
                       <i class="now-ui-icons arrows-1_minimal-left"></i> Kembali
-                      Ke Detail Bab
+                      Ke Bab
                     </Button>
                   </Link>
                 ) : (
-                  <Link to={`/detail-lesson/${id}`}>
+                  <Link to={`/guru`}>
                     <Button color="danger">
                       <i class="now-ui-icons arrows-1_minimal-left"></i> Kembali
-                      Ke Detail Bab
+                      Ke Beranda
                     </Button>
                   </Link>
                 )}
+
                 {/* <Button color="info">
                   <i class="now-ui-icons arrows-1_minimal-left"></i> Materi
                   Sebelumnya

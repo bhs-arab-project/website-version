@@ -15,7 +15,7 @@ const ShowAllLesson = () => {
   const [load, setLoad] = useState(true);
   let [listTable, setListTable] = React.useState([]);
 
-  const user = sessionStorage.getItem("token");
+  const user = localStorage.getItem("token");
   const userid = JSON.parse(user);
   const access_token = userid?.token?.token;
 
@@ -133,7 +133,15 @@ const ShowAllLesson = () => {
                           <td className="text-center">{list.chapter.length}</td>
                           <td class="text-center">
                             {" "}
-                            <span class="badge badge-warning">
+                            <span
+                              className={` badge   mt-2 ${
+                                list.tingkatan === "mudah"
+                                  ? "badge-success"
+                                  : list.tingkatan === "menengah"
+                                  ? "badge-warning"
+                                  : "badge-danger"
+                              }`}
+                            >
                               {list.tingkatan}
                             </span>
                           </td>

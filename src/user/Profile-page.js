@@ -10,7 +10,7 @@ import IndexNavbar from "components/Navbars/IndexNavbar";
 import PaginationSection from "./../template/index-sections/Pagination";
 import IndexNavbarGuru from "components/Navbars/IndexNavbarGuru";
 import IndexNavbarAdmin from "components/Navbars/IndexNavbarAdmin";
-const user = sessionStorage.getItem("token");
+const user = localStorage.getItem("token");
 const userJson = JSON.parse(user);
 const roleUser = userJson?.user?.role;
 const userName = userJson?.user?.name;

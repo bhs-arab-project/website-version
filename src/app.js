@@ -22,11 +22,12 @@ import useToken from "./auth/useToken";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import CreateMateri from "./user/guru/CRUDMateri/CreateMateri";
+import CreateTeacher from "user/guru/createTeacher.js";
 
 function App() {
   const { token, setToken } = useToken();
   let history = document.URL.split("/");
-  const user = sessionStorage.getItem("token");
+  const user = localStorage.getItem("token");
   const userJson = JSON.parse(user);
   const roleUser = userJson?.user?.role;
   const nameUser = userJson?.user?.name;
@@ -125,6 +126,11 @@ function App() {
             <Route
               path="/detail-lesson/:id"
               render={() => <DetailLesson />}
+              roles="teacher"
+            />
+            <Route
+              path="/create-teacher"
+              render={() => <CreateTeacher />}
               roles="teacher"
             />
 

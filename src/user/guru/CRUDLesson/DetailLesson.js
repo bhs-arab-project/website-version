@@ -18,7 +18,7 @@ const DetailLesson = () => {
   let { id } = useParams();
   let [detailLesson, setDetailLesson] = React.useState([]);
   const [load, setLoad] = useState(true);
-  const user = sessionStorage.getItem("token");
+  const user = localStorage.getItem("token");
   const userid = JSON.parse(user);
   const access_token = userid?.token?.token;
   async function fetchData() {
@@ -96,7 +96,7 @@ const DetailLesson = () => {
           img={require("assets/img/my-bab.jpg")}
         />
         <Container className="mt-4">
-          <h4>Materi Yang tersedia</h4>
+          <h4>Materi Yang tersedia - المواد المتاحة</h4>
           <Link to="/guru">
             <Button color="danger">
               {" "}

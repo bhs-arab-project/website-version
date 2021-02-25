@@ -5,7 +5,7 @@ import ShowAllLesson from "./ShowAllLesson";
 
 class HomeTeacher extends Component {
   render() {
-    const user = sessionStorage.getItem("token");
+    const user = localStorage.getItem("token");
     const userName = JSON.parse(user);
     return (
       <div className="wrapper">

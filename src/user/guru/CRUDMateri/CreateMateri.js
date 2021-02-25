@@ -29,7 +29,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default function CreateMateri() {
   const history = useHistory();
   const alert = useAlert();
-  const guru = sessionStorage.getItem("token");
+  const guru = localStorage.getItem("token");
   const guruToken = JSON.parse(guru);
   const access_token = guruToken?.token?.token;
 

@@ -22,7 +22,7 @@ function ProfilePageHeader(props) {
     }
   });
 
-  const user = sessionStorage.getItem("token");
+  const user = localStorage.getItem("token");
   const userJson = JSON.parse(user);
   const lessonLength = userJson?.user?.lesson?.length;
   console.log(lessonLength);

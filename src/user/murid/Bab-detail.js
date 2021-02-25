@@ -14,7 +14,7 @@ const BabDetail = () => {
   let { id } = useParams();
   let [detailLesson, setDetailLesson] = React.useState([]);
   const [load, setLoad] = useState(true);
-  const user = sessionStorage.getItem("token");
+  const user = localStorage.getItem("token");
   const userid = JSON.parse(user);
   const access_token = userid?.token?.token;
 
@@ -45,7 +45,7 @@ const BabDetail = () => {
   return (
     <div>
       <IndexNavbar />
-      <div className="wrapper allButFooter">
+      <div className="wrapper allButFooter text-capitalize">
         <div className="page-header page-header-small">
           <div
             className="page-header-image"
@@ -68,8 +68,8 @@ const BabDetail = () => {
                     ></img>
                     <div>{detailLesson.guru}</div>
                   </div>
-                  <div class="media-body text-left">
-                    <h1 className="title"> {detailLesson.pelajaran}</h1>
+                  <div class="media-body text-left ">
+                    <h1 className="title "> {detailLesson.pelajaran}</h1>
                     <div style={{ fontSize: "0.9rem" }}>
                       {detailLesson.deskripsi}
                     </div>
@@ -82,7 +82,7 @@ const BabDetail = () => {
           </div>
         </div>
         <Container className="mt-4">
-          <h4>Materi Yang Tersedia</h4>
+          <h4>Materi Yang Tersedia - المواد المتاحة</h4>
 
           {load === false ? (
             detailLesson?.chapter?.map((list, index) => {

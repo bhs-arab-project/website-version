@@ -22,7 +22,7 @@ import { useAlert } from "react-alert";
 export default function CreateLesson() {
   const history = useHistory();
   const alert = useAlert();
-  const guru = sessionStorage.getItem("token");
+  const guru = localStorage.getItem("token");
   const guruToken = JSON.parse(guru);
   const access_token = guruToken?.token?.token;
 

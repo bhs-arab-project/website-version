@@ -4,7 +4,7 @@ import Button from "reactstrap/lib/Button";
 import "./notFound.css";
 
 const NotFound = () => {
-  const user = sessionStorage.getItem("token");
+  const user = localStorage.getItem("token");
   const userJson = JSON.parse(user);
   const roleUser = userJson?.user?.role;
   return (
