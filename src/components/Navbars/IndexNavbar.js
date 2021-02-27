@@ -123,7 +123,7 @@ function IndexNavbar() {
                     detail profil
                   </DropdownItem>
 
-                  <DropdownItem to="/" onClick={handleLogout} tag={Link}>
+                  <DropdownItem onClick={handleLogout} tag={Link}>
                     <i
                       className="now-ui-icons arrows-1_minimal-right
 "

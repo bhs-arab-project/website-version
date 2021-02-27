@@ -10,8 +10,8 @@ export default class editAdminProfile extends Component {
     return (
       <>
         <DetailHeader
-          header="Detail Pelajaran"
-          subHeader="Detail pelajaran Nahwu"
+          header="Detail Kelas"
+          subHeader="Detail Kelas Nahwu"
           img={require("assets/img/my-bab.jpg")}
         />
         <div className="section">

@@ -5,7 +5,7 @@ import { Container } from "reactstrap";
 
 // core components
 
-function ProfilePageHeader(props) {
+function ProfilePageHeader() {
   let pageHeader = React.createRef();
 
   React.useEffect(() => {
@@ -25,6 +25,8 @@ function ProfilePageHeader(props) {
   const user = localStorage.getItem("token");
   const userJson = JSON.parse(user);
   const lessonLength = userJson?.user?.lesson?.length;
+  const roleUser = userJson?.user?.role;
+  const name = userJson?.user?.name;
   console.log(lessonLength);
   return (
     <>
@@ -43,13 +45,21 @@ function ProfilePageHeader(props) {
           <div className="photo-container">
             <img alt="..." src={require("assets/img/muslim.png")}></img>
           </div>
-          <h3 className="title">{props.name}</h3>
-          {props.roleUser === "teacher" ? (
+          <h3 className="title text-capitalize">{name}</h3>
+          {roleUser === "teacher" ? (
             <p className="category">Pengajar</p>
           ) : (
-            <p className="category">{props.roleUser}</p>
+            <p className="category">
+              {roleUser === "user" ? (
+                <>Murid</>
+              ) : roleUser === "teacher" ? (
+                <>Pengajar</>
+              ) : (
+                roleUser
+              )}
+            </p>
           )}
-          {props.roleUser === "user" ? (
+          {roleUser === "user" ? (
             <div className="content">
               <div className="social-description">
                 <h2>{lessonLength}</h2>
@@ -60,11 +70,11 @@ function ProfilePageHeader(props) {
                 <p>Progres Materi</p>
               </div>
             </div>
-          ) : props.roleUser === "teacher" ? (
+          ) : roleUser === "teacher" ? (
             <div className="content">
               <div className="social-description">
                 <h2>jak</h2>
-                <p>Pelajaran yang di Buat</p>
+                <p>Kelas yang di Buat</p>
               </div>
             </div>
           ) : (

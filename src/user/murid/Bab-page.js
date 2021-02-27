@@ -1,9 +1,9 @@
 import React from "react";
 
 // core components
-import DefaultFooter from "components/Footers/DefaultFooter.js";
 import ListMateri from "user/murid/ListMateri";
 import DetailHeader from "components/Headers/DetailHeader.js";
+import TransparentFooter from "components/Footers/TransparentFooter";
 
 function LandingPage() {
   React.useEffect(() => {
@@ -26,7 +26,7 @@ function LandingPage() {
           img={require("assets/img/bab-header.jpg")}
         />
         <ListMateri />
-        <DefaultFooter />
+        <TransparentFooter />
       </div>
     </>
   );

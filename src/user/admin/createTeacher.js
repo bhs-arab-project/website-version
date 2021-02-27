@@ -1,4 +1,3 @@
-import DefaultFooter from "components/Footers/DefaultFooter";
 import DetailHeader from "components/Headers/DetailHeader";
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
@@ -18,6 +17,7 @@ import { API_URL } from "utils/constants";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 import BackComponent from "../guru/CRUDLesson/BackComponent";
+import TransparentFooter from "components/Footers/TransparentFooter";
 
 export default function CreateTeacher() {
   const [name, setName] = useState();
@@ -25,6 +25,7 @@ export default function CreateTeacher() {
   const [password, setPassword] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const alert = useAlert();
+  const history = useHistory();
 
   let bodyFormData = new FormData();
   bodyFormData.set("name", name);
@@ -47,11 +48,10 @@ export default function CreateTeacher() {
     })
       .then(function (response) {
         setLoggedIn(false);
-
-        alert.success(<div className="notif">Berhasil Registrasi Guru!</div>);
-
-        //handle success
-        console.log(response);
+        alert.success(
+          <div className="notif">Registrasi Berhasil, Silahkan Cek Email</div>
+        );
+        history.push("/");
       })
       .catch(function (response) {
         setLoggedIn(false);
@@ -143,7 +143,7 @@ export default function CreateTeacher() {
           </div>
         </Container>
       </div>
-      <DefaultFooter />
+      <TransparentFooter />
     </>
   );
 }

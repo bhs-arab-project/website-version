@@ -6,10 +6,10 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { BulletList } from "react-content-loader";
 import DetailHeader from "components/Headers/DetailHeader";
-import DefaultFooter from "components/Footers/DefaultFooter";
 import Button from "reactstrap/lib/Button";
 import Col from "reactstrap/lib/Col";
 import swal from "sweetalert";
+import TransparentFooter from "components/Footers/TransparentFooter";
 
 const MyBulletListLoader = () => <BulletList />;
 
@@ -161,7 +161,7 @@ const DetailLesson = () => {
           )}
         </Container>
       </div>
-      <DefaultFooter />
+      <TransparentFooter />
     </div>
   );
 };

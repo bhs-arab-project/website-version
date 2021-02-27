@@ -5,9 +5,9 @@ import { Button, Container, Row, Col } from "reactstrap";
 
 // core components
 import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
-import DefaultFooter from "components/Footers/DefaultFooter.js";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import PaginationSection from "./../template/index-sections/Pagination";
+import TransparentFooter from "components/Footers/TransparentFooter";
 const user = localStorage.getItem("token");
 const userJson = JSON.parse(user);
 const roleUser = userJson?.user?.role;
@@ -143,7 +143,7 @@ function ProfilePage() {
             </Row>
           </Container>
         </div>
-        <DefaultFooter />
+        <TransparentFooter />
       </div>
     </>
   );

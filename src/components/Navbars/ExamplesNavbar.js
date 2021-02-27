@@ -48,53 +48,19 @@ function ExamplesNavbar() {
       ) : null}
       <Navbar className={"fixed-top " + navbarColor} color="info" expand="lg">
         <Container>
-          <UncontrolledDropdown className="button-dropdown">
-            <DropdownToggle
-              caret
-              data-toggle="dropdown"
-              href="#pablo"
-              id="navbarDropdown"
-              tag="a"
-              onClick={(e) => e.preventDefault()}
-            >
+          <NavbarBrand href="/" id="navbar-brand">
+            <img
+              width="50rem"
+              alt="..."
+              className="rounded mr-1"
+              src={require("assets/img/brand-logo.png")}
+            ></img>
+            Al-Qolam
+          </NavbarBrand>
+          {/* <span className="button-bar"></span>
               <span className="button-bar"></span>
-              <span className="button-bar"></span>
-              <span className="button-bar"></span>
-            </DropdownToggle>
-            <DropdownMenu aria-labelledby="navbarDropdown">
-              <DropdownItem header tag="a">
-                Dropdown header
-              </DropdownItem>
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
-                Action
-              </DropdownItem>
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
-                Another action
-              </DropdownItem>
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
-                Something else here
-              </DropdownItem>
-              <DropdownItem divider></DropdownItem>
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
-                Separated link
-              </DropdownItem>
-              <DropdownItem divider></DropdownItem>
-              <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
-                One more separated link
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
+              <span className="button-bar"></span> */}
           <div className="navbar-translate">
-            <NavbarBrand id="navbar-brand">
-              <img
-                width="50rem"
-                alt="..."
-                className="rounded mr-1"
-                src={require("assets/img/brand-logo.png")}
-              ></img>
-              Al-Qolam
-            </NavbarBrand>
-
             <button
               className="navbar-toggler navbar-toggler"
               onClick={() => {

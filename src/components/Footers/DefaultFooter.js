@@ -22,7 +22,7 @@ function DefaultFooter() {
                 </a>
               </li>
               <li>
-                <a href="#">Website</a>
+                <a href="https://smkmadinatulquran.sch.id/">Our School</a>
               </li>
               {/* <li>
               <a

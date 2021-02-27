@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Button, Container } from "reactstrap";
-import DefaultFooter from "../../components/Footers/DefaultFooter";
 import IndexNavbar from "../../components/Navbars/IndexNavbar";
 import { API_URL } from "utils/constants";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { BulletList } from "react-content-loader";
 import AvatarWithText from "../../components/loader/loaderAvatarWithText";
+import TransparentFooter from "components/Footers/TransparentFooter";
 
 const MyBulletListLoader = () => <BulletList />;
 
@@ -120,7 +120,7 @@ const BabDetail = () => {
           )}
         </Container>
       </div>
-      <DefaultFooter />
+      <TransparentFooter />
     </div>
   );
 };

@@ -42,10 +42,7 @@ const ShowAllTeacher = () => {
   async function deleteTeacher(id, name) {
     swal({
       title: "Menghapus Guru",
-      text:
-        "Apakah Kamu Yakin Untuk Menghapus Guru" +
-        <strong>{name}</strong> +
-        "?",
+      text: `Apakah Kamu Yakin Menghapus Guru ${name}?`,
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -107,7 +104,7 @@ const ShowAllTeacher = () => {
                   <th>#</th>
                   <th>Nama Guru</th>
                   <th className="text-center h-5">Email Guru</th>
-                  <th className="text-center">Jumlah Pelajaran</th>
+                  <th className="text-center">Jumlah Kelas</th>
                   <th className="text-center">Aksi</th>
                 </tr>
               </thead>
@@ -123,7 +120,7 @@ const ShowAllTeacher = () => {
                           <td class="text-center">
                             {" "}
                             {list.lesson.length === 0 ? (
-                              <>tidak ada materi</>
+                              <>-</>
                             ) : (
                               list.lesson.length
                             )}

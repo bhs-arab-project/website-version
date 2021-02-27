@@ -94,7 +94,7 @@ function MateriPage() {
                     </Button>
                   </Link>
                 ) : (
-                  <Link to={`/guru`}>
+                  <Link to={`/`}>
                     <Button color="danger">
                       <i class="now-ui-icons arrows-1_minimal-left"></i> Kembali
                       Ke Beranda

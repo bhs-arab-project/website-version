@@ -23,6 +23,7 @@ import axios from "axios";
 import Spinner from "reactstrap/lib/Spinner";
 import { useAlert } from "react-alert";
 import { API_URL } from "utils/constants";
+import { validator } from "validator";
 
 export default function SignUpPage() {
   const [name, setName] = useState();
@@ -30,6 +31,32 @@ export default function SignUpPage() {
   const [password, setPassword] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const alert = useAlert();
+
+  const required = (value) => {
+    if (!value.toString().trim().length) {
+      // We can return string or jsx as the 'error' prop for the validated Component
+      return "require";
+    }
+  };
+
+  const emailVal = (value) => {
+    if (!validator.isEmail(value)) {
+      return `${value} is not a valid email.`;
+    }
+  };
+
+  const passwordVal = (value, props, components) => {
+    // NOTE: Tricky place. The 'value' argument is always current component's value.
+    // So in case we're 'changing' let's say 'password' component - we'll compare it's value with 'confirm' value.
+    // But if we're changing 'confirm' component - the condition will always be true
+    // If we need to always compare own values - replace 'value' with components.password[0].value and make some magic with error rendering.
+    if (value !== components["confirm"][0].value) {
+      // components['password'][0].value !== components['confirm'][0].value
+      // 'confirm' - name of input
+      // components['confirm'] - array of same-name components because of checkboxes and radios
+      return <span className="error">Passwords are not equal.</span>;
+    }
+  };
 
   let bodyFormData = new FormData();
   bodyFormData.set("name", name);
@@ -54,7 +81,9 @@ export default function SignUpPage() {
         setLoggedIn(false);
 
         alert.success(
-          <div className="notif">Berhasil Registrasi, silahkan login</div>
+          <div className="notif">
+            Registrasi Berhasil, silahkan Cek Email anda
+          </div>
         );
 
         //handle success
@@ -108,38 +137,12 @@ export default function SignUpPage() {
               <Card className="card-login card-plain">
                 <Form className="form" onSubmit={handleSubmit}>
                   <CardHeader className="text-center">
-                    <h2>Register..</h2>
+                    <h2>Daftar Akun</h2>
+                    <h6 className="text-lowercase font-weight-normal">
+                      dartar akunmu sekarang juga!
+                    </h6>
                   </CardHeader>
                   <CardBody>
-                    {/* input Nama depan dan belakang */}
-                    {/* <form>
-                        <div class="form-row">
-                          <div class="from-group col-md-6">
-                            <InputGroup className={"no-border input-lg"}>
-                              <InputGroupAddon addonType="prepend">
-                                <InputGroupText>
-                                  <i className="now-ui-icons users_single-02"></i>
-                                </InputGroupText>
-                              </InputGroupAddon>
-                              <Input
-                                placeholder="First Name"
-                                type="text"
-                                // autofocus
-                              ></Input>
-                            </InputGroup>
-                          </div>
-                          <div class="col">
-                            <InputGroup className={"no-border input-lg"}>
-                              <Input
-                                placeholder="Last Name"
-                                type="text"
-                                // autofocus
-                              ></Input>
-                            </InputGroup>
-                          </div>
-                        </div>
-                      </form> */}
-                    {/* akhir tag nama depan dan belakang */}
                     <InputGroup className={"no-border input-md"}>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
@@ -147,6 +150,7 @@ export default function SignUpPage() {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
+                        validations={[required]}
                         placeholder="Nama"
                         type="text"
                         onInput={(e) => setName(e.target.value)}
@@ -160,6 +164,7 @@ export default function SignUpPage() {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
+                        validations={[required]}
                         placeholder="Email"
                         type="email"
                         onInput={(e) => setEmail(e.target.value)}
@@ -173,6 +178,7 @@ export default function SignUpPage() {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
+                        validations={[required]}
                         placeholder="Password"
                         type="password"
                         onInput={(e) => setPassword(e.target.value)}

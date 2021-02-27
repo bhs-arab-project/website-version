@@ -19,11 +19,8 @@ function DarkFooter() {
               </a>
             </li>
             <li>
-              <a
-                href="http://presentation.creative-tim.com?ref=nukr-dark-footer"
-                target="_blank"
-              >
-                Website
+              <a href="https://smkmadinatulquran.sch.id/" target="_blank">
+                Our School
               </a>
             </li>
             {/* <li>

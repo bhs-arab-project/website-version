@@ -8,13 +8,13 @@ export default class EditLesson extends Component {
     return (
       <>
         <DetailHeader
-          header="Edit Pelajaran"
-          subHeader="Edit pelajaran yang anda buat"
+          header="Edit Kelas"
+          subHeader="Edit Kelas yang anda buat"
           img={require("assets/img/my-bab.jpg")}
         />
         <div className="section">
           <BackComponent />
-          <h1>Edit Pelajaran</h1>
+          <h1>Edit Kelas</h1>
         </div>
         <DefaultFooter />
       </>

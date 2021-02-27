@@ -1,4 +1,3 @@
-import DefaultFooter from "components/Footers/DefaultFooter";
 import DetailHeader from "components/Headers/DetailHeader";
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
@@ -25,6 +24,7 @@ import BackComponent from "../CRUDLesson/BackComponent";
 import { Tooltip } from "reactstrap";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import TransparentFooter from "components/Footers/TransparentFooter";
 
 export default function CreateMateri() {
   const history = useHistory();
@@ -33,7 +33,7 @@ export default function CreateMateri() {
   const guruToken = JSON.parse(guru);
   const access_token = guruToken?.token?.token;
 
-  const [valButton, setValB] = useState("Pilih Pelajaran");
+  const [valButton, setValB] = useState("Pilih Kelas");
   const [judulMateri, setJudulMateri] = useState();
   const [materi, setMateri] = useState();
   const [lessonId, setLessonId] = useState();
@@ -95,7 +95,7 @@ export default function CreateMateri() {
       .then(function (response) {
         setLoggedIn(false);
         alert.success(<div className="notif">Berhasil membuat Bab!</div>);
-        history.push("/guru");
+        history.push("/");
         //handle success
         console.log(response);
       })
@@ -113,9 +113,9 @@ export default function CreateMateri() {
   return (
     <>
       <DetailHeader
-        header="Buat Pelajaran"
-        subHeader="buat pelajaran yang anda inginkan sekarang!"
-        img={require("assets/img/my-bab.jpg")}
+        header="Buat Materi"
+        subHeader="buat materi yang anda inginkan sekarang!"
+        img={require("assets/img/my-babex.jpg")}
       />
       <div className="section ">
         <Container>
@@ -128,7 +128,7 @@ export default function CreateMateri() {
               <Row>
                 <Col lg="4" sm="10">
                   <FormGroup>
-                    <Label>Pilih Pelajaran</Label>
+                    <Label>Pilih Kelas</Label>
                     <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                       <DropdownToggle caret>{valButton}</DropdownToggle>
                       <DropdownMenu>
@@ -164,7 +164,7 @@ export default function CreateMateri() {
                                   toggle={toggleTooltip}
                                   className="text-danger"
                                 >
-                                  Bukan Pelajaran Anda
+                                  Bukan Kelas Anda
                                 </Tooltip>
                               </div>
                             );
@@ -175,7 +175,7 @@ export default function CreateMateri() {
                       </DropdownMenu>
                     </Dropdown>
                     <span className="text-xs text-info">
-                      *anda hanya bisa memilih pelajaran yang anda buat
+                      *anda hanya bisa memilih kelas yang anda buat
                     </span>
                   </FormGroup>
                 </Col>
@@ -197,6 +197,7 @@ export default function CreateMateri() {
                 <FormGroup>
                   <Label>Materi</Label>
                   <CKEditor
+                    required
                     editor={ClassicEditor}
                     data={materi}
                     onChange={(event, editor) => {
@@ -225,7 +226,7 @@ export default function CreateMateri() {
           </div>
         </Container>
       </div>
-      <DefaultFooter />
+      <TransparentFooter />
     </>
   );
 }

@@ -1,4 +1,3 @@
-import DefaultFooter from "components/Footers/DefaultFooter";
 import DetailHeader from "components/Headers/DetailHeader";
 import React, { useState } from "react";
 import BackComponent from "./BackComponent";
@@ -18,6 +17,7 @@ import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
+import TransparentFooter from "components/Footers/TransparentFooter";
 
 export default function CreateLesson() {
   const history = useHistory();
@@ -57,7 +57,7 @@ export default function CreateLesson() {
     })
       .then(function (response) {
         setLoggedIn(false);
-        alert.success(<div className="notif">Berhasil membuat pelajaran!</div>);
+        alert.success(<div className="notif">Berhasil membuat Kelas!</div>);
         history.push("/");
         //handle success
         console.log(response);
@@ -65,9 +65,7 @@ export default function CreateLesson() {
       .catch(function (response) {
         setLoggedIn(false);
         alert.error(
-          <div className="notif">
-            Gagal membuat pelajaran Silahkan Coba Lagi
-          </div>
+          <div className="notif">Gagal membuat Kelas Silahkan Coba Lagi</div>
         );
         console.log(response);
       });
@@ -78,25 +76,25 @@ export default function CreateLesson() {
   return (
     <>
       <DetailHeader
-        header="Buat Pelajaran"
-        subHeader="buat pelajaran yang anda inginkan sekarang!"
-        img={require("assets/img/my-bab.jpg")}
+        header="Buat Kelas"
+        subHeader="buat Kelas yang anda inginkan sekarang!"
+        img={require("assets/img/class.jpg")}
       />
       <div className="section ">
         <Container>
           <BackComponent />
           <br />
           <div clasName="mt-2">
-            <h2>Buat Pelajaran Baru</h2>
+            <h2>Buat Kelas Baru</h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>
               <Row>
                 <Col lg="5" sm="10">
                   <FormGroup>
-                    <Label>Nama Pelajaran</Label>
+                    <Label>Nama Kelas</Label>
                     <Input
                       defaultValue=""
-                      placeholder="Nama Pelajaran"
+                      placeholder="Nama Kelas"
                       type="text"
                       onInput={(e) => setPelajaran(e.target.value)}
                     ></Input>
@@ -153,7 +151,7 @@ export default function CreateLesson() {
               </Row>
               <Col>
                 <FormGroup>
-                  <Label>Deskripsi Pelajaran</Label>
+                  <Label>Deskripsi Kelas</Label>
                   <textarea
                     onInput={(e) => setDeskripsi(e.target.value)}
                     class="form-control"
@@ -179,7 +177,7 @@ export default function CreateLesson() {
           </div>
         </Container>
       </div>
-      <DefaultFooter />
+      <TransparentFooter />
     </>
   );
 }

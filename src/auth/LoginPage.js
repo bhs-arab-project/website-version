@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import TransparentFooter from "components/Footers/TransparentFooter.js";
-
 import {
   Button,
   Card,
@@ -63,15 +62,16 @@ export default function LoginPage({ setToken }) {
     });
     setToken(token);
 
-    // const user = localStorage.getItem("token");
-    // const userJson = JSON.parse(user);
-    // const roleUser = userJson?.user?.role;
+    const user = localStorage.getItem("token");
+    const userJson = JSON.parse(user);
+    const roleUser = userJson?.user?.role;
 
-    // const url = "http://localhost:3000/";
+    const url = "http://localhost:3000/";
 
-    // if (roleUser === "user") {
-    //   window.location.href = `${url}`;
-    // } else if (roleUser === "teacher") {
+    if (roleUser === "undefined") {
+      window.location.href = `${url}`;
+    }
+    // else if (roleUser === "teacher") {
     //   window.location.href = `${url}guru`;
     // } else if (roleUser === "admin") {
     //   window.location.href = `${url}admin`;
@@ -98,7 +98,10 @@ export default function LoginPage({ setToken }) {
               <Card className="card-login card-plain">
                 <Form action="" className="form" method="" onSubmit={submitH}>
                   <CardHeader className="text-center">
-                    <h2>Login..</h2>
+                    <h2>Masuk</h2>
+                    <h6 className="text-lowercase font-weight-normal">
+                      Bagi kamu yang sudah terdaftar, silakan login
+                    </h6>
                   </CardHeader>
                   <CardBody>
                     <InputGroup
@@ -114,11 +117,10 @@ export default function LoginPage({ setToken }) {
                       </InputGroupAddon>
                       <Input
                         placeholder="Email"
-                        type="text"
+                        type="email"
                         onInput={(e) => setEmail(e.target.value)}
                         onFocus={() => setFirstFocus(true)}
                         onBlur={() => setFirstFocus(false)}
-                        required
                       ></Input>
                     </InputGroup>
                     <InputGroup

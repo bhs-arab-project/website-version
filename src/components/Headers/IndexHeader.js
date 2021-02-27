@@ -20,6 +20,7 @@ function IndexHeader() {
 
   const user = localStorage.getItem("token");
   const userName = JSON.parse(user);
+  const role = userName?.user?.role;
 
   return (
     <>
@@ -37,7 +38,13 @@ function IndexHeader() {
               Selamat Datang{" "}
               <span className="text-capitalize">{userName?.user?.name}</span>!
             </h1>
-            <h3>كيف حالك؟</h3>
+            {role === "user" ? (
+              <h2>كيف حالك؟</h2>
+            ) : role === "teacher" ? (
+              <h4>Anda Masuk Sebagai Pengajar</h4>
+            ) : (
+              <h4 className="text-capitalize">Anda Masuk Sebagai {role}</h4>
+            )}
           </div>
           <h6 className="category category-absolute">Scroll ke bawah</h6>
         </Container>

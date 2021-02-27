@@ -39,8 +39,8 @@ const ShowAllLesson = () => {
   async function deleteLesson(id) {
     // e.preventDefault();
     swal({
-      title: "Menghapus Pelajaran",
-      text: "Apakah Kamu Yakin Untuk Menghapus Pelajaran?",
+      title: "Menghapus Kelas",
+      text: "Apakah Kamu Yakin Untuk Menghapus Kelas?",
       icon: "warning",
       buttons: true,
 
@@ -56,7 +56,7 @@ const ShowAllLesson = () => {
           .then((res) => {
             swal({
               title: "Berhasil!",
-              text: "Pelajaran Terhapus!",
+              text: "Kelas Terhapus!",
               icon: "success",
               timer: 2000,
               button: false,
@@ -67,7 +67,7 @@ const ShowAllLesson = () => {
           .catch(() => {
             swal({
               title: "Gagal!",
-              text: "Gagal Menghapus Pelajaran, Silahkan Coba Lagi",
+              text: "Gagal Menghapus Kelas, Silahkan Coba Lagi",
               icon: "error",
               timer: 2000,
               button: false,
@@ -89,12 +89,12 @@ const ShowAllLesson = () => {
         <Container>
           <Row className="d-flex justify-space-between">
             <Col>
-              <h2>Semua Pelajaran</h2>
+              <h2>Semua Kelas</h2>
             </Col>
             <Col>
               <Link to="/create-lesson">
                 <Button color="info" className="float-right">
-                  <i class="now-ui-icons ui-1_simple-add"></i> Buat Pelajaran
+                  <i class="now-ui-icons ui-1_simple-add"></i> Buat Kelas
                 </Button>
               </Link>
               <Link to={`/create-chapter`}>
@@ -107,7 +107,7 @@ const ShowAllLesson = () => {
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Nama Pelajaran</th>
+                  <th>Nama Kelas</th>
                   <th className="text-center">Dibuat Oleh</th>
                   <th className="text-center">Jumlah Materi</th>
                   <th class="text-center">Tingkat</th>
