@@ -1,17 +1,6 @@
 import React from "react";
 // reactstrap components
-import {
-  Collapse,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  NavbarBrand,
-  Navbar,
-  Nav,
-  Container,
-} from "reactstrap";
-import { Link } from "react-router-dom";
+import { Collapse, NavbarBrand, Navbar, Nav, Container } from "reactstrap";
 
 function ExamplesNavbar() {
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");

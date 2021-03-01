@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "reactstrap/lib/Button";
-import "./notFound.css";
+import NotFound from "./../NotFound/notFound.css";
 
-const NotFound = () => {
+const Offline = () => {
+  const user = localStorage.getItem("token");
+  const userJson = JSON.parse(user);
+  const roleUser = userJson?.user?.role;
   return (
     <React.Fragment>
       <div id="notfound">
@@ -12,10 +15,12 @@ const NotFound = () => {
             <img
               alt="..."
               className="rounded"
-              src={require("assets/img/pnf.png")}
+              src={require("assets/img/dc.png")}
             ></img>
-            <h1>Duhh!</h1>
-            <h2>404 - Halamannya ga ketemu nih</h2>
+            <h2>
+              Sepertinya Kamu Sedang Offline, Cobalah Untuk Mengubungkan Ke
+              Jaringan Internet
+            </h2>
           </div>
           <img
             width="50rem"
@@ -23,13 +28,10 @@ const NotFound = () => {
             className="rounded"
             src={require("assets/img/brand-logo.png")}
           ></img>
-          <Link to="/" className="notFoundLink">
-            <Button color="primary">Kembali ke Beranda</Button>
-          </Link>
         </div>
       </div>
     </React.Fragment>
   );
 };
 
-export default NotFound;
+export default Offline;

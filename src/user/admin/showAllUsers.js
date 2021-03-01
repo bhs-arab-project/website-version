@@ -11,11 +11,16 @@ import Col from "reactstrap/lib/Col";
 import Button from "reactstrap/lib/Button";
 import swal from "sweetalert";
 
-const ShowAllTeacher = () => {
+const ShowAllUsers = () => {
   const [load, setLoad] = useState(true);
   let [listTable, setListTable] = React.useState([]);
-  let filterUser = listTable.filter(function (user) {
+
+  let filterTeachers = listTable.filter(function (user) {
     return user.role === "teacher";
+  });
+
+  let filterStudents = listTable.filter(function (user) {
+    return user.role === "user";
   });
 
   const user = localStorage.getItem("token");
@@ -81,6 +86,7 @@ const ShowAllTeacher = () => {
   React.useEffect(() => {
     setLoad(true);
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -89,7 +95,7 @@ const ShowAllTeacher = () => {
         <Container>
           <Row className="d-flex justify-space-between">
             <Col>
-              <h2>Semua Guru</h2>
+              <h2>Daftar Guru</h2>
             </Col>
             <Col>
               <Link to="/create-teacher">
@@ -109,7 +115,7 @@ const ShowAllTeacher = () => {
                 </tr>
               </thead>
               {load === false
-                ? filterUser?.map((list, index) => {
+                ? filterTeachers?.map((list, index) => {
                     return (
                       <tbody>
                         <tr>
@@ -143,10 +149,52 @@ const ShowAllTeacher = () => {
                 : BootstrapCardDataTable()}
             </table>
           </Row>
+          <Row className="d-flex justify-space-between">
+            <Col>
+              <h2>Daftar Pelajar</h2>
+            </Col>
+
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nama Pelajar</th>
+                  <th className="text-center h-5">Email Pelajar</th>
+                  <th className="text-center">Aksi</th>
+                </tr>
+              </thead>
+              {load === false
+                ? filterStudents?.map((list, index) => {
+                    return (
+                      <tbody>
+                        <tr>
+                          <td class="text-center">{index + 1}</td>
+                          <td>{list.name}</td>
+
+                          <td className="text-center">{list.email}</td>
+
+                          <td class="td-actions text-center">
+                            <button
+                              type="button"
+                              rel="tooltip"
+                              class="btn btn-danger"
+                              onClick={() => deleteTeacher(list.id, list.name)}
+                            >
+                              <i class="now-ui-icons ui-1_simple-remove"></i>{" "}
+                              Hapus
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    );
+                  })
+                : BootstrapCardDataTable()}
+            </table>
+          </Row>
         </Container>
       </div>
     </>
   );
 };
 
-export default ShowAllTeacher;
+export default ShowAllUsers;

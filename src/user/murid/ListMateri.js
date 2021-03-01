@@ -55,15 +55,29 @@ const ListMateri = () => {
         <Container>
           <h2>Mulai belajar - ابدا بالتعلم</h2>
           <Row className="d-flex justify-space-between">
-            {load === false
-              ? lesson?.map((pelajaran, index) => {
+            {load === false ? (
+              lesson.length === 0 ? (
+                <div className="container text-left">
+                  <p className=" font-weight-bold text-dark">
+                    Pengajar Sedang Membuat Kelas Terbaik Untuk Kamu, Tungguin
+                    Terus Yaa! <br /> - Al-Qolam
+                  </p>
+                  <img
+                    width="250rem"
+                    alt="..."
+                    className="rounded float-right"
+                    src={require("assets/img/books.png")}
+                  ></img>
+                </div>
+              ) : (
+                lesson?.map((pelajaran, index) => {
                   return (
                     <Col md="6" xl="4" key={index}>
                       <Card>
                         <CardBody className="ml-2">
                           <CardTitle className="pt-0">
                             <span
-                              class={` badge float-right  mt-2 ${
+                              className={` badge float-right mt-2 ${
                                 pelajaran.tingkatan === "mudah"
                                   ? "badge-success"
                                   : pelajaran.tingkatan === "menengah"
@@ -123,7 +137,10 @@ const ListMateri = () => {
                     </Col>
                   );
                 })
-              : loaderListMateri()}
+              )
+            ) : (
+              loaderListMateri()
+            )}
           </Row>
         </Container>
       </div>

@@ -96,7 +96,7 @@ const DetailLesson = () => {
         />
         <Container className="mt-4">
           <h4>Materi Yang tersedia - المواد المتاحة</h4>
-          <Link to="/guru">
+          <Link to="/">
             <Button color="danger">
               {" "}
               <i class="now-ui-icons arrows-1_minimal-left"></i> Kembali

@@ -35,7 +35,7 @@ function DefaultFooter() {
             </ul>
           </nav>
           <div className="copyright" id="copyright">
-            CopyRight © {new Date().getFullYear()}, Second Team{" "}
+            CopyRight © {new Date().getFullYear()}, Al-Qolam{" "}
           </div>
         </Container>
       </footer>

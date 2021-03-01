@@ -7,14 +7,12 @@ import React from "react";
 // core components
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import IndexHeader from "components/Headers/IndexHeader.js";
-import DarkFooter from "components/Footers/DarkFooter.js";
 
 import Tabs from "./murid/ListMateri.js";
 
 import "../styles.css";
 import Quote from "template/index-sections/Quote.js";
-import ShowAllTeacher from "user/admin/showAllTeacher";
-import DetailHeader from "./../components/Headers/DetailHeader";
+import ShowAllUsers from "user/admin/showAllUsers.js";
 import ShowAllLesson from "./guru/ShowAllLesson.js";
 import TransparentFooter from "components/Footers/TransparentFooter.js";
 
@@ -54,7 +52,7 @@ function Index() {
       ) : (
         <div className="wrapper">
           <IndexHeader />
-          <ShowAllTeacher />
+          <ShowAllUsers />
           <TransparentFooter />
         </div>
       )}

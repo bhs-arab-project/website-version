@@ -22,6 +22,7 @@ import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import CreateMateri from "./user/guru/CRUDMateri/CreateMateri";
 import CreateTeacher from "user/admin/createTeacher.js";
+import Quiz from "./user/murid/quiz/quiz";
 
 function App() {
   const { token, setToken } = useToken();
@@ -29,9 +30,6 @@ function App() {
   const user = localStorage.getItem("token");
   const userJson = JSON.parse(user);
   const roleUser = userJson?.user?.role;
-  const nameUser = userJson?.user?.name;
-  const accessToken = userJson?.token?.token;
-  const idUser = userJson?.user?.id;
 
   // const roleUser = userJson?.token?.role[0];
 
@@ -92,6 +90,13 @@ function App() {
               exact
               path="/detail-bab/:id"
               component={DetailBab}
+              roles="user"
+            />
+
+            <RoleBasedRouting
+              exact
+              path="/quiz"
+              component={Quiz}
               roles="user"
             />
 

@@ -30,10 +30,6 @@ function LoginPage() {
   let bodyFormData = new FormData();
   bodyFormData.set("email", email);
 
-  // for (var pair of bodyFormData.entries()) {
-  //   console.log(pair[0] + ", " + pair[1]);
-  // }
-
   const handleSubmit = async (e) => {
     setLoggedIn(true);
 
@@ -72,7 +68,6 @@ function LoginPage() {
 
     e.preventDefault();
   };
-  const [firstFocus, setFirstFocus] = React.useState(false);
   React.useEffect(() => {
     document.body.classList.add("login-page");
     document.body.classList.add("sidebar-collapse");

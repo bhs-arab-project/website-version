@@ -59,7 +59,7 @@ export default function CreateMateri() {
       })
       .catch((error) => {
         let message = error.response;
-        console.log(message.data.errors);
+        console.log(message);
       });
   }
 
@@ -213,7 +213,7 @@ export default function CreateMateri() {
                   <Spinner></Spinner>
                 ) : (
                   <Button
-                    className="btn-round"
+                    className="btn-round float-right"
                     color="info"
                     // onClick={(e) => e.preventDefault()}
                     size="md"

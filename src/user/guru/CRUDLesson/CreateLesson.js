@@ -38,10 +38,6 @@ export default function CreateLesson() {
   bodyFormData.set("guru", guruToken?.user?.name);
   bodyFormData.set("user_id", JSON.stringify(guruToken?.user?.id));
 
-  for (var pair of bodyFormData.entries()) {
-    console.log(pair[0] + ", " + pair[1]);
-  }
-
   const handleSubmit = async (e) => {
     setLoggedIn(true);
 
@@ -164,9 +160,8 @@ export default function CreateLesson() {
                   <Spinner></Spinner>
                 ) : (
                   <Button
-                    className="btn-round"
+                    className="btn-round float-right"
                     color="info"
-                    // onClick={(e) => e.preventDefault()}
                     size="md"
                   >
                     Submit

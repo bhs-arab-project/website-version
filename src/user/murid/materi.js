@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import ResponsiveArticle from "components/loader/loaderMateri";
 import ReactHtmlParser from "react-html-parser";
+import TransparentFooter from "components/Footers/TransparentFooter";
 
 function MateriPage() {
   let { id } = useParams();
@@ -117,6 +118,7 @@ function MateriPage() {
       ) : (
         ResponsiveArticle()
       )}
+      <TransparentFooter />
     </>
   );
 }

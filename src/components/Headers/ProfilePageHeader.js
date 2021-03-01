@@ -73,7 +73,7 @@ function ProfilePageHeader() {
           ) : roleUser === "teacher" ? (
             <div className="content">
               <div className="social-description">
-                <h2>jak</h2>
+                <h2>{lessonLength}</h2>
                 <p>Kelas yang di Buat</p>
               </div>
             </div>

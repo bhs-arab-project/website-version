@@ -42,6 +42,9 @@ const BabDetail = () => {
   }, [id]);
 
   let pageHeader = React.createRef();
+  // console.log(detailLesson?.chapter, "snjn");
+  const pelajaran = detailLesson.pelajaran;
+
   return (
     <div>
       <IndexNavbar />
@@ -69,7 +72,7 @@ const BabDetail = () => {
                     <div>{detailLesson.guru}</div>
                   </div>
                   <div class="media-body text-left ">
-                    <h1 className="title "> {detailLesson.pelajaran}</h1>
+                    <h1 className="title">{pelajaran}</h1>
                     <div style={{ fontSize: "0.9rem" }}>
                       {detailLesson.deskripsi}
                     </div>
@@ -86,7 +89,11 @@ const BabDetail = () => {
 
           {load === false ? (
             detailLesson?.chapter?.map((list, index) => {
-              return (
+              let cek = detailLesson?.chapter.length;
+              console.log(cek, "ss");
+              return cek === 0 ? (
+                <span>nsjs</span>
+              ) : (
                 <div class="card rounded" key={index}>
                   <div class="card-body">
                     <div className="row">
@@ -118,6 +125,17 @@ const BabDetail = () => {
           ) : (
             <MyBulletListLoader />
           )}
+          <div className="text-center">
+            <Link
+              to={{
+                pathname: "/quiz",
+                state: id,
+                pelajaran: detailLesson.pelajaran,
+              }}
+            >
+              <Button color="info">Mulai Ujian</Button>
+            </Link>
+          </div>
         </Container>
       </div>
       <TransparentFooter />
