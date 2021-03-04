@@ -18,6 +18,7 @@ import {
 } from "reactstrap";
 import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
+import swal from "sweetalert";
 
 export default function LoginPage({ setToken }) {
   const [firstFocus, setFirstFocus] = React.useState(false);
@@ -51,31 +52,37 @@ export default function LoginPage({ setToken }) {
 
   const submitH = async (e) => {
     e.preventDefault();
-
     setLoggedIn("logging in");
     const token = await loginUser({
       email,
       password,
     });
-    setToken(token);
 
-    const user = localStorage.getItem("token");
-    const userJson = JSON.parse(user);
-    const roleUser = userJson?.user?.role;
-
-    const url = "http://localhost:3000/";
-
-    if (roleUser === "undefined") {
-      window.location.href = `${url}`;
+    if (token?.message === "Email dan Password salah") {
+      console.log("salah");
+      swal({
+        title: "Gagal Login",
+        text: "Password dan Email Salah!",
+        icon: "error",
+        timer: 2000,
+        button: false,
+      });
+      setLoggedIn();
+      return false;
+    } else if (token?.message === "Tolong konfirmasi email kamu di mail box!") {
+      console.log("salah");
+      swal({
+        title: "Gagal Login",
+        text: "Silahkan Konfirmasi Email Kamu di Mail Box!",
+        icon: "error",
+        timer: 2000,
+        button: false,
+      });
+      setLoggedIn();
+      return false;
+    } else {
+      setToken(token);
     }
-    // else if (roleUser === "teacher") {
-    //   window.location.href = `${url}guru`;
-    // } else if (roleUser === "admin") {
-    //   window.location.href = `${url}admin`;
-    // } else {
-    //   console.log("sjsk");
-    //   window.location.href = `${url}`;
-    // }
   };
 
   return (
@@ -96,8 +103,8 @@ export default function LoginPage({ setToken }) {
                 <Form action="" className="form" method="" onSubmit={submitH}>
                   <CardHeader className="text-center">
                     <h2>Masuk</h2>
-                    <h6 className="text-lowercase font-weight-normal">
-                      Bagi kamu yang sudah terdaftar, silakan login
+                    <h6 className="text-capitalize font-weight-normal">
+                      Masuk Untuk Belajar Bahasa Arab Online Gratis!
                     </h6>
                   </CardHeader>
                   <CardBody>

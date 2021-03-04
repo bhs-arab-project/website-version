@@ -3,7 +3,6 @@ import React from "react";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./user/Home.js";
-import NucleoIcons from "template/NucleoIcons.js";
 import LoginPage from "auth/LoginPage";
 import ForgotPassword from "auth/forgotPassword";
 import BabPage from "./user/murid/Bab-page";
@@ -23,6 +22,8 @@ import AlertTemplate from "react-alert-template-basic";
 import CreateMateri from "./user/guru/CRUDMateri/CreateMateri";
 import CreateTeacher from "user/admin/createTeacher.js";
 import Quiz from "./user/murid/quiz/quiz";
+import CreateQuiz from "./user/guru/CreateQuiz";
+import EditMateri from "./user/guru/CRUDMateri/EditMateri";
 
 function App() {
   const { token, setToken } = useToken();
@@ -36,8 +37,7 @@ function App() {
   if (
     !token &&
     history[history.length - 1] !== "forgot-password" &&
-    history[history.length - 1] !== "sign-up" &&
-    history[history.length - 1] !== "nucleo-icons"
+    history[history.length - 1] !== "sign-up"
   ) {
     return <LoginPage setToken={setToken} />;
   }
@@ -78,7 +78,6 @@ function App() {
             <Route exact path="/" component={Home} />
 
             {/* start User Route */}
-            <Route exact path="/nucleo-icons" component={NucleoIcons} />
 
             <RoleBasedRouting
               exact
@@ -122,19 +121,37 @@ function App() {
               component={EditLesson}
               roles="teacher"
             />
+            <RoleBasedRouting
+              exact
+              path="/edit-materi/:id"
+              component={EditMateri}
+              roles="teacher"
+            />
             <Route
               path="/detail-lesson/:id"
               render={() => <DetailLesson />}
               roles="teacher"
             />
+
             <Route
-              path="/create-teacher"
-              render={() => <CreateTeacher />}
+              path="/create-question"
+              render={() => <CreateQuiz />}
+              roles="teacher"
+            />
+
+            <Route
+              path="/create-answer"
+              render={() => <CreateQuiz />}
               roles="teacher"
             />
 
             {/* end Teacher route */}
             {/* start Admin route */}
+            <Route
+              path="/create-teacher"
+              render={() => <CreateTeacher />}
+              roles="admin"
+            />
             {/* end Admin Route */}
             <Route path="/sign-up" render={() => <SignUp />} />
             <Route path="/login-page" render={() => <LoginPage />} />

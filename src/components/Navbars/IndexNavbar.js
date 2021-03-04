@@ -62,7 +62,7 @@ function IndexNavbar() {
         <Container>
           <div className="navbar-translate">
             <Link to="/">
-              <NavbarBrand id="navbar-brand">
+              <NavbarBrand>
                 <img
                   width="50rem"
                   alt="..."

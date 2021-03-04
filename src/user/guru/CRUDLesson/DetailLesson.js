@@ -133,7 +133,7 @@ const DetailLesson = () => {
                             <Link to={`/materi/${list.id}`}>
                               <Button color="info">Lihat</Button>
                             </Link>
-                            <Link to={`/materi/${list.id}`}>
+                            <Link to={`/edit-materi/${list.id}`}>
                               <Button color="success">Edit</Button>
                             </Link>
                             <Button

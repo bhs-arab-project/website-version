@@ -18,7 +18,7 @@ import {
 } from "reactstrap";
 import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useAlert } from "react-alert";
 import BackComponent from "../CRUDLesson/BackComponent";
 import { Tooltip } from "reactstrap";
@@ -26,19 +26,20 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import TransparentFooter from "components/Footers/TransparentFooter";
 
-export default function CreateMateri() {
+export default function EditMateri() {
+  let { id } = useParams();
   const history = useHistory();
   const alert = useAlert();
   const guru = localStorage.getItem("token");
   const guruToken = JSON.parse(guru);
   const access_token = guruToken?.token?.token;
-  const userId = guruToken?.user?.id;
 
+  const [detailM, setDetailM] = useState();
   const [valButton, setValB] = useState("Pilih Kelas");
   const [judulMateri, setJudulMateri] = useState();
   const [materi, setMateri] = useState();
   const [lessonId, setLessonId] = useState();
-  const [listLesson, setListLesson] = useState([]);
+  const [listLesson, setListLesson] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const [load, setLoad] = useState(false);
 
@@ -47,12 +48,22 @@ export default function CreateMateri() {
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
-  let filterListL = listLesson.filter(function (listL) {
-    // eslint-disable-next-line
-    return listL.user_id == userId;
-  });
-
-  console.log(filterListL);
+  async function fetchBab() {
+    axios
+      .get(`${API_URL}bab/${id}`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+      .then((response) => {
+        setLoad(false);
+        setDetailM(response.data);
+      })
+      .catch((error) => {
+        let message = error.response;
+        console.log(message);
+      });
+  }
 
   async function fetchData() {
     axios
@@ -73,6 +84,7 @@ export default function CreateMateri() {
 
   React.useEffect(() => {
     setLoad(true);
+    fetchBab();
     fetchData();
     // eslint-disable-next-line
   }, []);
@@ -91,8 +103,8 @@ export default function CreateMateri() {
     setLoggedIn(true);
 
     axios({
-      method: "post",
-      url: `${API_URL}bab`,
+      method: "put",
+      url: `${API_URL}bab/${id}`,
       data: bodyFormData,
       headers: {
         "Content-Type": "multipart/form-data",
@@ -102,7 +114,7 @@ export default function CreateMateri() {
     })
       .then(function (response) {
         setLoggedIn(false);
-        alert.success(<div className="notif">Berhasil membuat Bab!</div>);
+        alert.success(<div className="notif">Berhasil mengedit Bab!</div>);
         history.push("/");
         //handle success
         console.log(response);
@@ -110,7 +122,7 @@ export default function CreateMateri() {
       .catch(function (response) {
         setLoggedIn(false);
         alert.error(
-          <div className="notif">Gagal membuat Bab Silahkan Coba Lagi</div>
+          <div className="notif">Gagal mengedit Bab Silahkan Coba Lagi</div>
         );
         console.log(response);
       });
@@ -130,7 +142,7 @@ export default function CreateMateri() {
           <br />
           <div clasName="mt-2">
             <BackComponent />
-            <h2>Buat Materi</h2>
+            <h2>Edit Materi {detailM?.judul_bab}</h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>
               <Row>
@@ -141,31 +153,44 @@ export default function CreateMateri() {
                       <DropdownToggle caret>{valButton}</DropdownToggle>
                       <DropdownMenu>
                         {load === false ? (
-                          filterListL?.length === 0 ? (
-                            <DropdownItem text className="text-danger" disabled>
-                              Buat Kelas Terlebih Dahulu
-                            </DropdownItem>
-                          ) : (
-                            filterListL?.map((list, index) => {
-                              return (
-                                <DropdownItem
-                                  key={index}
-                                  checked={lessonId === list.id}
-                                  value={list.id}
-                                  onClick={() => {
-                                    setLessonId(list.id);
-                                    setValB(list.pelajaran);
-                                  }}
+                          listLesson?.map((list, index) => {
+                            return list.user_id === guruToken?.user?.id ? (
+                              <DropdownItem
+                                key={index}
+                                checked={lessonId === list.id}
+                                value={list.id}
+                                onClick={() => {
+                                  setLessonId(list.id);
+                                  setValB(list.pelajaran);
+                                }}
+                              >
+                                {list.pelajaran}
+                              </DropdownItem>
+                            ) : (
+                              <div>
+                                <div id="DisabledAutoHideExample">
+                                  <DropdownItem
+                                    className="text-danger"
+                                    disabled
+                                  >
+                                    {list.pelajaran}
+                                  </DropdownItem>
+                                </div>
+                                {/* <p>Somewhere in here is a <span style={{textDecoration: "underline", color:"blue"}} href="#" id="TooltipExample">tooltip</span>.</p> */}
+                                <Tooltip
+                                  placement="right"
+                                  isOpen={tooltipOpen}
+                                  target="DisabledAutoHideExample"
+                                  toggle={toggleTooltip}
+                                  className="text-danger"
                                 >
-                                  {list.pelajaran}
-                                </DropdownItem>
-                              );
-                            })
-                          )
+                                  Bukan Kelas Anda
+                                </Tooltip>
+                              </div>
+                            );
+                          })
                         ) : (
-                          <DropdownItem text disabled>
-                            Loading...
-                          </DropdownItem>
+                          <DropdownItem text>Loading...</DropdownItem>
                         )}
                       </DropdownMenu>
                     </Dropdown>
@@ -178,6 +203,7 @@ export default function CreateMateri() {
                   <FormGroup>
                     <Label>Judul Materi</Label>
                     <Input
+                      value={detailM?.judul_bab}
                       required
                       oninvalid="Judul Materi Harus di isi"
                       onvalid="this.setCustomValidity('')"
@@ -193,8 +219,8 @@ export default function CreateMateri() {
                   <Label>Materi</Label>
                   <CKEditor
                     required
+                    data={detailM?.materi}
                     editor={ClassicEditor}
-                    data={materi}
                     onChange={(event, editor) => {
                       const data = editor.getData();
                       setMateri(data);

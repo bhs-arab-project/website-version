@@ -1,8 +1,7 @@
 import React from "react";
 
 // reactstrap components
-// import {
-// } from "reactstrap";
+import { Container } from "reactstrap";
 
 // core components
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
@@ -11,7 +10,6 @@ import IndexHeader from "components/Headers/IndexHeader.js";
 import Tabs from "./murid/ListMateri.js";
 
 import "../styles.css";
-import Quote from "template/index-sections/Quote.js";
 import ShowAllUsers from "user/admin/showAllUsers.js";
 import ShowAllLesson from "./guru/ShowAllLesson.js";
 import TransparentFooter from "components/Footers/TransparentFooter.js";
@@ -38,7 +36,19 @@ function Index() {
         <div className="wrapper">
           <IndexHeader />
           <div className="main">
-            <Quote />
+            <div className="section">
+              <Container>
+                <blockquote class="blockquote text-center text-info border-0">
+                  <p id="arab">
+                    اُطْلُبِ العِلْمَ مِنَ الـمَهْدِ إِلَى اللَّحْدِ
+                  </p>
+                  <i id="latin">
+                    Tuntutlah ilmu dari sejak di buaian sampai liang lahat.
+                  </i>
+                  <p id="arti">uthlubil-‘ilma manal-mahdi ilal-lahdi</p>
+                </blockquote>
+              </Container>
+            </div>
             <Tabs />
           </div>
           <TransparentFooter />

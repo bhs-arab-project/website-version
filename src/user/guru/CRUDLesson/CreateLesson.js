@@ -157,7 +157,9 @@ export default function CreateLesson() {
               </Col>
               <div>
                 {loggedIn === true ? (
-                  <Spinner></Spinner>
+                  <div className="float-right">
+                    <Spinner></Spinner>
+                  </div>
                 ) : (
                   <Button
                     className="btn-round float-right"

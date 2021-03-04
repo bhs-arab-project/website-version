@@ -77,42 +77,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" ></script> 
-
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
-
-<script>
-var quotes = [
-
-{ arab: "لَيْسَ الجَمَالُ بِأَثْوَابٍ تُزَيِّنُنَا", arti: "Keindahan tidak terletak pada pakaian yang menghiasi kita", latin:"laysal-jamaalu bi-atswaabin tuzayyinunaa" },
-{ arab: "إِنَّ الجَمَالَ جَمَالُ العِلْمِ وَالأَدَبِ", arti: "Keindahan yang sesungguhnya adalah keindahan ilmu dan adab", latin:"innal-jamaala jamaalul-‘ilmi wal-adabi" },
-{ arab: "كُلُّ شَيْءٍ يَرْخُصُ إِذَا كَثُرَ إِلَّا العِلْمُ ، فَإِنَّهُ إَذَا كَثُرَ غَلَ", arti: "Segala sesuatu akan menjadi murah jika banyak kecuali ilmu, jika banyak ilmu akan menjadi mahal.", latin:"kullu syay-in yarkhushu idzaa katsura illal-‘ilmu, fa-innahuu idzaa katsura ghalaa" },
-{ arab: "يَرْزُقُ اللهُ العِلْمَ السُّعَدَاءَ وَيَـحْرِمُهُ الأَشْقِيَاءَ", arti: "Allah mengaruniakan ilmu kepada orang-orang yang bahagia dan menahannya dari orang-orang yang celaka/sengsara. ", latin:"yarzuqullahul-‘ilmas-su’adaa-a wa yahrimuhul-asyqiyaa-a" },
-{ arab: "اُغْدُ عَالِـمًا أَوْ مُتَعَلِّمًا ، وَلَا تَغْدُ إِمَّعَةً بَيْنَ ذَلِكَ", arti: "Jadilah seorang alim atau pelajar, dan jangan menjadi pengekor selain keduanya.", latin:"ughdu ‘aaliman aw muta’alliman, wa laa taghdu imma’atan bayna dzaalika" },
-{ arab: "العِلْمُ فِي الصِّغَرِ كَالنَّقْشِ عَلَى الحَجَرِ", arti: "(Menuntut) ilmu di masa kecil ibarat memahat di batu ", latin:"al-‘ilmu fish-shighari kan-naqsyi ‘alal-hajari" },
-{ arab: "العِلْمُ بِلَا عَمَلٍ كَالشَّجَرِ بِلَا ثَـمَرٍ", arti: "Ilmu tanpa amal, seperti pohon tanpa buah.", latin:"al-‘ilmu bilaa ‘amalin, kasy-syajari bilaa tsamarin" },
-{ arab: "اُطْلُبِ العِلْمَ مِنَ الـمَهْدِ إِلَى اللَّحْدِ", arti: "Tuntutlah ilmu dari sejak di buaian sampai liang lahat.", latin:"uthlubil-‘ilma manal-mahdi ilal-lahdi" },
-{ arab: "العِلْمُ يُؤْتَى وَلَا يَأْتِي", arti: "Ilmu itu didatangi, dan tidak datang (dengan sendirinya).", latin:"al-‘ilmu yu`taa wa laa ya`tii" },
-{ arab: "مَنْ سَلَكَ طَرِيْقًا يَلْتَمِسُ فِيْهِ عِلْمًا، سَهَّلَ اللهُ لَهُ بِهِ طَرِيْقًا إِلَى الْجَنَّةِ", arti: "Barang siapa yang berjalan untuk mencari ilmu, Allah akan memudahkan dirinya jalan menuju surga.", latin:"Man salaka thoriqon yaltamisu fihi i’lman sahhallahu bihi thoriqon ilal jannah" },
-{ arab: "مَنْ يُرِدِ اللَّهُ بِهِ خَيْرًا يُفَقِّهْهُ فِى الدِّينِ", arti: "Barang siapa yang Allah kehendaki kebaikan, maka Allah akan memahamkan dia tentang ilmu agama.", latin:"“Man yuridillahi khaoyron yufaqihhu fiddiin”" },
-
-
-];
-function showquote() {
-  var q = quotes.length;
-  var whichquote = quotes[Math.round(Math.random() * (q - 1))]; // ... fixed.
-
-  document.getElementById("latin").innerHTML = whichquote.latin;
-  document.getElementById("arab").innerHTML = whichquote.arab;
-  document.getElementById("arti").innerHTML = whichquote.arti;
-}
-showquote();
-setInterval(showquote, 5000);
-</script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </html>

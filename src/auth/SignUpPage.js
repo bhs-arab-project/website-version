@@ -42,7 +42,7 @@ export default function SignUpPage() {
   bodyFormData.set("name", name);
   bodyFormData.set("email", email);
   bodyFormData.set("password", password);
-  bodyFormData.set("role", "user");
+  bodyFormData.set("role", "teacher");
 
   const handleSubmit = async (e) => {
     setLoggedIn(true);
@@ -55,31 +55,15 @@ export default function SignUpPage() {
     })
       .then(function (response) {
         setLoggedIn(false);
-
         alert.success(
           <div className="notif">
             Registrasi Berhasil, silahkan Cek Email anda
           </div>
         );
-
-        //handle success
-        console.log(response);
       })
-      .catch(function (response) {
+      .catch(function (error) {
         setLoggedIn(false);
-        console.log("error", response);
-        if (response === "Error: Network Error at createError") {
-          alert.error(
-            <div className="notif">Tidak ada koneksi internet, coba lagi</div>
-          );
-        } else if (response === "Error: Request failed with status code 404") {
-          alert.error(
-            <div className="notif">
-              Gagal Registrasi, silahkan coba lagi, 404 error
-            </div>
-          );
-        }
-        // alert.error(<div className="notif">Gagal Registrasi</div>);
+        alert.error(<div className="notif">{error.response.data.message}</div>);
       });
 
     e.preventDefault();

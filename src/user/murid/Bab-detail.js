@@ -88,40 +88,51 @@ const BabDetail = () => {
           <h4>Materi Yang Tersedia - المواد المتاحة</h4>
 
           {load === false ? (
-            detailLesson?.chapter?.map((list, index) => {
-              let cek = detailLesson?.chapter.length;
-              console.log(cek, "ss");
-              return cek === 0 ? (
-                <span>nsjs</span>
-              ) : (
-                <div class="card rounded" key={index}>
-                  <div class="card-body">
-                    <div className="row">
-                      <div className="col-md-10 col-xs-2 col-sm-3 d-inline">
-                        <div className="row">
-                          <div className="col-md-1 col-xs-3 col-sm-2 mt-1">
-                            <img
-                              // width="50%"
-                              alt="..."
-                              className="rounded-circle "
-                              src={require("assets/img/book2.png")}
-                            ></img>
-                          </div>
-                          <div className="col-md-5 col-xs-4 col-sm-5 mt-3">
-                            {list.judul_bab}
+            detailLesson?.chapter?.length === 0 ? (
+              <div className="container">
+                <p className=" font-weight-bold text-dark">
+                  Pengajar Sedang Membuat Kelas Terbaik Untuk Kamu, Tungguin
+                  Terus Yaa! <br /> - Al-Qolam
+                </p>
+                <img
+                  width="250rem"
+                  alt="..."
+                  className="rounded float-right"
+                  src={require("assets/img/books.png")}
+                ></img>
+              </div>
+            ) : (
+              detailLesson?.chapter?.map((list, index) => {
+                return (
+                  <div class="card rounded" key={index}>
+                    <div class="card-body">
+                      <div className="row">
+                        <div className="col-md-10 col-xs-2 col-sm-3 d-inline">
+                          <div className="row">
+                            <div className="col-md-1 col-xs-3 col-sm-2 mt-1">
+                              <img
+                                // width="50%"
+                                alt="..."
+                                className="rounded-circle "
+                                src={require("assets/img/book2.png")}
+                              ></img>
+                            </div>
+                            <div className="col-md-5 col-xs-4 col-sm-5 mt-3">
+                              {list.judul_bab}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="col-md-2 col-xs-1 col-sm-1 px-1 text-right d-inline">
-                        <Link to={`/materi/${list.id}`}>
-                          <Button color="info">Mulai belajar</Button>
-                        </Link>
+                        <div className="col-md-2 col-xs-1 col-sm-1 px-1 text-right d-inline">
+                          <Link to={`/materi/${list.id}`}>
+                            <Button color="info">Mulai belajar</Button>
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })
+                );
+              })
+            )
           ) : (
             <MyBulletListLoader />
           )}

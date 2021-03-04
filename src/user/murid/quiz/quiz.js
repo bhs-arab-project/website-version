@@ -11,7 +11,7 @@ import Card from "reactstrap/lib/Card";
 import CardBody from "reactstrap/lib/CardBody";
 import axios from "axios";
 import { API_URL } from "utils/constants";
-import loaderListMateri from "components/loader/loaderListMateri";
+import DotLoad from "components/loader/dotLoader";
 
 export default function Quiz(state) {
   const [questions, setQuestions] = useState([]);
@@ -24,9 +24,7 @@ export default function Quiz(state) {
   const userid = JSON.parse(user);
   const access_token = userid?.token?.token;
   const lesson_id = state.location.state;
-  const pelajaran = state.location.pelajaran;
-
-  console.log(state);
+  const MyBulletListLoader = () => <DotLoad />;
 
   let filterQ = questions.filter(function (oneQuiz) {
     // eslint-disable-next-line
@@ -43,7 +41,6 @@ export default function Quiz(state) {
       .then((response) => {
         setLoad(false);
         setQuestions(response.data);
-        console.log("responQ", response);
       })
       .catch((response) => {
         console.log("errorQ", response);
@@ -148,8 +145,8 @@ export default function Quiz(state) {
                 <Row>
                   <Col>
                     <h2 className="mt-4">
-                      Kelas {pelajaran} | Soal Ke {currentQuestion + 1} dari{" "}
-                      {filterQ.length}
+                      Kelas {filterQ[currentQuestion]?.pelajaran} | Soal Ke{" "}
+                      {currentQuestion + 1} dari {filterQ.length}
                     </h2>
                   </Col>
                   <Col>
@@ -191,7 +188,7 @@ export default function Quiz(state) {
         )
       ) : (
         <div className="section container">
-          <loaderListMateri />
+          <MyBulletListLoader />
         </div>
       )}
     </div>

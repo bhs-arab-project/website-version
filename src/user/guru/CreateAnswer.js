@@ -20,25 +20,23 @@ import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
-import BackComponent from "../CRUDLesson/BackComponent";
 import { Tooltip } from "reactstrap";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import TransparentFooter from "components/Footers/TransparentFooter";
+import BackComponent from "./CRUDLesson/BackComponent";
 
-export default function CreateMateri() {
+export default function CreateQuiz() {
   const history = useHistory();
   const alert = useAlert();
   const guru = localStorage.getItem("token");
   const guruToken = JSON.parse(guru);
   const access_token = guruToken?.token?.token;
-  const userId = guruToken?.user?.id;
 
   const [valButton, setValB] = useState("Pilih Kelas");
-  const [judulMateri, setJudulMateri] = useState();
-  const [materi, setMateri] = useState();
-  const [lessonId, setLessonId] = useState();
-  const [listLesson, setListLesson] = useState([]);
+  const [answer, setAnswer] = useState();
+  const [quizId, setQuizId] = useState();
+  const [correct, setCorrect] = useState();
+
+  const [listLesson, setListLesson] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const [load, setLoad] = useState(false);
 
@@ -47,16 +45,9 @@ export default function CreateMateri() {
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
-  let filterListL = listLesson.filter(function (listL) {
-    // eslint-disable-next-line
-    return listL.user_id == userId;
-  });
-
-  console.log(filterListL);
-
   async function fetchData() {
     axios
-      .get(`${API_URL}pelajaran`, {
+      .get(`${API_URL}quiz`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
@@ -78,10 +69,9 @@ export default function CreateMateri() {
   }, []);
 
   let bodyFormData = new FormData();
-  bodyFormData.set("lesson_id", lessonId);
-  bodyFormData.set("user_id", guruToken?.user?.id);
-  bodyFormData.set("judul_bab", judulMateri);
-  bodyFormData.set("materi", materi);
+  bodyFormData.set("quiz_id", quizId);
+  bodyFormData.set("is_correct", correct);
+  bodyFormData.set("answer_text", answer);
 
   for (var pair of bodyFormData.entries()) {
     console.log(pair[0] + ", " + pair[1]);
@@ -92,7 +82,7 @@ export default function CreateMateri() {
 
     axios({
       method: "post",
-      url: `${API_URL}bab`,
+      url: `${API_URL}answer`,
       data: bodyFormData,
       headers: {
         "Content-Type": "multipart/form-data",
@@ -102,7 +92,9 @@ export default function CreateMateri() {
     })
       .then(function (response) {
         setLoggedIn(false);
-        alert.success(<div className="notif">Berhasil membuat Bab!</div>);
+        alert.success(
+          <div className="notif">Berhasil membuat Jawaban Soal Quiz!</div>
+        );
         history.push("/");
         //handle success
         console.log(response);
@@ -110,7 +102,9 @@ export default function CreateMateri() {
       .catch(function (response) {
         setLoggedIn(false);
         alert.error(
-          <div className="notif">Gagal membuat Bab Silahkan Coba Lagi</div>
+          <div className="notif">
+            Gagal membuat Jawaban Soal Quiz Silahkan Coba Lagi
+          </div>
         );
         console.log(response);
       });
@@ -121,8 +115,8 @@ export default function CreateMateri() {
   return (
     <>
       <DetailHeader
-        header="Buat Materi"
-        subHeader="buat materi yang anda inginkan sekarang!"
+        header="Buat Quiz"
+        subHeader="buat Quiz yang anda inginkan sekarang!"
         img={require("assets/img/my-babex.jpg")}
       />
       <div className="section ">
@@ -130,78 +124,77 @@ export default function CreateMateri() {
           <br />
           <div clasName="mt-2">
             <BackComponent />
-            <h2>Buat Materi</h2>
+            <h2>Buat Jawaban Soal</h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>
               <Row>
                 <Col lg="4" sm="10">
                   <FormGroup>
-                    <Label>Pilih Kelas</Label>
+                    <Label>Pilih Soal Quiz</Label>
                     <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                       <DropdownToggle caret>{valButton}</DropdownToggle>
                       <DropdownMenu>
                         {load === false ? (
-                          filterListL?.length === 0 ? (
-                            <DropdownItem text className="text-danger" disabled>
-                              Buat Kelas Terlebih Dahulu
-                            </DropdownItem>
-                          ) : (
-                            filterListL?.map((list, index) => {
-                              return (
-                                <DropdownItem
-                                  key={index}
-                                  checked={lessonId === list.id}
-                                  value={list.id}
-                                  onClick={() => {
-                                    setLessonId(list.id);
-                                    setValB(list.pelajaran);
-                                  }}
+                          listLesson?.map((list, index) => {
+                            return list.user_id === guruToken?.user?.id ? (
+                              <DropdownItem
+                                key={index}
+                                checked={quizId === list.id}
+                                value={list.id}
+                                onClick={() => {
+                                  setQuizId(list.id);
+                                  setValB(list.question_text);
+                                }}
+                              >
+                                {list.question_text}
+                              </DropdownItem>
+                            ) : (
+                              <div>
+                                <div id="DisabledAutoHideExample">
+                                  <DropdownItem
+                                    className="text-danger"
+                                    disabled
+                                  >
+                                    {list.question_text}
+                                  </DropdownItem>
+                                </div>
+                                {/* <p>Somewhere in here is a <span style={{textDecoration: "underline", color:"blue"}} href="#" id="TooltipExample">tooltip</span>.</p> */}
+                                <Tooltip
+                                  placement="right"
+                                  isOpen={tooltipOpen}
+                                  target="DisabledAutoHideExample"
+                                  toggle={toggleTooltip}
+                                  className="text-danger"
                                 >
-                                  {list.pelajaran}
-                                </DropdownItem>
-                              );
-                            })
-                          )
+                                  Bukan Soal Quiz Anda
+                                </Tooltip>
+                              </div>
+                            );
+                          })
                         ) : (
-                          <DropdownItem text disabled>
-                            Loading...
-                          </DropdownItem>
+                          <DropdownItem text>Loading...</DropdownItem>
                         )}
                       </DropdownMenu>
                     </Dropdown>
                     <span className="text-xs text-info">
-                      *anda hanya bisa memilih kelas yang anda buat
+                      *anda hanya bisa memilih soal quiz yang anda buat
                     </span>
                   </FormGroup>
                 </Col>
                 <Col lg="5" sm="10">
                   <FormGroup>
-                    <Label>Judul Materi</Label>
+                    <Label>Jawaban Quiz</Label>
                     <Input
                       required
                       oninvalid="Judul Materi Harus di isi"
                       onvalid="this.setCustomValidity('')"
-                      placeholder="Judul Materi"
+                      placeholder="Jawaban Quiz"
                       type="text"
-                      onInput={(e) => setJudulMateri(e.target.value)}
+                      onInput={(e) => setAnswer(e.target.value)}
                     ></Input>
                   </FormGroup>
                 </Col>
               </Row>
-              <Col>
-                <FormGroup>
-                  <Label>Materi</Label>
-                  <CKEditor
-                    required
-                    editor={ClassicEditor}
-                    data={materi}
-                    onChange={(event, editor) => {
-                      const data = editor.getData();
-                      setMateri(data);
-                    }}
-                  />
-                </FormGroup>
-              </Col>
 
               <div>
                 {loggedIn === true ? (

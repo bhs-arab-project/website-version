@@ -102,6 +102,11 @@ const ShowAllLesson = () => {
                   <i class="now-ui-icons ui-1_simple-add"></i> Buat Materi
                 </Button>
               </Link>
+              <Link to={`/create-question`}>
+                <Button color="primary" className="float-right">
+                  <i class="now-ui-icons ui-1_simple-add"></i> Buat Soal
+                </Button>
+              </Link>
             </Col>
             <table class="table table-hover">
               <thead>
@@ -110,6 +115,7 @@ const ShowAllLesson = () => {
                   <th>Nama Kelas</th>
                   <th className="text-center">Dibuat Oleh</th>
                   <th className="text-center">Jumlah Materi</th>
+                  <th className="text-center">Jumlah Soal Quiz</th>
                   <th class="text-center">Tingkat</th>
                   <th class="text-center">Aksi</th>
                 </tr>
@@ -131,6 +137,7 @@ const ShowAllLesson = () => {
                             )}
                           </td>
                           <td className="text-center">{list.chapter.length}</td>
+                          <td className="text-center">{list.quiz.length}</td>
                           <td class="text-center">
                             {" "}
                             <span
