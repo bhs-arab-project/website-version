@@ -2,32 +2,70 @@ import React from "react";
 
 // reactstrap components
 import { Container } from "reactstrap";
-
+import axios from "axios";
+import { useState } from "react";
+import { API_URL } from "utils/constants";
 // core components
 
 function ProfilePageHeader() {
   let pageHeader = React.createRef();
 
-  React.useEffect(() => {
-    if (window.innerWidth > 991) {
-      const updateScroll = () => {
-        let windowScrollTop = window.pageYOffset / 3;
-        pageHeader.current.style.transform =
-          "translate3d(0," + windowScrollTop + "px,0)";
-      };
-      window.addEventListener("scroll", updateScroll);
-      return function cleanup() {
-        window.removeEventListener("scroll", updateScroll);
-      };
-    }
-  });
-
   const user = localStorage.getItem("token");
   const userJson = JSON.parse(user);
-  const lessonLength = userJson?.user?.lesson?.length;
   const roleUser = userJson?.user?.role;
+  const access_token = userJson?.token?.token;
+  const user_id = userJson?.user?.id;
   const name = userJson?.user?.name;
-  console.log(lessonLength);
+  const [listL, setListL] = useState();
+  const [listM, setListM] = useState();
+
+  async function fetchData() {
+    axios
+      .get(`${API_URL}pelajaran`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+      .then((response) => {
+        setListL(response.data);
+      })
+      .catch((error) => {
+        let message = error.response;
+        console.log(message);
+      });
+  }
+
+  // async function fetchDataM() {
+  //   axios
+  //     .get(`${API_URL}bab`, {
+  //       headers: {
+  //         Authorization: `Bearer ${access_token}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setListM(response.data);
+  //     })
+  //     .catch((error) => {
+  //       let message = error.response;
+  //       console.log(message);
+  //     });
+  // }
+
+  // let filterM = listM.filter(function (materi) {
+  //   // eslint-disable-next-line
+  //   return materi.lesson_id == lesson_id;
+  // });
+
+  React.useEffect(() => {
+    fetchData();
+    // fetchDataM();
+    // eslint-disable-next-line
+  }, []);
+
+  let filterL = listL?.filter(function (lesson) {
+    // eslint-disable-next-line
+    return lesson.user_id == user_id;
+  });
   return (
     <>
       <div
@@ -62,7 +100,7 @@ function ProfilePageHeader() {
           {roleUser === "user" ? (
             <div className="content">
               <div className="social-description">
-                <h2>{lessonLength}</h2>
+                <h2>{listL?.length}</h2>
                 <p>Sertifikat</p>
               </div>
               <div className="social-description">
@@ -73,8 +111,8 @@ function ProfilePageHeader() {
           ) : roleUser === "teacher" ? (
             <div className="content">
               <div className="social-description">
-                <h2>{lessonLength}</h2>
-                <p>Kelas yang di Buat</p>
+                <h2>{filterL?.length}</h2>
+                <p>Kelas</p>
               </div>
             </div>
           ) : (

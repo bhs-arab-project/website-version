@@ -77,7 +77,7 @@ export default function EditMateri() {
         setListLesson(response.data);
       })
       .catch((error) => {
-        let message = error.response;
+        let message = error.response.data;
         console.log(message);
       });
   }
@@ -119,12 +119,12 @@ export default function EditMateri() {
         //handle success
         console.log(response);
       })
-      .catch(function (response) {
+      .catch(function (error) {
         setLoggedIn(false);
         alert.error(
           <div className="notif">Gagal mengedit Bab Silahkan Coba Lagi</div>
         );
-        console.log(response);
+        console.log(error.data);
       });
 
     e.preventDefault();

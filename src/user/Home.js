@@ -13,6 +13,7 @@ import "../styles.css";
 import ShowAllUsers from "user/admin/showAllUsers.js";
 import ShowAllLesson from "./guru/ShowAllLesson.js";
 import TransparentFooter from "components/Footers/TransparentFooter.js";
+import HookButtonSwitch from "./test";
 
 function Index() {
   React.useEffect(() => {
@@ -57,6 +58,7 @@ function Index() {
         <div className="wrapper">
           <IndexHeader />
           <ShowAllLesson />
+          <HookButtonSwitch />
           <TransparentFooter />
         </div>
       ) : (

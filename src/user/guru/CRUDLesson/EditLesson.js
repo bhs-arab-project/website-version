@@ -28,9 +28,9 @@ export default function EditLesson() {
   const access_token = guruToken?.token?.token;
 
   const [detailL, setDetailL] = useState();
-  const [pelajaran, setPelajaran] = useState();
-  const [kesulitan, setKesulitan] = useState("mudah");
-  const [deskripsi, setDeskripsi] = useState();
+  const [pelajaran, setPelajaran] = useState(detailL?.pelajaran);
+  const [kesulitan, setKesulitan] = useState(detailL?.kesulitan);
+  const [deskripsi, setDeskripsi] = useState(detailL?.deskripsi);
   const [load, setLoad] = useState(false);
 
   async function fetchData() {
@@ -56,22 +56,21 @@ export default function EditLesson() {
     // eslint-disable-next-line
   }, [id]);
 
-  let bodyFormData = new FormData();
-  bodyFormData.set("pelajaran", pelajaran);
-  bodyFormData.set("tingkatan", kesulitan);
-  bodyFormData.set("deskripsi", deskripsi);
-  bodyFormData.set("guru", guruToken?.user?.name);
-  bodyFormData.set("user_id", JSON.stringify(guruToken?.user?.id));
-
   const handleSubmit = async (e) => {
+    e.preventDefault();
     setLoad(true);
 
     axios({
       method: "put",
       url: `${API_URL}pelajaran/${id}`,
-      data: bodyFormData,
+      data: {
+        pelajaran: pelajaran,
+        tingkatan: kesulitan,
+        deskripsi: deskripsi,
+        guru: guruToken?.user?.name,
+      },
       headers: {
-        "Content-Type": "multipart/form-data",
+        ContentType: "multipart/form-data",
         Accept: "application/json",
         Authorization: `Bearer ${access_token}`,
       },
@@ -83,12 +82,12 @@ export default function EditLesson() {
         //handle success
         console.log(response);
       })
-      .catch(function (response) {
+      .catch(function (error) {
         setLoad(false);
         alert.error(
           <div className="notif">Gagal mengedit Kelas Silahkan Coba Lagi</div>
         );
-        console.log(response);
+        console.log(error.response);
       });
 
     e.preventDefault();
@@ -126,7 +125,7 @@ export default function EditLesson() {
                   <FormGroup check className="form-check-radio ">
                     <Label check>
                       <Input
-                        defaultValue="option1"
+                        defaultValue={detailL?.kesulitan}
                         type="radio"
                         label="mudah"
                         checked={kesulitan === "mudah"}
@@ -141,7 +140,7 @@ export default function EditLesson() {
                     <Label check>
                       <Input
                         defaultChecked
-                        defaultValue="option2"
+                        defaultValue={detailL?.kesulitan}
                         type="radio"
                         label="menengah"
                         checked={kesulitan === "menengah"}
@@ -156,7 +155,7 @@ export default function EditLesson() {
                     <Label check>
                       <Input
                         defaultChecked
-                        defaultValue="option2"
+                        defaultValue={detailL?.kesulitan}
                         name="level"
                         type="radio"
                         label="sulit"
@@ -174,7 +173,7 @@ export default function EditLesson() {
                 <FormGroup>
                   <Label>Deskripsi Kelas</Label>
                   <textarea
-                    value={detailL?.deskripsi}
+                    defaultValue={detailL?.deskripsi}
                     onInput={(e) => setDeskripsi(e.target.value)}
                     class="form-control"
                     rows="5"

@@ -42,7 +42,7 @@ export default function SignUpPage() {
   bodyFormData.set("name", name);
   bodyFormData.set("email", email);
   bodyFormData.set("password", password);
-  bodyFormData.set("role", "teacher");
+  bodyFormData.set("role", "admin");
 
   const handleSubmit = async (e) => {
     setLoggedIn(true);
@@ -63,6 +63,7 @@ export default function SignUpPage() {
       })
       .catch(function (error) {
         setLoggedIn(false);
+        console.log(error.response.data.message);
         alert.error(<div className="notif">{error.response.data.message}</div>);
       });
 

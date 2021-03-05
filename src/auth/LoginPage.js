@@ -62,7 +62,7 @@ export default function LoginPage({ setToken }) {
       console.log("salah");
       swal({
         title: "Gagal Login",
-        text: "Password dan Email Salah!",
+        text: "Password atau Email Salah!",
         icon: "error",
         timer: 2000,
         button: false,

@@ -18,16 +18,13 @@ import {
 } from "reactstrap";
 import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
-import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 import BackComponent from "../CRUDLesson/BackComponent";
-import { Tooltip } from "reactstrap";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import TransparentFooter from "components/Footers/TransparentFooter";
 
 export default function CreateMateri() {
-  const history = useHistory();
   const alert = useAlert();
   const guru = localStorage.getItem("token");
   const guruToken = JSON.parse(guru);
@@ -43,9 +40,7 @@ export default function CreateMateri() {
   const [load, setLoad] = useState(false);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [tooltipOpen, setTooltipOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-  const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
   let filterListL = listLesson.filter(function (listL) {
     // eslint-disable-next-line
@@ -103,7 +98,8 @@ export default function CreateMateri() {
       .then(function (response) {
         setLoggedIn(false);
         alert.success(<div className="notif">Berhasil membuat Bab!</div>);
-        history.push("/");
+        // window.location.href = "#listLesson";
+        // history.push("/");
         //handle success
         console.log(response);
       })

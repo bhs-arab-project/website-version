@@ -1,19 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 
 // reactstrap components
-import { Button, Container, Row, Col } from "reactstrap";
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+  Label,
+  Input,
+  Spinner,
+  FormGroup,
+  Form,
+} from "reactstrap";
 
 // core components
 import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
-const user = localStorage.getItem("token");
-const userJson = JSON.parse(user);
-const roleUser = userJson?.user?.role;
-const userName = userJson?.user?.name;
+import BackComponent from "./guru/CRUDLesson/BackComponent";
+import axios from "axios";
+import { API_URL } from "utils/constants";
+import { useAlert } from "react-alert";
 
-function ProfilePage() {
-  // const [pills, setPills] = React.useState("2");
+function ProfilePage({ setToken }) {
+  const alert = useAlert();
+  const user = localStorage.getItem("token");
+  const userJson = JSON.parse(user);
+  const roleUser = userJson?.user?.role;
+  const userName = userJson?.user?.name;
+  const userEmail = userJson?.user?.email;
+  const access_token = userJson?.token?.token;
+  const id = userJson?.user?.id;
+  const [load, setLoad] = useState(false);
+  const [nama, setNama] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+
   React.useEffect(() => {
     document.body.classList.add("profile-page");
     document.body.classList.add("sidebar-collapse");
@@ -26,17 +48,126 @@ function ProfilePage() {
     };
   }, []);
 
+  async function loginUser(credentials) {
+    return fetch(`${API_URL}login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    }).then((data) => data.json());
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoad(true);
+
+    axios({
+      method: "put",
+      url: `${API_URL}user/${id}`,
+      data: {
+        name: nama,
+        email: email,
+        password: pass,
+        role: roleUser,
+      },
+      headers: {
+        ContentType: "multipart/form-data",
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    })
+      .then(function (response) {
+        setLoad(false);
+        alert.success(<div className="notif">Berhasil mengedit Profil!</div>);
+        //handle success
+        console.log(response);
+      })
+      .catch(function (error) {
+        setLoad(false);
+        alert.error(
+          <div className="notif">Gagal mengedit Profil Silahkan Coba Lagi</div>
+        );
+        console.log(error.response);
+      });
+
+    e.preventDefault();
+  };
+
   return (
     <>
       <IndexNavbar />
       <div className="wrapper">
         <ProfilePageHeader name={userName} roleUser={roleUser} />
         <div className="section">
-          <Container>
+          {/* <Container>
             <div className="button-container">
+              <Link to>
               <Button className="btn-round" color="info" size="lg">
                 Edit Profil
               </Button>
+              </Link>
+            </div>
+          </Container> */}
+          <Container>
+            <BackComponent />
+            <br />
+            <div clasName="mt-2">
+              <h2>Edit Profil Saya</h2>
+              <hr />
+              <Form className="form" onSubmit={handleSubmit}>
+                <Row>
+                  <Col lg="5" sm="10">
+                    <FormGroup>
+                      <Label>Nama</Label>
+                      <Input
+                        defaultValue={userName}
+                        placeholder="Nama"
+                        type="text"
+                        onInput={(e) => setNama(e.target.value)}
+                      ></Input>
+                    </FormGroup>
+                  </Col>
+                  <Col lg="5" sm="10">
+                    <FormGroup>
+                      <Label>Email</Label>
+                      <Input
+                        defaultValue={userEmail}
+                        placeholder="Email"
+                        type="email"
+                        onInput={(e) => setEmail(e.target.value)}
+                      ></Input>
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg="5" sm="10">
+                    <FormGroup>
+                      <Label>Password</Label>
+                      <Input
+                        placeholder="Password"
+                        type="password"
+                        onInput={(e) => setPass(e.target.value)}
+                      ></Input>
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <div>
+                  {load === true ? (
+                    <div className="float-right">
+                      <Spinner></Spinner>
+                    </div>
+                  ) : (
+                    <Button
+                      className="btn-round float-right"
+                      color="info"
+                      size="md"
+                    >
+                      Submit
+                    </Button>
+                  )}
+                </div>
+              </Form>
             </div>
           </Container>
           {roleUser === user ? (

@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import React from "react";
 
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Home from "./user/Home.js";
 import LoginPage from "auth/LoginPage";
 import ForgotPassword from "auth/forgotPassword";
@@ -65,7 +65,7 @@ function App() {
             )}
           />
         )}
-        {!roles === roleUser && <NotFound />}
+        {!roles === roleUser && <Redirect to="/" />}
       </>
     );
   }
@@ -160,6 +160,7 @@ function App() {
               path="/profile-page"
               component={ProfilePage}
               userRole={roleUser}
+              setToken={setToken}
             />
             <Route exact path="/materi/:id" component={Materi} />
             <Route path="/forgot-password" render={() => <ForgotPassword />} />

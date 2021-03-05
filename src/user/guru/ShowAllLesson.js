@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import Col from "reactstrap/lib/Col";
 import Button from "reactstrap/lib/Button";
 import swal from "sweetalert";
+import Table from "reactstrap/lib/Table";
+import Switch from "react-bootstrap-switch";
 
 const ShowAllLesson = () => {
   const [load, setLoad] = useState(true);
@@ -34,6 +36,10 @@ const ShowAllLesson = () => {
         let message = error.response;
         console.log(message);
       });
+  }
+
+  function switchH() {
+    console.log("pencet");
   }
 
   async function deleteLesson(id) {
@@ -85,11 +91,14 @@ const ShowAllLesson = () => {
 
   return (
     <>
-      <div className="section section-tabs">
+      <div className="section section-tabs" id="listLesson">
         <Container>
           <Row className="d-flex justify-space-between">
+            <h1>Semua Kelas</h1>
+            <hr />
             <Col>
-              <h2>Semua Kelas</h2>
+              <Button color="info">Kelas Saya</Button>
+              <Button color="info">Semua Kelas</Button>
             </Col>
             <Col>
               <Link to="/create-lesson">
@@ -108,7 +117,7 @@ const ShowAllLesson = () => {
                 </Button>
               </Link>
             </Col>
-            <table class="table table-hover">
+            <Table class="table-hover">
               <thead>
                 <tr>
                   <th>#</th>
@@ -120,8 +129,28 @@ const ShowAllLesson = () => {
                   <th class="text-center">Aksi</th>
                 </tr>
               </thead>
-              {load === false
-                ? listTable?.map((list, index) => {
+              {load === false ? (
+                listTable.length === 0 ? (
+                  <div>
+                    <Row>
+                      <Col>
+                        <img
+                          width="250rem"
+                          alt="..."
+                          className="rounded"
+                          src={require("assets/img/books.png")}
+                        ></img>
+                      </Col>
+                      <Col>
+                        <p className=" font-weight-bold text-dark">
+                          Belum Ada Yang Membuat Kelas, Buat Kelas Pertamamu!{" "}
+                          <br /> - Al-Qolam
+                        </p>
+                      </Col>
+                    </Row>
+                  </div>
+                ) : (
+                  listTable?.map((list, index) => {
                     return list?.length === 0 ? (
                       <span>hsius</span>
                     ) : (
@@ -200,8 +229,11 @@ const ShowAllLesson = () => {
                       </tbody>
                     );
                   })
-                : BootstrapCardDataTable()}
-            </table>
+                )
+              ) : (
+                BootstrapCardDataTable()
+              )}
+            </Table>
           </Row>
         </Container>
       </div>
