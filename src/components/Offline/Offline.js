@@ -1,7 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Button from "reactstrap/lib/Button";
-import NotFound from "./../NotFound/notFound.css";
 
 const Offline = () => {
   const user = localStorage.getItem("token");
@@ -10,8 +7,8 @@ const Offline = () => {
   return (
     <React.Fragment>
       <div id="notfound">
-        <div class="notfound">
-          <div class="notfound-404">
+        <div className="notfound">
+          <div className="notfound-404">
             <img
               alt="..."
               className="rounded"

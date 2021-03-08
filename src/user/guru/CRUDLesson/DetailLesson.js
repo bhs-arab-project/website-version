@@ -99,14 +99,14 @@ const DetailLesson = () => {
           <Link to="/">
             <Button color="danger">
               {" "}
-              <i class="now-ui-icons arrows-1_minimal-left"></i> Kembali
+              <i className="now-ui-icons arrows-1_minimal-left"></i> Kembali
             </Button>
           </Link>
           {load === false ? (
             detailLesson?.chapter?.map((list, index) => {
               return (
-                <div class="card rounded" key={index}>
-                  <div class="card-body">
+                <div className="card rounded" key={index}>
+                  <div className="card-body">
                     <div className="row">
                       <div className="col-md-8 col-xs-2 col-sm-3 d-inline">
                         <div className="row">
@@ -159,6 +159,15 @@ const DetailLesson = () => {
           ) : (
             <MyBulletListLoader />
           )}
+          <div className="text-center">
+            <Link
+              to={{
+                pathname: "/quiz",
+              }}
+            >
+              <Button color="info">Mulai Ujian</Button>
+            </Link>
+          </div>
         </Container>
       </div>
       <TransparentFooter />

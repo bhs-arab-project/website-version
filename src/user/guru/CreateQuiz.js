@@ -20,7 +20,6 @@ import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
-import { Tooltip } from "reactstrap";
 import TransparentFooter from "components/Footers/TransparentFooter";
 import BackComponent from "./CRUDLesson/BackComponent";
 
@@ -32,30 +31,27 @@ export default function CreateQuiz() {
   const access_token = guruToken?.token?.token;
 
   const [valButton, setValB] = useState("Pilih Kelas");
-  const [questionText, setQuestionT] = useState();
-  const [lessonId, setLessonId] = useState();
-  const [lesson, setLesson] = useState();
-  const [answer, setAnswer] = useState(["test"]);
+  const [quizId, setQuizId] = useState();
+  const [answer, setAnswer] = useState(["awal"]);
+  const [answerOption, setAnswerOption] = useState("");
 
-  const [listLesson, setListLesson] = useState();
+  const [listQuiz, setListQuiz] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const [load, setLoad] = useState(false);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [tooltipOpen, setTooltipOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-  const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
   async function fetchData() {
     axios
-      .get(`${API_URL}pelajaran`, {
+      .get(`${API_URL}quiz`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       })
       .then((response) => {
         setLoad(false);
-        setListLesson(response.data);
+        setListQuiz(response.data);
       })
       .catch((error) => {
         let message = error.response;
@@ -69,49 +65,51 @@ export default function CreateQuiz() {
     // eslint-disable-next-line
   }, []);
 
-  let bodyFormData = new FormData();
-  bodyFormData.set("lesson_id", lessonId);
-  bodyFormData.set("pelajaran", lesson);
-  bodyFormData.set("question_text", questionText);
+  // let bodyFormData = new FormData();
+  // answer.forEach((item) => {
+  //   bodyFormData.append("answer_option[]", item);
+  // });
 
-  for (var pair of bodyFormData.entries()) {
-    console.log(pair[0] + ", " + pair[1]);
-  }
+  // for (var pair of bodyFormData.entries()) {
+  //   console.log(pair[0] + ", " + pair[1]);
+  // }
 
   const handleSubmit = async (e) => {
     setLoggedIn(true);
 
     axios({
       method: "post",
-      url: `${API_URL}quiz`,
-      data: bodyFormData,
+      url: `${API_URL}quiz/${quizId}`,
+      data: answer,
       headers: {
         "Content-Type": "multipart/form-data",
-        Accept: "application/json",
+        Accept: "application/x-www-form-urlencoded",
         Authorization: `Bearer ${access_token}`,
       },
     })
       .then(function (response) {
         setLoggedIn(false);
-        alert.success(<div className="notif">Berhasil membuat Soal Quiz!</div>);
+        alert.success(
+          <div className="notif">Berhasil membuat Jawaban Quiz!</div>
+        );
         history.push("/");
         //handle success
         console.log(response);
       })
       .catch(function (response) {
         setLoggedIn(false);
-        alert.error(
-          <div className="notif">Gagal membuat Soal Quiz {response}</div>
-        );
-        console.log(response);
+        alert.error(<div className="notif">Gagal membuat Jawaban Quiz</div>);
+        console.log(response.data);
       });
 
     e.preventDefault();
   };
 
   const handleAnswer = () => {
-    setAnswer([...answer, 1]);
+    setAnswer([...answer, answerOption]);
   };
+
+  console.log("id", quizId);
 
   return (
     <>
@@ -136,45 +134,31 @@ export default function CreateQuiz() {
                       <DropdownToggle caret>{valButton}</DropdownToggle>
                       <DropdownMenu>
                         {load === false ? (
-                          listLesson?.map((list, index) => {
-                            return list.user_id === guruToken?.user?.id ? (
-                              <DropdownItem
-                                key={index}
-                                checked={lessonId === list.id}
-                                value={list.id}
-                                onClick={() => {
-                                  setLessonId(list.id);
-                                  setValB(list.pelajaran);
-                                  setLesson(list.pelajaran);
-                                }}
-                              >
-                                {list.pelajaran}
-                              </DropdownItem>
-                            ) : (
-                              <div>
-                                <div id="DisabledAutoHideExample">
-                                  <DropdownItem
-                                    className="text-danger"
-                                    disabled
-                                  >
-                                    {list.pelajaran}
-                                  </DropdownItem>
-                                </div>
-                                {/* <p>Somewhere in here is a <span style={{textDecoration: "underline", color:"blue"}} href="#" id="TooltipExample">tooltip</span>.</p> */}
-                                <Tooltip
-                                  placement="right"
-                                  isOpen={tooltipOpen}
-                                  target="DisabledAutoHideExample"
-                                  toggle={toggleTooltip}
-                                  className="text-danger"
+                          listQuiz?.length === 0 ? (
+                            <DropdownItem text className="text-danger" disabled>
+                              Buat Pertanyaan Terlebih Dahulu
+                            </DropdownItem>
+                          ) : (
+                            listQuiz?.map((list, index) => {
+                              return (
+                                <DropdownItem
+                                  key={index}
+                                  checked={quizId === list.id}
+                                  value={list.id}
+                                  onClick={() => {
+                                    setQuizId(list.id);
+                                    setValB(list.question_text);
+                                  }}
                                 >
-                                  Bukan Kelas Anda
-                                </Tooltip>
-                              </div>
-                            );
-                          })
+                                  {list.question_text}
+                                </DropdownItem>
+                              );
+                            })
+                          )
                         ) : (
-                          <DropdownItem text>Loading...</DropdownItem>
+                          <DropdownItem text disabled>
+                            Loading...
+                          </DropdownItem>
                         )}
                       </DropdownMenu>
                     </Dropdown>
@@ -183,7 +167,7 @@ export default function CreateQuiz() {
                     </span>
                   </FormGroup>
                 </Col>
-                <Col lg="5" sm="10">
+                {/* <Col lg="5" sm="10">
                   <FormGroup>
                     <Label>Soal Quiz</Label>
                     <Input
@@ -195,14 +179,14 @@ export default function CreateQuiz() {
                       onInput={(e) => setQuestionT(e.target.value)}
                     ></Input>
                   </FormGroup>
-                  <Button onClick={handleAnswer}>Tambah</Button>
-                </Col>
+                </Col> */}
+                <Button onClick={handleAnswer}>Tambah</Button>
                 {answer.map((list, index) => (
                   <span key={index}>
                     <Input
-                      required
                       name={list}
                       placeholder="Jawaban"
+                      onInput={(e) => setAnswerOption(e.target.value)}
                       type="text"
                     ></Input>
                   </span>

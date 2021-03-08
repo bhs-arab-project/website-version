@@ -17,7 +17,7 @@ function ProfilePageHeader() {
   const user_id = userJson?.user?.id;
   const name = userJson?.user?.name;
   const [listL, setListL] = useState();
-  const [listM, setListM] = useState();
+  const [load, setLoad] = useState(false);
 
   async function fetchData() {
     axios
@@ -27,6 +27,7 @@ function ProfilePageHeader() {
         },
       })
       .then((response) => {
+        setLoad(false);
         setListL(response.data);
       })
       .catch((error) => {
@@ -57,6 +58,7 @@ function ProfilePageHeader() {
   // });
 
   React.useEffect(() => {
+    setLoad(true);
     fetchData();
     // fetchDataM();
     // eslint-disable-next-line
@@ -111,7 +113,15 @@ function ProfilePageHeader() {
           ) : roleUser === "teacher" ? (
             <div className="content">
               <div className="social-description">
-                <h2>{filterL?.length}</h2>
+                {load === false ? (
+                  filterL?.length === 0 ? (
+                    <p>-</p>
+                  ) : (
+                    <h2>{filterL?.length}</h2>
+                  )
+                ) : (
+                  <p className="text-secondary">memuat...</p>
+                )}
                 <p>Kelas</p>
               </div>
             </div>

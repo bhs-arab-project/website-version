@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import loaderListMateri from "components/loader/loaderListMateri";
+import { withAuthUser } from "./../../auth/RouteAccess";
 
 const ListMateri = () => {
   const [load, setLoad] = useState(true);
@@ -99,11 +100,11 @@ const ListMateri = () => {
                               ></img>
                             </Col>
                             <Col xs="auto">
-                              <div class="pl-0 pr-0 pb-1">
-                                <h6 class="card-title text-left card-trainer-name">
+                              <div className="pl-0 pr-0 pb-1">
+                                <h6 className="card-title text-left card-trainer-name">
                                   {pelajaran.guru}
                                 </h6>{" "}
-                                <h6 class="card-title text-left card-trainer-tipe text-info">
+                                <h6 className="card-title text-left card-trainer-tipe text-info">
                                   Pengajar
                                 </h6>
                               </div>
@@ -111,7 +112,7 @@ const ListMateri = () => {
                           </Row>
                           <Row className="d-flex justify-content-end">
                             <Col xs="auto" className="mt-3">
-                              <i class="now-ui-icons files_single-copy-04 "></i>
+                              <i className="now-ui-icons files_single-copy-04 "></i>
                               <span>
                                 {" "}
                                 :{" "}
@@ -148,4 +149,4 @@ const ListMateri = () => {
   );
 };
 
-export default ListMateri;
+export default withAuthUser(ListMateri);

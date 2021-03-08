@@ -7,6 +7,7 @@ import axios from "axios";
 import { BulletList } from "react-content-loader";
 import AvatarWithText from "../../components/loader/loaderAvatarWithText";
 import TransparentFooter from "components/Footers/TransparentFooter";
+import { withAuthUser } from "./../../auth/RouteAccess";
 
 const MyBulletListLoader = () => <BulletList />;
 
@@ -61,7 +62,7 @@ const BabDetail = () => {
           <div className="content-center">
             <Container>
               {load === false ? (
-                <div class="media">
+                <div className="media">
                   <div className="align-self-center mr-4 mt-5 ">
                     <img
                       width="100rem"
@@ -71,7 +72,7 @@ const BabDetail = () => {
                     ></img>
                     <div>{detailLesson.guru}</div>
                   </div>
-                  <div class="media-body text-left ">
+                  <div className="media-body text-left ">
                     <h1 className="title">{pelajaran}</h1>
                     <div style={{ fontSize: "0.9rem" }}>
                       {detailLesson.deskripsi}
@@ -104,8 +105,8 @@ const BabDetail = () => {
             ) : (
               detailLesson?.chapter?.map((list, index) => {
                 return (
-                  <div class="card rounded" key={index}>
-                    <div class="card-body">
+                  <div className="card rounded" key={index}>
+                    <div className="card-body">
                       <div className="row">
                         <div className="col-md-10 col-xs-2 col-sm-3 d-inline">
                           <div className="row">
@@ -154,4 +155,4 @@ const BabDetail = () => {
   );
 };
 
-export default BabDetail;
+export default withAuthUser(BabDetail);

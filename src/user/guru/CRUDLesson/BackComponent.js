@@ -8,8 +8,8 @@ const BackComponent = () => {
     <Row>
       <Col>
         <Link to="/">
-          <button type="button" rel="tooltip" class="btn btn-danger">
-            <i class="now-ui-icons arrows-1_minimal-left"></i> Kembali
+          <button type="button" rel="tooltip" className="btn btn-danger">
+            <i className="now-ui-icons arrows-1_minimal-left"></i> Kembali
           </button>
         </Link>
       </Col>

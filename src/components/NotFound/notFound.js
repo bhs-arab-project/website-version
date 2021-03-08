@@ -7,8 +7,8 @@ const NotFound = () => {
   return (
     <React.Fragment>
       <div id="notfound">
-        <div class="notfound">
-          <div class="notfound-404">
+        <div className="notfound">
+          <div className="notfound-404">
             <img
               alt="..."
               className="rounded"

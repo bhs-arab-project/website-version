@@ -12,8 +12,9 @@ import CardBody from "reactstrap/lib/CardBody";
 import axios from "axios";
 import { API_URL } from "utils/constants";
 import DotLoad from "components/loader/dotLoader";
+import { withAuthTeacher, withAuthUser } from "./../../../auth/RouteAccess";
 
-export default function Quiz(state) {
+function Quiz(state) {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
@@ -23,12 +24,12 @@ export default function Quiz(state) {
   const user = localStorage.getItem("token");
   const userid = JSON.parse(user);
   const access_token = userid?.token?.token;
-  const lesson_id = state.location.state;
+  // const lesson_id = state.location.state;
   const MyBulletListLoader = () => <DotLoad />;
 
   let filterQ = questions.filter(function (oneQuiz) {
     // eslint-disable-next-line
-    return oneQuiz.lesson_id == lesson_id;
+    return oneQuiz.lesson_id == 1;
   });
 
   async function fetchData() {
@@ -81,6 +82,8 @@ export default function Quiz(state) {
       }
     });
   }
+  const answerOption = JSON.parse(filterQ[currentQuestion]?.answer_options);
+  console.log(answerOption);
   return (
     <div>
       {load === false ? (
@@ -101,7 +104,7 @@ export default function Quiz(state) {
             </Link>
           </div>
         ) : showScore ? (
-          <div class="section container">
+          <div className="section container">
             <Card>
               <CardBody>
                 <CardTitle>
@@ -162,22 +165,20 @@ export default function Quiz(state) {
                 <div className="question-text">
                   <h5>{filterQ[currentQuestion]?.question_text}</h5>
                 </div>
-                {filterQ[currentQuestion]?.answer_option.map(
-                  (answerOption, index) => {
-                    return (
-                      <Row className="ml-1" key={index}>
-                        <Button
-                          className="btn-block btn-info"
-                          onClick={() =>
-                            handleAnswerOptionClick(answerOption.is_correct)
-                          }
-                        >
-                          {answerOption.answer_text}
-                        </Button>
-                      </Row>
-                    );
-                  }
-                )}
+                {/* {answerOption.map((answerOption, index) => {
+                  return (
+                    <Row className="ml-1" key={index}>
+                      <Button
+                        className="btn-block btn-info"
+                        onClick={() =>
+                          handleAnswerOptionClick(answerOption.is_correct)
+                        }
+                      >
+                        {answerOption.answer_text}
+                      </Button>
+                    </Row>
+                  );
+                })} */}
                 <Button color="danger" onClick={() => confirmCancel()}>
                   Batalkan Quiz
                 </Button>
@@ -194,3 +195,5 @@ export default function Quiz(state) {
     </div>
   );
 }
+
+export default withAuthTeacher(Quiz);

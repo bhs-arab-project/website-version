@@ -175,7 +175,7 @@ export default function EditLesson() {
                   <textarea
                     defaultValue={detailL?.deskripsi}
                     onInput={(e) => setDeskripsi(e.target.value)}
-                    class="form-control"
+                    className="form-control"
                     rows="5"
                   ></textarea>
                 </FormGroup>

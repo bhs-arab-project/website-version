@@ -46,10 +46,10 @@ function MateriPage() {
     <>
       {load === false ? (
         <div className="bungkus">
-          <div class="konten">
-            <nav class="baratas navbar-expand-lg navbar-light bg-light">
+          <div className="konten">
+            <nav className="baratas navbar-expand-lg navbar-light bg-light">
               <button
-                class="navbar-toggler float-right mt-2"
+                className="navbar-toggler float-right mt-2"
                 type="button"
                 data-toggle="collapse"
                 data-target="#navbarNav"
@@ -57,59 +57,59 @@ function MateriPage() {
                 aria-expanded="false"
                 aria-label="Toggle navigation"
               >
-                <span class="navbar-toggler-icon"></span>
+                <span className="navbar-toggler-icon"></span>
               </button>
 
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                  <li class="nav-item mt-2">
+              <div className="collapse navbar-collapse" id="navbarNav">
+                <ul className="navbar-nav ml-auto">
+                  <li className="nav-item mt-2">
                     {roleUser === "user" ? (
                       <Link to="/bab" className="text-decoration-none">
-                        <i class="now-ui-icons files_single-copy-04 text-black"></i>{" "}
+                        <i className="now-ui-icons files_single-copy-04 text-black"></i>{" "}
                         <span className="text-black">Bab Materi</span>
                       </Link>
                     ) : (
                       <span></span>
                     )}
                   </li>
-                  <li class="nav-item mt-2">
+                  <li className="nav-item mt-2">
                     <Link to="/profile-page" className="text-decoration-none">
-                      <i class="now-ui-icons now-ui-icons users_single-02 text-black"></i>{" "}
+                      <i className="now-ui-icons now-ui-icons users_single-02 text-black"></i>{" "}
                       <span className="text-black">Profil</span>
                     </Link>
                   </li>
                 </ul>
               </div>
             </nav>
-            <div class="konten-bungkus">
+            <div className="konten-bungkus">
               <h1>{materi?.judul_bab}</h1>
               <hr />
               <p>{ReactHtmlParser(materi?.materi)}</p>
-              <div class="line "></div>
+              <div className="line "></div>
               <div className="text-right  d-flex justify-content-between tombol-navigasi">
                 {roleUser === "user" ? (
                   <Link to={`/bab`}>
                     <Button color="danger">
-                      <i class="now-ui-icons arrows-1_minimal-left"></i> Kembali
-                      Ke Bab
+                      <i className="now-ui-icons arrows-1_minimal-left"></i>{" "}
+                      Kembali Ke Bab
                     </Button>
                   </Link>
                 ) : (
                   <Link to={`/`}>
                     <Button color="danger">
-                      <i class="now-ui-icons arrows-1_minimal-left"></i> Kembali
-                      Ke Beranda
+                      <i className="now-ui-icons arrows-1_minimal-left"></i>{" "}
+                      Kembali Ke Beranda
                     </Button>
                   </Link>
                 )}
 
                 {/* <Button color="info">
-                  <i class="now-ui-icons arrows-1_minimal-left"></i> Materi
+                  <i className="now-ui-icons arrows-1_minimal-left"></i> Materi
                   Sebelumnya
                 </Button>
                 <Button color="info">
                   Lanjut Materi{" "}
-                  <i class="now-ui-icons arrows-1_minimal-right"></i>
+                  <i className="now-ui-icons arrows-1_minimal-right"></i>
                 </Button> */}
               </div>
             </div>

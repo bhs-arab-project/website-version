@@ -14,7 +14,6 @@ import {
 } from "reactstrap";
 import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
-import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 import BackComponent from "../guru/CRUDLesson/BackComponent";
 import TransparentFooter from "components/Footers/TransparentFooter";
@@ -25,7 +24,6 @@ export default function CreateTeacher() {
   const [password, setPassword] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const alert = useAlert();
-  const history = useHistory();
 
   let bodyFormData = new FormData();
   bodyFormData.set("name", name);
@@ -49,9 +47,9 @@ export default function CreateTeacher() {
       .then(function (response) {
         setLoggedIn(false);
         alert.success(
-          <div className="notif">Registrasi Berhasil, Silahkan Cek Email</div>
+          <div className="notif">Registrasi Guru Berhasil! Cek Email Guru</div>
         );
-        history.push("/");
+        window.location.href = "/#sectionList";
       })
       .catch(function (response) {
         setLoggedIn(false);
@@ -105,7 +103,6 @@ export default function CreateTeacher() {
                   <FormGroup>
                     <Label>Email</Label>
                     <Input
-                      defaultValue=""
                       placeholder="Email"
                       type="email"
                       onInput={(e) => setEmail(e.target.value)}
@@ -116,9 +113,9 @@ export default function CreateTeacher() {
                   <FormGroup>
                     <Label>Password</Label>
                     <Input
-                      defaultValue=""
+                      id="pw"
                       placeholder="password"
-                      type="text"
+                      type="password"
                       onInput={(e) => setPassword(e.target.value)}
                     ></Input>
                   </FormGroup>

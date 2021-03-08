@@ -15,12 +15,10 @@ import {
 } from "reactstrap";
 import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
-import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 import TransparentFooter from "components/Footers/TransparentFooter";
 
 export default function CreateLesson() {
-  const history = useHistory();
   const alert = useAlert();
   const guru = localStorage.getItem("token");
   const guruToken = JSON.parse(guru);
@@ -46,7 +44,7 @@ export default function CreateLesson() {
       url: `${API_URL}pelajaran`,
       data: bodyFormData,
       headers: {
-        "Content-Type": "multipart/form-data",
+        ContentType: "multipart/form-data",
         Accept: "application/json",
         Authorization: `Bearer ${access_token}`,
       },
@@ -54,7 +52,8 @@ export default function CreateLesson() {
       .then(function (response) {
         setLoggedIn(false);
         alert.success(<div className="notif">Berhasil membuat Kelas!</div>);
-        history.push("/");
+        window.location.href = "/#section1";
+        // history.push("/#section1");
         //handle success
         console.log(response);
       })
@@ -150,7 +149,7 @@ export default function CreateLesson() {
                   <Label>Deskripsi Kelas</Label>
                   <textarea
                     onInput={(e) => setDeskripsi(e.target.value)}
-                    class="form-control"
+                    className="form-control"
                     rows="5"
                   ></textarea>
                 </FormGroup>

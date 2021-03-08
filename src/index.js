@@ -28,8 +28,8 @@ import "assets/demo/nucleo-icons-page-styles.css?v=1.4.0";
 // pages for this kit
 
 ReactDOM.render(
-  <React.StrictMode>
+  <React.Fragment>
     <App />,
-  </React.StrictMode>,
+  </React.Fragment>,
   document.getElementById("root")
 );

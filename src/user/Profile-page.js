@@ -48,16 +48,6 @@ function ProfilePage({ setToken }) {
     };
   }, []);
 
-  async function loginUser(credentials) {
-    return fetch(`${API_URL}login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    }).then((data) => data.json());
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoad(true);
@@ -175,17 +165,17 @@ function ProfilePage({ setToken }) {
               <h2>Sertifikat</h2>
               <Row>
                 <Col md="6" xl="4">
-                  <div class="media">
+                  <div className="media">
                     <img
                       width="35%"
                       alt="..."
                       className="rounded align-self-center mr-3"
                       src={require("assets/img/cert-icon.png")}
                     ></img>
-                    <div class="media-body mt-2">
+                    <div className="media-body mt-2">
                       <h5>Nahwu</h5>
-                      <div class="date">Lulus : 18 April, 2020</div>
-                      <div class="download">
+                      <div className="date">Lulus : 18 April, 2020</div>
+                      <div className="download">
                         Download :
                         <Button className="btn-link" color="primary">
                           PDF
@@ -199,17 +189,17 @@ function ProfilePage({ setToken }) {
                   </div>
                 </Col>
                 <Col md="6" xl="4">
-                  <div class="media">
+                  <div className="media">
                     <img
                       width="35%"
                       alt="..."
                       className="rounded align-self-center mr-3"
                       src={require("assets/img/cert-icon.png")}
                     ></img>
-                    <div class="media-body mt-2">
+                    <div className="media-body mt-2">
                       <h5>Nahwu</h5>
-                      <div class="date">Lulus : 18 April, 2020</div>
-                      <div class="download">
+                      <div className="date">Lulus : 18 April, 2020</div>
+                      <div className="download">
                         Download :
                         <Button className="btn-link" color="primary">
                           PDF
@@ -223,17 +213,17 @@ function ProfilePage({ setToken }) {
                   </div>
                 </Col>
                 <Col md="6" xl="4">
-                  <div class="media">
+                  <div className="media">
                     <img
                       width="35%"
                       alt="..."
                       className="rounded align-self-center mr-3"
                       src={require("assets/img/cert-icon.png")}
                     ></img>
-                    <div class="media-body mt-2">
+                    <div className="media-body mt-2">
                       <h5>Nahwu</h5>
-                      <div class="date">Lulus : 18 April, 2020</div>
-                      <div class="download">
+                      <div className="date">Lulus : 18 April, 2020</div>
+                      <div className="download">
                         Download :
                         <Button className="btn-link" color="primary">
                           PDF
@@ -247,17 +237,17 @@ function ProfilePage({ setToken }) {
                   </div>
                 </Col>
                 <Col md="6" xl="4">
-                  <div class="media">
+                  <div className="media">
                     <img
                       width="35%"
                       alt="..."
                       className="rounded align-self-center mr-3"
                       src={require("assets/img/cert-icon.png")}
                     ></img>
-                    <div class="media-body mt-2">
+                    <div className="media-body mt-2">
                       <h5>Nahwu</h5>
-                      <div class="date">Lulus : 18 April, 2020</div>
-                      <div class="download">
+                      <div className="date">Lulus : 18 April, 2020</div>
+                      <div className="download">
                         Download :
                         <Button className="btn-link" color="primary">
                           PDF

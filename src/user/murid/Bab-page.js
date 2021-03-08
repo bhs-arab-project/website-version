@@ -4,6 +4,7 @@ import React from "react";
 import ListMateri from "user/murid/ListMateri";
 import DetailHeader from "components/Headers/DetailHeader.js";
 import TransparentFooter from "components/Footers/TransparentFooter";
+import { withAuthUser } from "./../../auth/RouteAccess";
 
 function LandingPage() {
   React.useEffect(() => {
@@ -32,4 +33,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default withAuthUser(LandingPage);

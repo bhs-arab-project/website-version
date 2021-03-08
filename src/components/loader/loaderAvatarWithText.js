@@ -2,7 +2,7 @@ import React from "react";
 import ContentLoader from "react-content-loader";
 
 const AvatarWithText = (props) => (
-  <div class="media">
+  <div className="media">
     <div className="align-self-center mr-4 mt-5 ">
       <ContentLoader viewBox="0 0 400 160" height={160} width={400} {...props}>
         <rect x="110" y="21" rx="4" ry="4" width="254" height="6" />

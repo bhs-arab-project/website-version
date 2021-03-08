@@ -21,7 +21,6 @@ import { API_URL } from "utils/constants";
 import { useHistory, useParams } from "react-router-dom";
 import { useAlert } from "react-alert";
 import BackComponent from "../CRUDLesson/BackComponent";
-import { Tooltip } from "reactstrap";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import TransparentFooter from "components/Footers/TransparentFooter";
@@ -33,9 +32,10 @@ export default function EditMateri() {
   const guru = localStorage.getItem("token");
   const guruToken = JSON.parse(guru);
   const access_token = guruToken?.token?.token;
+  const userId = guruToken?.user?.id;
 
   const [detailM, setDetailM] = useState();
-  const [valButton, setValB] = useState("Pilih Kelas");
+  const [valButton, setValB] = useState(detailM?.pelajaran);
   const [judulMateri, setJudulMateri] = useState();
   const [materi, setMateri] = useState();
   const [lessonId, setLessonId] = useState();
@@ -44,9 +44,12 @@ export default function EditMateri() {
   const [load, setLoad] = useState(false);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [tooltipOpen, setTooltipOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-  const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
+
+  let filterListL = listLesson?.filter(function (listL) {
+    // eslint-disable-next-line
+    return listL.user_id == userId;
+  });
 
   async function fetchBab() {
     axios
@@ -100,14 +103,21 @@ export default function EditMateri() {
   }
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
     setLoggedIn(true);
 
     axios({
       method: "put",
       url: `${API_URL}bab/${id}`,
-      data: bodyFormData,
+      data: {
+        lesson_id: lessonId,
+        user_id: userId,
+        judul_bab: judulMateri,
+        materi: materi,
+      },
       headers: {
-        "Content-Type": "multipart/form-data",
+        ContentType: "multipart/form-data",
         Accept: "application/json",
         Authorization: `Bearer ${access_token}`,
       },
@@ -124,7 +134,7 @@ export default function EditMateri() {
         alert.error(
           <div className="notif">Gagal mengedit Bab Silahkan Coba Lagi</div>
         );
-        console.log(error.data);
+        console.log(error.response);
       });
 
     e.preventDefault();
@@ -153,44 +163,31 @@ export default function EditMateri() {
                       <DropdownToggle caret>{valButton}</DropdownToggle>
                       <DropdownMenu>
                         {load === false ? (
-                          listLesson?.map((list, index) => {
-                            return list.user_id === guruToken?.user?.id ? (
-                              <DropdownItem
-                                key={index}
-                                checked={lessonId === list.id}
-                                value={list.id}
-                                onClick={() => {
-                                  setLessonId(list.id);
-                                  setValB(list.pelajaran);
-                                }}
-                              >
-                                {list.pelajaran}
-                              </DropdownItem>
-                            ) : (
-                              <div>
-                                <div id="DisabledAutoHideExample">
-                                  <DropdownItem
-                                    className="text-danger"
-                                    disabled
-                                  >
-                                    {list.pelajaran}
-                                  </DropdownItem>
-                                </div>
-                                {/* <p>Somewhere in here is a <span style={{textDecoration: "underline", color:"blue"}} href="#" id="TooltipExample">tooltip</span>.</p> */}
-                                <Tooltip
-                                  placement="right"
-                                  isOpen={tooltipOpen}
-                                  target="DisabledAutoHideExample"
-                                  toggle={toggleTooltip}
-                                  className="text-danger"
+                          filterListL?.length === 0 ? (
+                            <DropdownItem text className="text-danger" disabled>
+                              Buat Kelas Terlebih Dahulu
+                            </DropdownItem>
+                          ) : (
+                            filterListL?.map((list, index) => {
+                              return (
+                                <DropdownItem
+                                  key={index}
+                                  checked={lessonId === list.id}
+                                  value={list.id}
+                                  onClick={() => {
+                                    setLessonId(list.id);
+                                    setValB(list.pelajaran);
+                                  }}
                                 >
-                                  Bukan Kelas Anda
-                                </Tooltip>
-                              </div>
-                            );
-                          })
+                                  {list.pelajaran}
+                                </DropdownItem>
+                              );
+                            })
+                          )
                         ) : (
-                          <DropdownItem text>Loading...</DropdownItem>
+                          <DropdownItem text disabled>
+                            Loading...
+                          </DropdownItem>
                         )}
                       </DropdownMenu>
                     </Dropdown>
@@ -203,7 +200,9 @@ export default function EditMateri() {
                   <FormGroup>
                     <Label>Judul Materi</Label>
                     <Input
-                      value={detailM?.judul_bab}
+                      // data={detailM?.judul_bab}
+                      defaultValue={detailM?.judul_bab}
+                      // value={detailM?.judul_bab}
                       required
                       oninvalid="Judul Materi Harus di isi"
                       onvalid="this.setCustomValidity('')"

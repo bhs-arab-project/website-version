@@ -10,10 +10,10 @@ import IndexHeader from "components/Headers/IndexHeader.js";
 import Tabs from "./murid/ListMateri.js";
 
 import "../styles.css";
-import ShowAllUsers from "user/admin/showAllUsers.js";
-import ShowAllLesson from "./guru/ShowAllLesson.js";
 import TransparentFooter from "components/Footers/TransparentFooter.js";
-import HookButtonSwitch from "./test";
+import ShowAllUsersBeta from "./admin/ShowAllTeachers.js";
+import ShowAllLessonBeta from "./guru/ShowAllLesson2.js";
+import ListControl from "./admin/ListControl.js";
 
 function Index() {
   React.useEffect(() => {
@@ -39,7 +39,7 @@ function Index() {
           <div className="main">
             <div className="section">
               <Container>
-                <blockquote class="blockquote text-center text-info border-0">
+                <blockquote className="blockquote text-center text-info border-0">
                   <p id="arab">
                     اُطْلُبِ العِلْمَ مِنَ الـمَهْدِ إِلَى اللَّحْدِ
                   </p>
@@ -57,14 +57,14 @@ function Index() {
       ) : role === "teacher" ? (
         <div className="wrapper">
           <IndexHeader />
-          <ShowAllLesson />
-          <HookButtonSwitch />
+          <ShowAllLessonBeta />
+          {/* <HookButtonSwitch /> */}
           <TransparentFooter />
         </div>
       ) : (
         <div className="wrapper">
           <IndexHeader />
-          <ShowAllUsers />
+          <ListControl />
           <TransparentFooter />
         </div>
       )}

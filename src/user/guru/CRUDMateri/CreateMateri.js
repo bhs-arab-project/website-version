@@ -78,9 +78,9 @@ export default function CreateMateri() {
   bodyFormData.set("judul_bab", judulMateri);
   bodyFormData.set("materi", materi);
 
-  for (var pair of bodyFormData.entries()) {
-    console.log(pair[0] + ", " + pair[1]);
-  }
+  // for (var pair of bodyFormData.entries()) {
+  //   console.log(pair[0] + ", " + pair[1]);
+  // }
 
   const handleSubmit = async (e) => {
     setLoggedIn(true);
@@ -90,7 +90,7 @@ export default function CreateMateri() {
       url: `${API_URL}bab`,
       data: bodyFormData,
       headers: {
-        "Content-Type": "multipart/form-data",
+        ContentType: "multipart/form-data",
         Accept: "application/json",
         Authorization: `Bearer ${access_token}`,
       },
@@ -98,7 +98,7 @@ export default function CreateMateri() {
       .then(function (response) {
         setLoggedIn(false);
         alert.success(<div className="notif">Berhasil membuat Bab!</div>);
-        // window.location.href = "#listLesson";
+        window.location.href = "/#section1";
         // history.push("/");
         //handle success
         console.log(response);

@@ -61,17 +61,15 @@ function IndexNavbar() {
       <Navbar className={"fixed-top " + navbarColor} expand="lg" color="info">
         <Container>
           <div className="navbar-translate">
-            <Link to="/">
-              <NavbarBrand>
-                <img
-                  width="50rem"
-                  alt="..."
-                  className="rounded mr-1"
-                  src={require("assets/img/brand-logo.png")}
-                ></img>
-                Al-Qolam
-              </NavbarBrand>
-            </Link>
+            <NavbarBrand to="/" tag={Link}>
+              <img
+                width="50rem"
+                alt="..."
+                className="rounded mr-1"
+                src={require("assets/img/brand-logo.png")}
+              ></img>
+              Al-Qolam
+            </NavbarBrand>
 
             <button
               className="navbar-toggler navbar-toggler"
@@ -95,12 +93,10 @@ function IndexNavbar() {
             <Nav navbar>
               {role === "user" ? (
                 <NavItem>
-                  <Link to="/bab" className="text-decoration-none">
-                    <NavLink>
-                      <i className="now-ui-icons files_single-copy-04"></i>
-                      <span>Bab Materi</span>
-                    </NavLink>
-                  </Link>
+                  <NavLink to="/bab" tag={Link}>
+                    <i className="now-ui-icons files_single-copy-04"></i>
+                    <span>Bab Materi</span>
+                  </NavLink>
                 </NavItem>
               ) : null}
 
@@ -114,7 +110,7 @@ function IndexNavbar() {
                 >
                   <i
                     aria-hidden="true"
-                    class="now-ui-icons users_single-02"
+                    className="now-ui-icons users_single-02"
                   ></i>
                 </DropdownToggle>
                 <DropdownMenu>
@@ -123,7 +119,7 @@ function IndexNavbar() {
                     detail profil
                   </DropdownItem>
 
-                  <DropdownItem onClick={handleLogout} tag={Link}>
+                  <DropdownItem onClick={handleLogout}>
                     <i
                       className="now-ui-icons arrows-1_minimal-right
 "

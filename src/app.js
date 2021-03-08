@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import React from "react";
 
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./user/Home.js";
 import LoginPage from "auth/LoginPage";
 import ForgotPassword from "auth/forgotPassword";
@@ -24,13 +24,11 @@ import CreateTeacher from "user/admin/createTeacher.js";
 import Quiz from "./user/murid/quiz/quiz";
 import CreateQuiz from "./user/guru/CreateQuiz";
 import EditMateri from "./user/guru/CRUDMateri/EditMateri";
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 function App() {
   const { token, setToken } = useToken();
   let history = document.URL.split("/");
-  const user = localStorage.getItem("token");
-  const userJson = JSON.parse(user);
-  const roleUser = userJson?.user?.role;
 
   // const roleUser = userJson?.token?.role[0];
 
@@ -52,24 +50,6 @@ function App() {
     },
   };
 
-  function RoleBasedRouting({ component: Component, roles, ...rest }) {
-    return (
-      <>
-        {roles === roleUser && (
-          <Route
-            {...rest}
-            render={(props) => (
-              <>
-                <Component {...props} />
-              </>
-            )}
-          />
-        )}
-        {!roles === roleUser && <Redirect to="/" />}
-      </>
-    );
-  }
-
   return (
     <div>
       <AlertProvider template={AlertTemplate} {...options}>
@@ -79,79 +59,27 @@ function App() {
 
             {/* start User Route */}
 
-            <RoleBasedRouting
-              exact
-              path="/bab"
-              component={BabPage}
-              roles="user"
-            />
-            <RoleBasedRouting
-              exact
-              path="/detail-bab/:id"
-              component={DetailBab}
-              roles="user"
-            />
-
-            <RoleBasedRouting
-              exact
-              path="/quiz"
-              component={Quiz}
-              roles="user"
-            />
+            <Route exact path="/bab" component={BabPage} />
+            <Route exact path="/detail-bab/:id" component={DetailBab} />
+            <Route exact path="/quiz" component={Quiz} />
 
             {/* end User route */}
 
             {/* start Teacher route */}
 
-            <RoleBasedRouting
-              exact
-              path="/create-lesson"
-              component={CreateLesson}
-              roles="teacher"
-            />
-            <RoleBasedRouting
-              exact
-              path="/create-chapter"
-              component={CreateMateri}
-              roles="teacher"
-            />
-            <RoleBasedRouting
-              exact
-              path="/edit-lesson/:id"
-              component={EditLesson}
-              roles="teacher"
-            />
-            <RoleBasedRouting
-              exact
-              path="/edit-materi/:id"
-              component={EditMateri}
-              roles="teacher"
-            />
-            <Route
-              path="/detail-lesson/:id"
-              render={() => <DetailLesson />}
-              roles="teacher"
-            />
+            <Route exact path="/create-lesson" component={CreateLesson} />
+            <Route exact path="/create-chapter" component={CreateMateri} />
+            <Route exact path="/edit-lesson/:id" component={EditLesson} />
+            <Route exact path="/edit-materi/:id" component={EditMateri} />
+            <Route path="/detail-lesson/:id" render={() => <DetailLesson />} />
 
-            <Route
-              path="/create-question"
-              render={() => <CreateQuiz />}
-              roles="teacher"
-            />
+            <Route path="/create-question" render={() => <CreateQuiz />} />
 
-            <Route
-              path="/create-answer"
-              render={() => <CreateQuiz />}
-              roles="teacher"
-            />
+            <Route path="/create-answer" render={() => <CreateQuiz />} />
 
             {/* end Teacher route */}
             {/* start Admin route */}
-            <Route
-              path="/create-teacher"
-              render={() => <CreateTeacher />}
-              roles="admin"
-            />
+            <Route path="/create-teacher" render={() => <CreateTeacher />} />
             {/* end Admin Route */}
             <Route path="/sign-up" render={() => <SignUp />} />
             <Route path="/login-page" render={() => <LoginPage />} />
@@ -159,7 +87,6 @@ function App() {
               exact
               path="/profile-page"
               component={ProfilePage}
-              userRole={roleUser}
               setToken={setToken}
             />
             <Route exact path="/materi/:id" component={Materi} />
