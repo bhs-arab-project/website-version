@@ -21,8 +21,11 @@ import BackComponent from "./guru/CRUDLesson/BackComponent";
 import axios from "axios";
 import { API_URL } from "utils/constants";
 import { useAlert } from "react-alert";
+import { useHistory } from "react-router-dom";
+import { ChangePassForm } from "./ChangePassForm";
 
-function ProfilePage({ setToken }) {
+function ProfilePage() {
+  const history = useHistory();
   const alert = useAlert();
   const user = localStorage.getItem("token");
   const userJson = JSON.parse(user);
@@ -31,10 +34,10 @@ function ProfilePage({ setToken }) {
   const userEmail = userJson?.user?.email;
   const access_token = userJson?.token?.token;
   const id = userJson?.user?.id;
+  let [typeList, setTypeList] = React.useState("editProfile");
   const [load, setLoad] = useState(false);
-  const [nama, setNama] = useState("");
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
+  const [nama, setNama] = useState(userName);
+  const [email, setEmail] = useState(userEmail);
 
   React.useEffect(() => {
     document.body.classList.add("profile-page");
@@ -58,7 +61,6 @@ function ProfilePage({ setToken }) {
       data: {
         name: nama,
         email: email,
-        password: pass,
         role: roleUser,
       },
       headers: {
@@ -69,16 +71,22 @@ function ProfilePage({ setToken }) {
     })
       .then(function (response) {
         setLoad(false);
+        let dataUser = response.data;
+        let jsonUser = JSON.stringify(dataUser);
+        // setToken(dataUser);
+        localStorage.setItem("token", jsonUser);
         alert.success(<div className="notif">Berhasil mengedit Profil!</div>);
+        history.push("/");
+
         //handle success
-        console.log(response);
+        // console.log(jsonUser);
       })
       .catch(function (error) {
         setLoad(false);
         alert.error(
           <div className="notif">Gagal mengedit Profil Silahkan Coba Lagi</div>
         );
-        console.log(error.response);
+        console.log(error);
       });
 
     e.preventDefault();
@@ -90,75 +98,74 @@ function ProfilePage({ setToken }) {
       <div className="wrapper">
         <ProfilePageHeader name={userName} roleUser={roleUser} />
         <div className="section">
-          {/* <Container>
-            <div className="button-container">
-              <Link to>
-              <Button className="btn-round" color="info" size="lg">
-                Edit Profil
-              </Button>
-              </Link>
-            </div>
-          </Container> */}
           <Container>
             <BackComponent />
+            <Button color="info" onClick={(e) => setTypeList("editProfile")}>
+              <i className="now-ui-icons ow-ui-icons travel_info"></i>
+              Edit Profil
+            </Button>
+            <Button color="success" onClick={(e) => setTypeList("changePass")}>
+              <i className="now-ui-icons ow-ui-icons travel_info"></i>
+              Ubah Password
+            </Button>
             <br />
-            <div clasName="mt-2">
-              <h2>Edit Profil Saya</h2>
-              <hr />
-              <Form className="form" onSubmit={handleSubmit}>
-                <Row>
-                  <Col lg="5" sm="10">
-                    <FormGroup>
-                      <Label>Nama</Label>
-                      <Input
-                        defaultValue={userName}
-                        placeholder="Nama"
-                        type="text"
-                        onInput={(e) => setNama(e.target.value)}
-                      ></Input>
-                    </FormGroup>
-                  </Col>
-                  <Col lg="5" sm="10">
-                    <FormGroup>
-                      <Label>Email</Label>
-                      <Input
-                        defaultValue={userEmail}
-                        placeholder="Email"
-                        type="email"
-                        onInput={(e) => setEmail(e.target.value)}
-                      ></Input>
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg="5" sm="10">
-                    <FormGroup>
-                      <Label>Password</Label>
-                      <Input
-                        placeholder="Password"
-                        type="password"
-                        onInput={(e) => setPass(e.target.value)}
-                      ></Input>
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <div>
-                  {load === true ? (
-                    <div className="float-right">
-                      <Spinner></Spinner>
+            {(() => {
+              // eslint-disable-next-line
+              switch (typeList) {
+                case "editProfile":
+                  return (
+                    <div clasName="mt-2">
+                      <h2>Edit Profil Saya</h2>
+                      <hr />
+                      <Form className="form" onSubmit={handleSubmit}>
+                        <Row>
+                          <Col lg="5" sm="10">
+                            <FormGroup>
+                              <Label>Nama</Label>
+                              <Input
+                                defaultValue={userName}
+                                placeholder="Nama"
+                                type="text"
+                                onInput={(e) => setNama(e.target.value)}
+                              ></Input>
+                            </FormGroup>
+                          </Col>
+                          <Col lg="5" sm="10">
+                            <FormGroup>
+                              <Label>Email</Label>
+                              <Input
+                                disabled
+                                defaultValue={userEmail}
+                                placeholder="Email"
+                                type="email"
+                                onInput={(e) => setEmail(e.target.value)}
+                              ></Input>
+                            </FormGroup>
+                          </Col>
+                        </Row>
+
+                        <div>
+                          {load === true ? (
+                            <div className="float-right">
+                              <Spinner></Spinner>
+                            </div>
+                          ) : (
+                            <Button
+                              className="btn-round float-right"
+                              color="info"
+                              size="md"
+                            >
+                              Submit
+                            </Button>
+                          )}
+                        </div>
+                      </Form>
                     </div>
-                  ) : (
-                    <Button
-                      className="btn-round float-right"
-                      color="info"
-                      size="md"
-                    >
-                      Submit
-                    </Button>
-                  )}
-                </div>
-              </Form>
-            </div>
+                  );
+                case "changePass":
+                  return <ChangePassForm />;
+              }
+            })()}
           </Container>
           {roleUser === user ? (
             <Container>

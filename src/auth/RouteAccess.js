@@ -1,10 +1,10 @@
 import NotFound from "components/NotFound/notFound";
 import React from "react";
-const user = localStorage.getItem("token");
-const userJson = JSON.parse(user);
 
 export const withAuthUser = (Component) => {
   const AuthRoute = () => {
+    const user = localStorage.getItem("token");
+    const userJson = JSON.parse(user);
     const roleUser = userJson?.user?.role;
     if (roleUser === "user" || roleUser === "admin") {
       return <Component />;
@@ -18,6 +18,8 @@ export const withAuthUser = (Component) => {
 
 export const withAuthTeacher = (Component) => {
   const AuthRoute = () => {
+    const user = localStorage.getItem("token");
+    const userJson = JSON.parse(user);
     const roleUser = userJson?.user?.role;
     if (roleUser === "teacher" || roleUser === "admin") {
       return <Component />;

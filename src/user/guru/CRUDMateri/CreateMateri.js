@@ -34,7 +34,7 @@ export default function CreateMateri() {
   const [valButton, setValB] = useState("Pilih Kelas");
   const [judulMateri, setJudulMateri] = useState();
   const [materi, setMateri] = useState();
-  const [lessonId, setLessonId] = useState();
+  const [lessonId, setLessonId] = useState("");
   const [listLesson, setListLesson] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [load, setLoad] = useState(false);
@@ -47,7 +47,7 @@ export default function CreateMateri() {
     return listL.user_id == userId;
   });
 
-  console.log(filterListL);
+  console.log(materi);
 
   async function fetchData() {
     axios
@@ -83,7 +83,16 @@ export default function CreateMateri() {
   // }
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
     setLoggedIn(true);
+
+    if (lessonId === "") {
+      setLoggedIn(false);
+      return alert.error(
+        <div className="notif">Pilih Kelas Terlebih Dahulu</div>
+      );
+    }
 
     axios({
       method: "post",
@@ -97,8 +106,9 @@ export default function CreateMateri() {
     })
       .then(function (response) {
         setLoggedIn(false);
-        alert.success(<div className="notif">Berhasil membuat Bab!</div>);
         window.location.href = "/#section1";
+        alert.success(<div className="notif">Berhasil membuat Bab!</div>);
+
         // history.push("/");
         //handle success
         console.log(response);
@@ -110,8 +120,6 @@ export default function CreateMateri() {
         );
         console.log(response);
       });
-
-    e.preventDefault();
   };
 
   return (

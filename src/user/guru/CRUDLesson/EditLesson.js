@@ -28,9 +28,7 @@ export default function EditLesson() {
   const access_token = guruToken?.token?.token;
 
   const [detailL, setDetailL] = useState();
-  const [pelajaran, setPelajaran] = useState(detailL?.pelajaran);
-  const [kesulitan, setKesulitan] = useState(detailL?.kesulitan);
-  const [deskripsi, setDeskripsi] = useState(detailL?.deskripsi);
+
   const [load, setLoad] = useState(false);
 
   async function fetchData() {
@@ -49,6 +47,13 @@ export default function EditLesson() {
         console.log(message);
       });
   }
+  let dataPel = detailL?.pelajaran;
+  let dataKes = detailL?.kesulitan;
+  let dataDesk = detailL?.deskripsi;
+  const [pelajaran, setPelajaran] = useState(dataPel);
+  const [kesulitan, setKesulitan] = useState(dataKes);
+  const [deskripsi, setDeskripsi] = useState(dataDesk);
+  console.log(pelajaran);
 
   React.useEffect(() => {
     setLoad(true);
@@ -96,7 +101,7 @@ export default function EditLesson() {
   return (
     <>
       <DetailHeader
-        header="Buat Kelas"
+        header="Edit Kelas"
         subHeader="buat Kelas yang anda inginkan sekarang!"
         img={require("assets/img/class.jpg")}
       />

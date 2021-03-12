@@ -178,7 +178,7 @@ const ShowAllLessonBeta = () => {
   ];
 
   function createdFormatter(cell, row) {
-    if (row.guru === userVal?.user?.name) {
+    if (row.user_id === userId) {
       return <span className="font-weight-bold">Saya</span>;
     }
 

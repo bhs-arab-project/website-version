@@ -4,7 +4,7 @@ import { Button } from "reactstrap";
 import Container from "reactstrap/lib/Container";
 import Row from "reactstrap/lib/Row";
 import CardTitle from "reactstrap/lib/CardTitle";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import swal from "sweetalert";
 import Col from "reactstrap/lib/Col";
 import Card from "reactstrap/lib/Card";
@@ -12,9 +12,12 @@ import CardBody from "reactstrap/lib/CardBody";
 import axios from "axios";
 import { API_URL } from "utils/constants";
 import DotLoad from "components/loader/dotLoader";
-import { withAuthTeacher, withAuthUser } from "./../../../auth/RouteAccess";
+import { withAuthTeacher } from "auth/RouteAccess";
+import Countdown from "react-countdown";
 
-function Quiz(state) {
+function Quiz() {
+  let { id } = useParams();
+  console.log(id);
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
@@ -24,27 +27,39 @@ function Quiz(state) {
   const user = localStorage.getItem("token");
   const userid = JSON.parse(user);
   const access_token = userid?.token?.token;
-  // const lesson_id = state.location.state;
+  const roleUser = userid?.user?.role;
   const MyBulletListLoader = () => <DotLoad />;
 
-  let filterQ = questions.filter(function (oneQuiz) {
-    // eslint-disable-next-line
-    return oneQuiz.lesson_id == 1;
-  });
+  // let questions = questions?.filter(function (oneQuiz) {
+  //   // eslint-disable-next-line
+  //   return oneQuiz.lesson_id == id;
+  // });
+
+  console.log(questions);
+
+  // const renderer = ({ hours, minutes, seconds, completed }) => {
+  //   if (!completed) {
+  //     return (
+  //       <span>
+  //         {hours}:{minutes}:{seconds}
+  //       </span>
+  //     );
+  //   }
+  // };
 
   async function fetchData() {
     axios
-      .get(`${API_URL}quiz`, {
+      .get(`${API_URL}quiz?cari=${id}`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       })
       .then((response) => {
         setLoad(false);
-        setQuestions(response.data);
+        setQuestions(response.data.data);
       })
-      .catch((response) => {
-        console.log("errorQ", response);
+      .catch((error) => {
+        console.log("errorQ", error);
       });
   }
 
@@ -60,12 +75,20 @@ function Quiz(state) {
     }
 
     const nextQuestion = currentQuestion + 1;
-    if (nextQuestion < filterQ.length) {
+    if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
     } else {
       setShowScore(true);
     }
   };
+  // const countComplete = () => {
+  //   const nextQuestion = currentQuestion + 1;
+  //   if (nextQuestion < questions.length) {
+  //     setCurrentQuestion(nextQuestion);
+  //   } else {
+  //     setShowScore(true);
+  //   }
+  // };
 
   function confirmCancel() {
     // e.preventDefault();
@@ -82,12 +105,13 @@ function Quiz(state) {
       }
     });
   }
-  const answerOption = JSON.parse(filterQ[currentQuestion]?.answer_options);
-  console.log(answerOption);
+  // const dataAnswer = questions[0]?.answer_options;
+  // const answerOption = JSON.parse(dataAnswer);
+  // console.log("ans", answerOption?.answer_text);
   return (
     <div>
       {load === false ? (
-        filterQ.length === 0 ? (
+        questions.length === 0 ? (
           <div className="section container text-left">
             <p className=" font-weight-bold text-dark">
               Pengajar Sedang Membuat Quiz Terbaik Untuk Kamu, Tungguin Terus
@@ -115,7 +139,7 @@ function Quiz(state) {
                       src={require("assets/img/brand-logo.png")}
                     ></img>
                     <h3 className="mt-4 ml-2">
-                      Quiz {filterQ[currentQuestion]?.pelajaran}
+                      Quiz {questions[currentQuestion]?.pelajaran}
                     </h3>
                   </Row>
                 </CardTitle>
@@ -130,11 +154,17 @@ function Quiz(state) {
                   </Col>
                   <Col className="mt-5">
                     <h5>
-                      Kamu Benar {score} dari {filterQ.length}
+                      Kamu Benar {score} dari {questions.length}
                     </h5>
-                    <Link to="/bab">
-                      <Button color="info">Pelajari Kelas Lainnya!</Button>
-                    </Link>
+                    {roleUser === "user" ? (
+                      <Link to="/bab">
+                        <Button color="info">Pelajari Kelas Lainnya!</Button>
+                      </Link>
+                    ) : (
+                      <Link to="/">
+                        <Button color="info">Kembali Ke Halaman Utama</Button>
+                      </Link>
+                    )}
                   </Col>
                 </Row>
               </CardBody>
@@ -148,8 +178,8 @@ function Quiz(state) {
                 <Row>
                   <Col>
                     <h2 className="mt-4">
-                      Kelas {filterQ[currentQuestion]?.pelajaran} | Soal Ke{" "}
-                      {currentQuestion + 1} dari {filterQ.length}
+                      Kelas {questions[currentQuestion]?.pelajaran} | Soal Ke{" "}
+                      {currentQuestion + 1} dari {questions.length}
                     </h2>
                   </Col>
                   <Col>
@@ -161,24 +191,30 @@ function Quiz(state) {
                     ></img>
                   </Col>
                 </Row>
-                <div className="question-count"></div>
-                <div className="question-text">
-                  <h5>{filterQ[currentQuestion]?.question_text}</h5>
+                <div className="question-count">
+                  {" "}
+                  {/* <Countdown date={Date.now() + 10000} renderer={renderer} onComplete={completeCount}/> */}
                 </div>
-                {/* {answerOption.map((answerOption, index) => {
-                  return (
-                    <Row className="ml-1" key={index}>
-                      <Button
-                        className="btn-block btn-info"
-                        onClick={() =>
-                          handleAnswerOptionClick(answerOption.is_correct)
-                        }
-                      >
-                        {answerOption.answer_text}
-                      </Button>
-                    </Row>
-                  );
-                })} */}
+                <div className="question-text">
+                  <h5>{questions[currentQuestion]?.question_text}</h5>
+                  {/* <span>{questions[currentQuestion]?.answer_options}</span> */}
+                </div>
+                {JSON.parse(questions[currentQuestion]?.answer_options).map(
+                  (answerOption, index) => {
+                    return (
+                      <Row className="ml-1" key={index}>
+                        <Button
+                          className="btn-block btn-info"
+                          onClick={() =>
+                            handleAnswerOptionClick(answerOption.isCorrect)
+                          }
+                        >
+                          {answerOption.answerText}
+                        </Button>
+                      </Row>
+                    );
+                  }
+                )}
                 <Button color="danger" onClick={() => confirmCancel()}>
                   Batalkan Quiz
                 </Button>
@@ -196,4 +232,4 @@ function Quiz(state) {
   );
 }
 
-export default withAuthTeacher(Quiz);
+export default Quiz;

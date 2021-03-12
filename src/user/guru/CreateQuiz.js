@@ -29,11 +29,15 @@ export default function CreateQuiz() {
   const guru = localStorage.getItem("token");
   const guruToken = JSON.parse(guru);
   const access_token = guruToken?.token?.token;
+  const userId = guruToken?.user?.id;
 
   const [valButton, setValB] = useState("Pilih Kelas");
-  const [quizId, setQuizId] = useState();
+  const [listLesson, setListLesson] = useState();
+  const [pelajaran, setPel] = useState();
+  const [lessonId, setLessonId] = useState();
   const [answer, setAnswer] = useState(["awal"]);
   const [answerOption, setAnswerOption] = useState("");
+  const [questionQ, setQuestionQ] = useState("");
 
   const [listQuiz, setListQuiz] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
@@ -44,14 +48,14 @@ export default function CreateQuiz() {
 
   async function fetchData() {
     axios
-      .get(`${API_URL}quiz`, {
+      .get(`${API_URL}pelajaran`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       })
       .then((response) => {
         setLoad(false);
-        setListQuiz(response.data);
+        setListLesson(response.data);
       })
       .catch((error) => {
         let message = error.response;
@@ -65,25 +69,41 @@ export default function CreateQuiz() {
     // eslint-disable-next-line
   }, []);
 
-  // let bodyFormData = new FormData();
-  // answer.forEach((item) => {
-  //   bodyFormData.append("answer_option[]", item);
-  // });
+  let filterListL = listLesson?.filter(function (listL) {
+    // eslint-disable-next-line
+    return listL.user_id == userId;
+  });
 
-  // for (var pair of bodyFormData.entries()) {
-  //   console.log(pair[0] + ", " + pair[1]);
-  // }
+  console.log("pel", pelajaran);
+  console.log("ques", questionQ);
+  console.log("ans", answer);
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
     setLoggedIn(true);
+
+    if (pelajaran === "") {
+      setLoggedIn(false);
+      return alert.error(
+        <div className="notif">Pilih Kelas Terlebih Dahulu</div>
+      );
+    }
+
+    let jsonAns = JSON.stringify(answer);
 
     axios({
       method: "post",
-      url: `${API_URL}quiz/${quizId}`,
-      data: answer,
+      url: `${API_URL}quiz`,
+      data: {
+        lesson_id: lessonId,
+        pelajaran: pelajaran,
+        question_text: questionQ,
+        answer_options: jsonAns,
+      },
       headers: {
-        "Content-Type": "multipart/form-data",
-        Accept: "application/x-www-form-urlencoded",
+        ContentType: "multipart/form-data",
+        Accept: "application/json",
         Authorization: `Bearer ${access_token}`,
       },
     })
@@ -96,20 +116,16 @@ export default function CreateQuiz() {
         //handle success
         console.log(response);
       })
-      .catch(function (response) {
+      .catch(function (error) {
         setLoggedIn(false);
         alert.error(<div className="notif">Gagal membuat Jawaban Quiz</div>);
-        console.log(response.data);
+        console.log(error.response);
       });
-
-    e.preventDefault();
   };
 
-  const handleAnswer = () => {
+  const handleTambah = () => {
     setAnswer([...answer, answerOption]);
   };
-
-  console.log("id", quizId);
 
   return (
     <>
@@ -134,23 +150,24 @@ export default function CreateQuiz() {
                       <DropdownToggle caret>{valButton}</DropdownToggle>
                       <DropdownMenu>
                         {load === false ? (
-                          listQuiz?.length === 0 ? (
+                          filterListL?.length === 0 ? (
                             <DropdownItem text className="text-danger" disabled>
-                              Buat Pertanyaan Terlebih Dahulu
+                              Buat Kelas Terlebih Dahulu
                             </DropdownItem>
                           ) : (
-                            listQuiz?.map((list, index) => {
+                            filterListL?.map((list, index) => {
                               return (
                                 <DropdownItem
                                   key={index}
-                                  checked={quizId === list.id}
-                                  value={list.id}
+                                  checked={pelajaran === list.pelajaran}
+                                  value={list.pelajaran}
                                   onClick={() => {
-                                    setQuizId(list.id);
-                                    setValB(list.question_text);
+                                    setPel(list.pelajaran);
+                                    setLessonId(list.id);
+                                    setValB(list.pelajaran);
                                   }}
                                 >
-                                  {list.question_text}
+                                  {list.pelajaran}
                                 </DropdownItem>
                               );
                             })
@@ -167,7 +184,7 @@ export default function CreateQuiz() {
                     </span>
                   </FormGroup>
                 </Col>
-                {/* <Col lg="5" sm="10">
+                <Col lg="5" sm="10">
                   <FormGroup>
                     <Label>Soal Quiz</Label>
                     <Input
@@ -176,21 +193,25 @@ export default function CreateQuiz() {
                       onvalid="this.setCustomValidity('')"
                       placeholder="Soal Quiz"
                       type="text"
-                      onInput={(e) => setQuestionT(e.target.value)}
+                      onInput={(e) => setQuestionQ(e.target.value)}
                     ></Input>
                   </FormGroup>
-                </Col> */}
-                <Button onClick={handleAnswer}>Tambah</Button>
-                {answer.map((list, index) => (
-                  <span key={index}>
-                    <Input
-                      name={list}
-                      placeholder="Jawaban"
-                      onInput={(e) => setAnswerOption(e.target.value)}
-                      type="text"
-                    ></Input>
-                  </span>
-                ))}
+                </Col>
+                <Col lg="5" sm="10">
+                  {answer.map((list, index) => (
+                    <ul>
+                      <li key={index}>
+                        <Input
+                          name={list}
+                          placeholder="Jawaban"
+                          onInput={(e) => setAnswerOption(e.target.value)}
+                          type="text"
+                        ></Input>
+                      </li>
+                    </ul>
+                  ))}
+                  <Button onClick={handleTambah}>Tambah</Button>
+                </Col>
               </Row>
 
               <div>

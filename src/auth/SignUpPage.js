@@ -23,6 +23,7 @@ import axios from "axios";
 import Spinner from "reactstrap/lib/Spinner";
 import { useAlert } from "react-alert";
 import { API_URL } from "utils/constants";
+import { useHistory } from "react-router-dom";
 
 export default function SignUpPage() {
   const [name, setName] = useState();
@@ -30,6 +31,7 @@ export default function SignUpPage() {
   const [password, setPassword] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const alert = useAlert();
+  const history = useHistory();
 
   const required = (value) => {
     if (!value.toString().trim().length) {
@@ -42,10 +44,20 @@ export default function SignUpPage() {
   bodyFormData.set("name", name);
   bodyFormData.set("email", email);
   bodyFormData.set("password", password);
-  bodyFormData.set("role", "teacher");
+  bodyFormData.set("role", "user");
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
     setLoggedIn(true);
+
+    // if (password.length < 6) {
+    //   setLoggedIn(false);
+    //   alert.error(
+    //     <div className="notif">Password Harus Lebih Dari 6 Karakter</div>
+    //   );
+    //   return false;
+    // }
 
     axios({
       method: "post",
@@ -55,6 +67,7 @@ export default function SignUpPage() {
     })
       .then(function (response) {
         setLoggedIn(false);
+        history.push("/login-page");
         alert.success(
           <div className="notif">
             Registrasi Berhasil, silahkan Cek Email anda
@@ -66,8 +79,6 @@ export default function SignUpPage() {
         console.log(error.response.data.message);
         alert.error(<div className="notif">{error.response.data.message}</div>);
       });
-
-    e.preventDefault();
   };
 
   React.useEffect(() => {

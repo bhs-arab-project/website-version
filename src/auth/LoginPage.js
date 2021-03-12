@@ -19,6 +19,7 @@ import {
 import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import swal from "sweetalert";
+import { useHistory } from "react-router-dom";
 
 export default function LoginPage({ setToken }) {
   const [firstFocus, setFirstFocus] = React.useState(false);
@@ -27,6 +28,8 @@ export default function LoginPage({ setToken }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loggedIn, setLoggedIn] = useState();
+
+  const history = useHistory();
 
   React.useEffect(() => {
     document.body.classList.add("login-page");

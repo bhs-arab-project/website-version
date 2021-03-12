@@ -21,10 +21,10 @@ body {
   /* font-family: "Poppins", sans-serif; */
   background: #fafafa;
 }
-p.text-konten {
-  font-size: 1.1em;
-  font-weight: 300;
-  line-height: 1.7em;
+b.text-konten {
+  font-size: 1em;
+  font-weight: bolder;
+  /* line-height: 1.7em; */
   color: rgb(0, 0, 0);
 }
 a,
@@ -36,11 +36,12 @@ a:focus {
 }
 .baratas {
   padding: 15px 10px;
-  background: #fff;
+  color: #2ca8ff;
+  background-color: #2ca8ff;
   border: none;
   border-radius: 0;
   margin-bottom: 40px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0px;
   width: 100%;
@@ -177,4 +178,31 @@ a.download:hover {
   align-items: center;
   font-size: 1.25em;
   margin-top: 0.25em;
+}
+
+.not-allowed {
+  cursor: not-allowed !important;
+}
+
+.myDiv h4 {
+  color: #fff;
+  margin: auto;
+  text-align: center;
+  padding: 5px;
+  /* font-size: 15px; */
+}
+
+.myDiv {
+  text-align: center;
+}
+
+.myDiv .bgImage {
+  display: inline-block;
+  /* background-color: #2ba6cb; */
+  /* border-radius: 90px; */
+  padding: 0.5em 0.2em 0.8em 0.5em;
+}
+
+.aButton {
+  cursor: pointer;
 }

@@ -61,7 +61,7 @@ function App() {
 
             <Route exact path="/bab" component={BabPage} />
             <Route exact path="/detail-bab/:id" component={DetailBab} />
-            <Route exact path="/quiz" component={Quiz} />
+            <Route exact path="/quiz/:id" component={Quiz} />
 
             {/* end User route */}
 
@@ -89,7 +89,7 @@ function App() {
               component={ProfilePage}
               setToken={setToken}
             />
-            <Route exact path="/materi/:id" component={Materi} />
+            <Route exact path="/bab-materi/:id" component={Materi} />
             <Route path="/forgot-password" render={() => <ForgotPassword />} />
             <Route path="*" render={() => <NotFound />} />
           </Switch>

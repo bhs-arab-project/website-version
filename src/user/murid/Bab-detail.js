@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Button, Container } from "reactstrap";
 import IndexNavbar from "../../components/Navbars/IndexNavbar";
 import { API_URL } from "utils/constants";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import { BulletList } from "react-content-loader";
 import AvatarWithText from "../../components/loader/loaderAvatarWithText";
 import TransparentFooter from "components/Footers/TransparentFooter";
 import { withAuthUser } from "./../../auth/RouteAccess";
+import Col from "reactstrap/lib/Col";
+import Row from "reactstrap/lib/Row";
 
 const MyBulletListLoader = () => <BulletList />;
 
@@ -18,6 +20,7 @@ const BabDetail = () => {
   const user = localStorage.getItem("token");
   const userid = JSON.parse(user);
   const access_token = userid?.token?.token;
+  const history = useHistory();
 
   async function fetchData() {
     axios
@@ -45,6 +48,10 @@ const BabDetail = () => {
   let pageHeader = React.createRef();
   // console.log(detailLesson?.chapter, "snjn");
   const pelajaran = detailLesson.pelajaran;
+
+  const handleSub = () => {
+    history.push("/");
+  };
 
   return (
     <div>
@@ -87,20 +94,60 @@ const BabDetail = () => {
         </div>
         <Container className="mt-4">
           <h4>Materi Yang Tersedia - المواد المتاحة</h4>
-
+          <div>
+            <Row>
+              <Col>
+                <Link to="/">
+                  <Button color="danger">
+                    {" "}
+                    <i className="now-ui-icons arrows-1_minimal-left"></i>{" "}
+                    Kembali
+                  </Button>
+                </Link>
+              </Col>
+              {detailLesson?.chapter?.length === 0 ? (
+                <></>
+              ) : (
+                <Col>
+                  <div
+                    class="myDiv rounded mt-2"
+                    style={{
+                      backgroundColor:
+                        detailLesson?.quiz?.length === 0
+                          ? "#FF3636"
+                          : "#2ba6cb",
+                    }}
+                  >
+                    <div class="bgImage">
+                      <h4>
+                        Quiz :{" "}
+                        {detailLesson?.quiz?.length === 0 ? (
+                          <>Belum Tersedia</>
+                        ) : (
+                          <>Tersedia</>
+                        )}
+                      </h4>
+                    </div>
+                  </div>
+                </Col>
+              )}
+            </Row>
+          </div>
           {load === false ? (
             detailLesson?.chapter?.length === 0 ? (
               <div className="container">
                 <p className=" font-weight-bold text-dark">
-                  Pengajar Sedang Membuat Kelas Terbaik Untuk Kamu, Tungguin
+                  Pengajar Sedang Membuat Materi Terbaik Untuk Kamu, Tungguin
                   Terus Yaa! <br /> - Al-Qolam
                 </p>
-                <img
-                  width="250rem"
-                  alt="..."
-                  className="rounded float-right"
-                  src={require("assets/img/books.png")}
-                ></img>
+                <div className="d-flex justify-content-end">
+                  <img
+                    width="250rem"
+                    alt="..."
+                    className="rounded"
+                    src={require("assets/img/books.png")}
+                  ></img>
+                </div>
               </div>
             ) : (
               detailLesson?.chapter?.map((list, index) => {
@@ -124,7 +171,12 @@ const BabDetail = () => {
                           </div>
                         </div>
                         <div className="col-md-2 col-xs-1 col-sm-1 px-1 text-right d-inline">
-                          <Link to={`/materi/${list.id}`}>
+                          <Link
+                            to={{
+                              pathname: `/bab-materi/${id}`,
+                              state: { index },
+                            }}
+                          >
                             <Button color="info">Mulai belajar</Button>
                           </Link>
                         </div>
@@ -137,17 +189,6 @@ const BabDetail = () => {
           ) : (
             <MyBulletListLoader />
           )}
-          <div className="text-center">
-            <Link
-              to={{
-                pathname: "/quiz",
-                state: id,
-                pelajaran: detailLesson.pelajaran,
-              }}
-            >
-              <Button color="info">Mulai Ujian</Button>
-            </Link>
-          </div>
         </Container>
       </div>
       <TransparentFooter />
