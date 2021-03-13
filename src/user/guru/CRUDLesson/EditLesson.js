@@ -1,6 +1,6 @@
 import DetailHeader from "components/Headers/DetailHeader";
 import React, { useState } from "react";
-import BackComponent from "./BackComponent";
+import BackComponent from "../../../utils/BackComponent";
 import { Form } from "react-bootstrap";
 import axios from "axios";
 // reactstrap components
@@ -18,6 +18,7 @@ import { API_URL } from "utils/constants";
 import { useHistory, useParams } from "react-router-dom";
 import { useAlert } from "react-alert";
 import TransparentFooter from "components/Footers/TransparentFooter";
+import BackButton from "../../../utils/BackComponent";
 
 export default function EditLesson() {
   let { id } = useParams();
@@ -107,7 +108,7 @@ export default function EditLesson() {
       />
       <div className="section ">
         <Container>
-          <BackComponent />
+          <BackButton />
           <br />
           <div clasName="mt-2">
             <h2>Edit Kelas {detailL?.pelajaran}</h2>

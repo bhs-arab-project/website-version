@@ -20,10 +20,11 @@ import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useHistory, useParams } from "react-router-dom";
 import { useAlert } from "react-alert";
-import BackComponent from "../CRUDLesson/BackComponent";
+import BackComponent from "../../../utils/BackComponent";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import TransparentFooter from "components/Footers/TransparentFooter";
+import BackButton from "../../../utils/BackComponent";
 
 export default function EditMateri() {
   let { id } = useParams();
@@ -151,7 +152,7 @@ export default function EditMateri() {
         <Container>
           <br />
           <div clasName="mt-2">
-            <BackComponent />
+            <BackButton />
             <h2>Edit Materi {detailM?.judul_bab}</h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>

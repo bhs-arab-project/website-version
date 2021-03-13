@@ -184,12 +184,12 @@ a.download:hover {
   cursor: not-allowed !important;
 }
 
-.myDiv h4 {
+.myDiv h5 {
   color: #fff;
   margin: auto;
   text-align: center;
   padding: 5px;
-  /* font-size: 15px; */
+  font-size: 15px;
 }
 
 .myDiv {
@@ -199,7 +199,7 @@ a.download:hover {
 .myDiv .bgImage {
   display: inline-block;
   /* background-color: #2ba6cb; */
-  /* border-radius: 90px; */
+  /* border-radius: 50%; */
   padding: 0.5em 0.2em 0.8em 0.5em;
 }
 

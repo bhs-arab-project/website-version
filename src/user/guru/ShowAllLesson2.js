@@ -323,24 +323,44 @@ const ShowAllLessonBeta = () => {
                         <></>
                       ) : (
                         <ButtonGroup>
-                          <Button
-                            outline
-                            color="info"
+                          <button
+                            type="button"
+                            className={`btn ${
+                              typeList === "AllClass"
+                                ? "btn-outline-info"
+                                : "btn-info"
+                            }`}
                             onClick={(e) => setTypeList("MyClass")}
                           >
-                            <img width="25rem" src="./my-list.png" alt="..." />
-                          </Button>
-                          <Button
-                            outline
-                            color="info"
+                            <img
+                              width="25rem"
+                              src={
+                                typeList === "MyClass"
+                                  ? "./my-list-active.png"
+                                  : "./my-list.png"
+                              }
+                              alt="..."
+                            />
+                          </button>
+                          <button
+                            type="button"
+                            className={`btn ${
+                              typeList === "AllClass"
+                                ? "btn-info"
+                                : "btn-outline-info"
+                            }`}
                             onClick={(e) => setTypeList("AllClass")}
                           >
                             <img
                               width="25rem"
-                              src="./group-list.png"
+                              src={
+                                typeList === "AllClass"
+                                  ? "./group-list-active.png"
+                                  : "./group-list.png"
+                              }
                               alt="..."
                             />
-                          </Button>
+                          </button>
                         </ButtonGroup>
                       )}
                       <span className="ml-2">Cari : </span>

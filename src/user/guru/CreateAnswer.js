@@ -22,7 +22,7 @@ import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { Tooltip } from "reactstrap";
 import TransparentFooter from "components/Footers/TransparentFooter";
-import BackComponent from "./CRUDLesson/BackComponent";
+import BackComponent from "../../utils/BackComponent";
 
 export default function CreateQuiz() {
   const history = useHistory();

@@ -10,6 +10,7 @@ import TransparentFooter from "components/Footers/TransparentFooter";
 import { withAuthUser } from "./../../auth/RouteAccess";
 import Col from "reactstrap/lib/Col";
 import Row from "reactstrap/lib/Row";
+import BackButton from "utils/BackComponent";
 
 const MyBulletListLoader = () => <BulletList />;
 
@@ -97,39 +98,37 @@ const BabDetail = () => {
           <div>
             <Row>
               <Col>
-                <Link to="/">
-                  <Button color="danger">
-                    {" "}
-                    <i className="now-ui-icons arrows-1_minimal-left"></i>{" "}
-                    Kembali
-                  </Button>
-                </Link>
+                <BackButton />
               </Col>
-              {detailLesson?.chapter?.length === 0 ? (
-                <></>
-              ) : (
-                <Col>
-                  <div
-                    class="myDiv rounded mt-2"
-                    style={{
-                      backgroundColor:
-                        detailLesson?.quiz?.length === 0
-                          ? "#FF3636"
-                          : "#2ba6cb",
-                    }}
-                  >
-                    <div class="bgImage">
-                      <h4>
-                        Quiz :{" "}
-                        {detailLesson?.quiz?.length === 0 ? (
-                          <>Belum Tersedia</>
-                        ) : (
-                          <>Tersedia</>
-                        )}
-                      </h4>
+              {load === false ? (
+                detailLesson?.chapter?.length === 0 ? (
+                  <></>
+                ) : (
+                  <Col>
+                    <div
+                      class="myDiv rounded"
+                      style={{
+                        backgroundColor:
+                          detailLesson?.quiz?.length === 0
+                            ? "#FF3636"
+                            : "#2ba6cb",
+                      }}
+                    >
+                      <div class="bgImage">
+                        <h5>
+                          <i className="now-ui-icons travel_info"></i> Quiz :{" "}
+                          {detailLesson?.quiz?.length === 0 ? (
+                            <>Belum Tersedia</>
+                          ) : (
+                            <>Tersedia</>
+                          )}
+                        </h5>
+                      </div>
                     </div>
-                  </div>
-                </Col>
+                  </Col>
+                )
+              ) : (
+                <></>
               )}
             </Row>
           </div>

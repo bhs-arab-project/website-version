@@ -19,10 +19,12 @@ import {
 import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useAlert } from "react-alert";
-import BackComponent from "../CRUDLesson/BackComponent";
+import BackComponent from "../../../utils/BackComponent";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import TransparentFooter from "components/Footers/TransparentFooter";
+import BackButton from "../../../utils/BackComponent";
+import { useHistory } from "react-router-dom";
 
 export default function CreateMateri() {
   const alert = useAlert();
@@ -30,6 +32,8 @@ export default function CreateMateri() {
   const guruToken = JSON.parse(guru);
   const access_token = guruToken?.token?.token;
   const userId = guruToken?.user?.id;
+
+  const history = useHistory();
 
   const [valButton, setValB] = useState("Pilih Kelas");
   const [judulMateri, setJudulMateri] = useState();
@@ -106,10 +110,9 @@ export default function CreateMateri() {
     })
       .then(function (response) {
         setLoggedIn(false);
-        window.location.href = "/#section1";
         alert.success(<div className="notif">Berhasil membuat Bab!</div>);
 
-        // history.push("/");
+        history.goBack();
         //handle success
         console.log(response);
       })
@@ -133,7 +136,7 @@ export default function CreateMateri() {
         <Container>
           <br />
           <div clasName="mt-2">
-            <BackComponent />
+            <BackButton />
             <h2>Buat Materi</h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>

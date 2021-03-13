@@ -15,7 +15,7 @@ import {
 import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useAlert } from "react-alert";
-import BackComponent from "../guru/CRUDLesson/BackComponent";
+import BackComponent from "../../utils/BackComponent";
 import TransparentFooter from "components/Footers/TransparentFooter";
 
 export default function CreateTeacher() {

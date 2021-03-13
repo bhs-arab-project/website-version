@@ -1,6 +1,6 @@
 import DetailHeader from "components/Headers/DetailHeader";
 import React, { useState } from "react";
-import BackComponent from "./BackComponent";
+import BackComponent from "../../../utils/BackComponent";
 import { Form } from "react-bootstrap";
 import axios from "axios";
 // reactstrap components
@@ -17,12 +17,15 @@ import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useAlert } from "react-alert";
 import TransparentFooter from "components/Footers/TransparentFooter";
+import BackButton from "../../../utils/BackComponent";
+import { useHistory } from "react-router-dom";
 
 export default function CreateLesson() {
   const alert = useAlert();
   const guru = localStorage.getItem("token");
   const guruToken = JSON.parse(guru);
   const access_token = guruToken?.token?.token;
+  const history = useHistory();
 
   const [pelajaran, setPelajaran] = useState();
   const [kesulitan, setKesulitan] = useState("mudah");
@@ -52,8 +55,8 @@ export default function CreateLesson() {
       .then(function (response) {
         setLoggedIn(false);
         alert.success(<div className="notif">Berhasil membuat Kelas!</div>);
-        window.location.href = "/#section1";
-        // history.push("/#section1");
+        // window.location.href = "/#section1";
+        history.goBack();
         //handle success
         console.log(response);
       })
@@ -77,7 +80,7 @@ export default function CreateLesson() {
       />
       <div className="section ">
         <Container>
-          <BackComponent />
+          <BackButton />
           <br />
           <div clasName="mt-2">
             <h2>Buat Kelas Baru</h2>

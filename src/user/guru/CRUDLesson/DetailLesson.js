@@ -11,6 +11,7 @@ import Col from "reactstrap/lib/Col";
 import swal from "sweetalert";
 import TransparentFooter from "components/Footers/TransparentFooter";
 import Row from "reactstrap/lib/Row";
+import BackButton from "utils/BackComponent";
 
 const MyBulletListLoader = () => <BulletList />;
 
@@ -102,13 +103,7 @@ const DetailLesson = () => {
           <div>
             <Row>
               <Col>
-                <Link to="/">
-                  <Button color="danger">
-                    {" "}
-                    <i className="now-ui-icons arrows-1_minimal-left"></i>{" "}
-                    Kembali
-                  </Button>
-                </Link>
+                <BackButton />
               </Col>
               {detailLesson?.chapter?.length === 0 ? (
                 <></>

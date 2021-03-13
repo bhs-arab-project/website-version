@@ -21,7 +21,8 @@ import { API_URL } from "utils/constants";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 import TransparentFooter from "components/Footers/TransparentFooter";
-import BackComponent from "./CRUDLesson/BackComponent";
+import BackComponent from "../../utils/BackComponent";
+import BackButton from "../../utils/BackComponent";
 
 export default function CreateQuiz() {
   const history = useHistory();
@@ -138,7 +139,7 @@ export default function CreateQuiz() {
         <Container>
           <br />
           <div clasName="mt-2">
-            <BackComponent />
+            <BackButton />
             <h2>Buat Soal</h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>

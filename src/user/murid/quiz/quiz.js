@@ -22,6 +22,7 @@ function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const [score, setScore] = useState(0);
+  const [scoreTotal, setScoreT] = useState(0);
   const [load, setLoad] = useState();
   const history = useHistory();
   const user = localStorage.getItem("token");
@@ -72,6 +73,8 @@ function Quiz() {
   const handleAnswerOptionClick = (isCorrect) => {
     if (isCorrect) {
       setScore(score + 1);
+      let e = ((score + 1) / questions.length) * 100;
+      setScoreT(e);
     }
 
     const nextQuestion = currentQuestion + 1;
@@ -105,6 +108,12 @@ function Quiz() {
       }
     });
   }
+
+  let averageScore = Math.floor(scoreTotal);
+  const reloadPage = () => {
+    window.location.reload();
+  };
+
   // const dataAnswer = questions[0]?.answer_options;
   // const answerOption = JSON.parse(dataAnswer);
   // console.log("ans", answerOption?.answer_text);
@@ -146,20 +155,51 @@ function Quiz() {
                 <Row>
                   <Col>
                     <img
-                      width="200rem"
+                      width={averageScore < 60 ? "400rem" : "310rem"}
                       alt="..."
                       className="rounded float-right"
-                      src={require("assets/img/result.png")}
+                      src={
+                        averageScore < 60
+                          ? require("assets/img/try-again.jpg")
+                          : require("assets/img/suc3.png")
+                      }
                     ></img>
                   </Col>
                   <Col className="mt-5">
+                    {averageScore < 60 ? (
+                      <h3>Semangat, Ayo Coba Lagi!</h3>
+                    ) : (
+                      <h3>Selamat, Kamu Lolos!</h3>
+                    )}
                     <h5>
-                      Kamu Benar {score} dari {questions.length}
+                      Kamu Benar {score} dari {questions.length} | Nilai{" "}
+                      {averageScore}
                     </h5>
+                    {averageScore < 60 ? (
+                      <span className="text-info">
+                        *Kamu Harus Memiliki Nilai Diatas 60 Untuk Mendapatkan
+                        Sertifikat
+                      </span>
+                    ) : (
+                      <span className="text-info">
+                        Dapatkan Sertifikatmu Di Halaman Profil! <br />
+                      </span>
+                    )}
                     {roleUser === "user" ? (
-                      <Link to="/bab">
-                        <Button color="info">Pelajari Kelas Lainnya!</Button>
-                      </Link>
+                      <>
+                        <Link to="/bab">
+                          <Button color="info">Pelajari Kelas Lainnya!</Button>
+                        </Link>
+                        {averageScore < 60 ? (
+                          <Button color="info" onClick={reloadPage}>
+                            Coba Lagi
+                          </Button>
+                        ) : (
+                          <Link to="/profile-page">
+                            <Button color="info">Profil Saya</Button>
+                          </Link>
+                        )}
+                      </>
                     ) : (
                       <Link to="/">
                         <Button color="info">Kembali Ke Halaman Utama</Button>

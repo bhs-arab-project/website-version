@@ -17,12 +17,13 @@ import {
 import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
-import BackComponent from "./guru/CRUDLesson/BackComponent";
+import BackComponent from "../utils/BackComponent";
 import axios from "axios";
 import { API_URL } from "utils/constants";
 import { useAlert } from "react-alert";
 import { useHistory } from "react-router-dom";
 import { ChangePassForm } from "./ChangePassForm";
+import BackButton from "../utils/BackComponent";
 
 function ProfilePage() {
   const history = useHistory();
@@ -34,7 +35,7 @@ function ProfilePage() {
   const userEmail = userJson?.user?.email;
   const access_token = userJson?.token?.token;
   const id = userJson?.user?.id;
-  let [typeList, setTypeList] = React.useState("editProfile");
+  const [typeList, setTypeList] = React.useState("editProfile");
   const [load, setLoad] = useState(false);
   const [nama, setNama] = useState(userName);
   const [email, setEmail] = useState(userEmail);
@@ -99,15 +100,27 @@ function ProfilePage() {
         <ProfilePageHeader name={userName} roleUser={roleUser} />
         <div className="section">
           <Container>
-            <BackComponent />
-            <Button color="info" onClick={(e) => setTypeList("editProfile")}>
-              <i className="now-ui-icons ow-ui-icons travel_info"></i>
-              Edit Profil
-            </Button>
-            <Button color="success" onClick={(e) => setTypeList("changePass")}>
-              <i className="now-ui-icons ow-ui-icons travel_info"></i>
-              Ubah Password
-            </Button>
+            <BackButton />
+            <button
+              type="button"
+              className={`btn ${
+                typeList === "editProfile" ? "btn-info" : "btn-outline-info"
+              }`}
+              onClick={(e) => setTypeList("editProfile")}
+            >
+              <i className="now-ui-icons ow-ui-icons travel_info"></i> Edit
+              Profil
+            </button>
+            <button
+              type="button"
+              className={`btn ${
+                typeList === "editProfile" ? "btn-outline-info" : "btn-info"
+              }`}
+              onClick={(e) => setTypeList("changePass")}
+            >
+              <i className="now-ui-icons ow-ui-icons travel_info"></i> Ubah
+              Password
+            </button>
             <br />
             {(() => {
               // eslint-disable-next-line
