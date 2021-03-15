@@ -15,19 +15,17 @@ import BackButton from "utils/BackComponent";
 
 const MyBulletListLoader = () => <BulletList />;
 
-const DetailLesson = () => {
+const DetailLesson = (props) => {
   let { id } = useParams();
   let [detailLesson, setDetailLesson] = React.useState([]);
   const [load, setLoad] = useState(true);
-  const user = localStorage.getItem("token");
-  const userid = JSON.parse(user);
-  const access_token = userid?.token?.token;
-  const idUser = userid?.user?.id;
+  const { token, idUser } = props;
+
   async function fetchData() {
     axios
       .get(`${API_URL}pelajaran/${id}`, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -61,7 +59,7 @@ const DetailLesson = () => {
         axios
           .delete(`${API_URL}bab/${id}`, {
             headers: {
-              Authorization: `Bearer ${access_token}`,
+              Authorization: `Bearer ${token}`,
             },
           })
           .then((res) => {
@@ -197,7 +195,7 @@ const DetailLesson = () => {
                             </div>
                           </div>
                         </div>
-                        {list.user_id === userid?.user?.id ? (
+                        {list.user_id === idUser ? (
                           <div className="col-md-4 col-xs-1 col-sm-1 px-1 text-right d-inline">
                             <Col>
                               <Link

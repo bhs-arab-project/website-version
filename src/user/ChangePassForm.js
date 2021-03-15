@@ -14,7 +14,7 @@ import { API_URL } from "utils/constants";
 import { useAlert } from "react-alert";
 import { useHistory } from "react-router-dom";
 
-export function ChangePassForm(params) {
+export function ChangePassForm(props) {
   const [newPass, setNewPass] = useState("");
   const [oldPass, setOldPass] = useState("");
   const [confPass, setConfPass] = useState("");
@@ -22,9 +22,7 @@ export function ChangePassForm(params) {
   const history = useHistory();
   const alert = useAlert();
 
-  const user = localStorage.getItem("token");
-  const userJson = JSON.parse(user);
-  const access_token = userJson?.token?.token;
+  const { token } = props;
 
   const handleS = async (e) => {
     e.preventDefault();
@@ -54,7 +52,7 @@ export function ChangePassForm(params) {
       headers: {
         ContentType: "multipart/form-data",
         Accept: "application/json",
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then(function (response) {

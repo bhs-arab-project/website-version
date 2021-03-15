@@ -17,30 +17,43 @@ import {
 import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import TransparentFooter from "components/Footers/TransparentFooter";
-import BackComponent from "../utils/BackComponent";
 import axios from "axios";
 import { API_URL } from "utils/constants";
 import { useAlert } from "react-alert";
-import { useHistory } from "react-router-dom";
 import { ChangePassForm } from "./ChangePassForm";
 import BackButton from "../utils/BackComponent";
 
-function ProfilePage() {
-  const history = useHistory();
+function ProfilePage(props) {
+  const { role, name, emailUser, token, id } = props;
   const alert = useAlert();
-  const user = localStorage.getItem("token");
-  const userJson = JSON.parse(user);
-  const roleUser = userJson?.user?.role;
-  const userName = userJson?.user?.name;
-  const userEmail = userJson?.user?.email;
-  const access_token = userJson?.token?.token;
-  const id = userJson?.user?.id;
+
   const [typeList, setTypeList] = React.useState("editProfile");
   const [load, setLoad] = useState(false);
-  const [nama, setNama] = useState(userName);
-  const [email, setEmail] = useState(userEmail);
+  const [nama, setNama] = useState(name);
+  const [nameOnHeader, setNameH] = useState("");
+  const [email, setEmail] = useState(emailUser);
+
+  function fetchData() {
+    axios
+      .get(`${API_URL}user/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setLoad(false);
+        setNameH(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        let message = error.response;
+        console.log(message);
+      });
+  }
 
   React.useEffect(() => {
+    fetchData();
+
     document.body.classList.add("profile-page");
     document.body.classList.add("sidebar-collapse");
     document.documentElement.classList.remove("nav-open");
@@ -50,6 +63,7 @@ function ProfilePage() {
       document.body.classList.remove("profile-page");
       document.body.classList.remove("sidebar-collapse");
     };
+    // eslint-disable-next-line
   }, []);
 
   const handleSubmit = async (e) => {
@@ -62,12 +76,12 @@ function ProfilePage() {
       data: {
         name: nama,
         email: email,
-        role: roleUser,
+        role: role,
       },
       headers: {
         ContentType: "multipart/form-data",
         Accept: "application/json",
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then(function (response) {
@@ -77,10 +91,9 @@ function ProfilePage() {
         // setToken(dataUser);
         localStorage.setItem("token", jsonUser);
         alert.success(<div className="notif">Berhasil mengedit Profil!</div>);
-        history.push("/");
-
-        //handle success
-        // console.log(jsonUser);
+      })
+      .then(() => {
+        fetchData();
       })
       .catch(function (error) {
         setLoad(false);
@@ -97,7 +110,7 @@ function ProfilePage() {
     <>
       <IndexNavbar />
       <div className="wrapper">
-        <ProfilePageHeader name={userName} roleUser={roleUser} />
+        <ProfilePageHeader name={nameOnHeader?.success?.name} roleUser={role} />
         <div className="section">
           <Container>
             <BackButton />
@@ -136,7 +149,7 @@ function ProfilePage() {
                             <FormGroup>
                               <Label>Nama</Label>
                               <Input
-                                defaultValue={userName}
+                                defaultValue={name}
                                 placeholder="Nama"
                                 type="text"
                                 onInput={(e) => setNama(e.target.value)}
@@ -148,7 +161,7 @@ function ProfilePage() {
                               <Label>Email</Label>
                               <Input
                                 disabled
-                                defaultValue={userEmail}
+                                defaultValue={emailUser}
                                 placeholder="Email"
                                 type="email"
                                 onInput={(e) => setEmail(e.target.value)}
@@ -176,11 +189,11 @@ function ProfilePage() {
                     </div>
                   );
                 case "changePass":
-                  return <ChangePassForm />;
+                  return <ChangePassForm token={token} />;
               }
             })()}
           </Container>
-          {roleUser === user ? (
+          {role === "user" ? (
             <Container>
               <h2>Sertifikat</h2>
               <Row>

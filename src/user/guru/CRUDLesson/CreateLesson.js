@@ -1,6 +1,5 @@
 import DetailHeader from "components/Headers/DetailHeader";
 import React, { useState } from "react";
-import BackComponent from "../../../utils/BackComponent";
 import { Form } from "react-bootstrap";
 import axios from "axios";
 // reactstrap components
@@ -20,11 +19,10 @@ import TransparentFooter from "components/Footers/TransparentFooter";
 import BackButton from "../../../utils/BackComponent";
 import { useHistory } from "react-router-dom";
 
-export default function CreateLesson() {
+export default function CreateLesson(props) {
+  const { name, token, id } = props;
+
   const alert = useAlert();
-  const guru = localStorage.getItem("token");
-  const guruToken = JSON.parse(guru);
-  const access_token = guruToken?.token?.token;
   const history = useHistory();
 
   const [pelajaran, setPelajaran] = useState();
@@ -36,8 +34,8 @@ export default function CreateLesson() {
   bodyFormData.set("pelajaran", pelajaran);
   bodyFormData.set("tingkatan", kesulitan);
   bodyFormData.set("deskripsi", deskripsi);
-  bodyFormData.set("guru", guruToken?.user?.name);
-  bodyFormData.set("user_id", JSON.stringify(guruToken?.user?.id));
+  bodyFormData.set("guru", name);
+  bodyFormData.set("user_id", id);
 
   const handleSubmit = async (e) => {
     setLoggedIn(true);
@@ -49,7 +47,7 @@ export default function CreateLesson() {
       headers: {
         ContentType: "multipart/form-data",
         Accept: "application/json",
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then(function (response) {

@@ -7,15 +7,13 @@ import { useState } from "react";
 import { API_URL } from "utils/constants";
 // core components
 
-function ProfilePageHeader() {
+function ProfilePageHeader(props) {
   let pageHeader = React.createRef();
 
   const user = localStorage.getItem("token");
   const userJson = JSON.parse(user);
-  const roleUser = userJson?.user?.role;
   const access_token = userJson?.token?.token;
   const user_id = userJson?.user?.id;
-  const name = userJson?.user?.name;
   const [listL, setListL] = useState();
   const [load, setLoad] = useState(false);
 
@@ -35,27 +33,6 @@ function ProfilePageHeader() {
         console.log(message);
       });
   }
-
-  // async function fetchDataM() {
-  //   axios
-  //     .get(`${API_URL}bab`, {
-  //       headers: {
-  //         Authorization: `Bearer ${access_token}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       setListM(response.data);
-  //     })
-  //     .catch((error) => {
-  //       let message = error.response;
-  //       console.log(message);
-  //     });
-  // }
-
-  // let filterM = listM.filter(function (materi) {
-  //   // eslint-disable-next-line
-  //   return materi.lesson_id == lesson_id;
-  // });
 
   React.useEffect(() => {
     setLoad(true);
@@ -85,21 +62,21 @@ function ProfilePageHeader() {
           <div className="photo-container">
             <img alt="..." src={require("assets/img/muslim.png")}></img>
           </div>
-          <h3 className="title text-capitalize">{name}</h3>
-          {roleUser === "teacher" ? (
+          <h3 className="title text-capitalize">{props.name}</h3>
+          {props.roleUser === "teacher" ? (
             <p className="category">Pengajar</p>
           ) : (
             <p className="category">
-              {roleUser === "user" ? (
+              {props.roleUser === "user" ? (
                 <>Murid</>
-              ) : roleUser === "teacher" ? (
+              ) : props.roleUser === "teacher" ? (
                 <>Pengajar</>
               ) : (
-                roleUser
+                props.roleUser
               )}
             </p>
           )}
-          {roleUser === "user" ? (
+          {props.roleUser === "user" ? (
             <div className="content">
               <div className="social-description">
                 <h2>{listL?.length}</h2>
@@ -110,7 +87,7 @@ function ProfilePageHeader() {
                 <p>Progres Materi</p>
               </div>
             </div>
-          ) : roleUser === "teacher" ? (
+          ) : props.roleUser === "teacher" ? (
             <div className="content">
               <div className="social-description">
                 {load === false ? (

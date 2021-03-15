@@ -21,16 +21,12 @@ import { API_URL } from "utils/constants";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 import TransparentFooter from "components/Footers/TransparentFooter";
-import BackComponent from "../../utils/BackComponent";
 import BackButton from "../../utils/BackComponent";
 
-export default function CreateQuiz() {
+export default function CreateQuiz(props) {
   const history = useHistory();
   const alert = useAlert();
-  const guru = localStorage.getItem("token");
-  const guruToken = JSON.parse(guru);
-  const access_token = guruToken?.token?.token;
-  const userId = guruToken?.user?.id;
+  const { token, userId } = props;
 
   const [valButton, setValB] = useState("Pilih Kelas");
   const [listLesson, setListLesson] = useState();
@@ -40,7 +36,7 @@ export default function CreateQuiz() {
   const [answerOption, setAnswerOption] = useState("");
   const [questionQ, setQuestionQ] = useState("");
 
-  const [listQuiz, setListQuiz] = useState();
+  // const [listQuiz, setListQuiz] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const [load, setLoad] = useState(false);
 
@@ -51,7 +47,7 @@ export default function CreateQuiz() {
     axios
       .get(`${API_URL}pelajaran`, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -105,7 +101,7 @@ export default function CreateQuiz() {
       headers: {
         ContentType: "multipart/form-data",
         Accept: "application/json",
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then(function (response) {

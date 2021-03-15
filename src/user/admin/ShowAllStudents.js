@@ -6,7 +6,6 @@ import { Container, Row } from "reactstrap";
 import { API_URL } from "utils/constants";
 import BootstrapCardDataTable from "../../components/loader/loaderTable";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import Col from "reactstrap/lib/Col";
 import swal from "sweetalert";
 import BootstrapTable from "react-bootstrap-table-next";

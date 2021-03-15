@@ -12,12 +12,9 @@ import CardBody from "reactstrap/lib/CardBody";
 import axios from "axios";
 import { API_URL } from "utils/constants";
 import DotLoad from "components/loader/dotLoader";
-import { withAuthTeacher } from "auth/RouteAccess";
-import Countdown from "react-countdown";
 
-function Quiz() {
+function Quiz(props) {
   let { id } = useParams();
-  console.log(id);
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
@@ -25,18 +22,14 @@ function Quiz() {
   const [scoreTotal, setScoreT] = useState(0);
   const [load, setLoad] = useState();
   const history = useHistory();
-  const user = localStorage.getItem("token");
-  const userid = JSON.parse(user);
-  const access_token = userid?.token?.token;
-  const roleUser = userid?.user?.role;
+  const { token, roleUser } = props;
+
   const MyBulletListLoader = () => <DotLoad />;
 
   // let questions = questions?.filter(function (oneQuiz) {
   //   // eslint-disable-next-line
   //   return oneQuiz.lesson_id == id;
   // });
-
-  console.log(questions);
 
   // const renderer = ({ hours, minutes, seconds, completed }) => {
   //   if (!completed) {
@@ -52,15 +45,16 @@ function Quiz() {
     axios
       .get(`${API_URL}quiz?cari=${id}`, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
         setLoad(false);
         setQuestions(response.data.data);
+        console.log(response.data.data);
       })
-      .catch((error) => {
-        console.log("errorQ", error);
+      .catch((response) => {
+        console.log("errorQ", response);
       });
   }
 
@@ -120,7 +114,7 @@ function Quiz() {
   return (
     <div>
       {load === false ? (
-        questions.length === 0 ? (
+        questions?.length === 0 ? (
           <div className="section container text-left">
             <p className=" font-weight-bold text-dark">
               Pengajar Sedang Membuat Quiz Terbaik Untuk Kamu, Tungguin Terus
@@ -237,16 +231,16 @@ function Quiz() {
                 </div>
                 <div className="question-text">
                   <h5>{questions[currentQuestion]?.question_text}</h5>
-                  {/* <span>{questions[currentQuestion]?.answer_options}</span> */}
+                  <span>{questions[currentQuestion]?.answer_options}</span>
                 </div>
-                {JSON.parse(questions[currentQuestion]?.answer_options).map(
+                {/* {JSON.parse(questions[currentQuestion]?.answer_options).map(
                   (answerOption, index) => {
                     return (
                       <Row className="ml-1" key={index}>
                         <Button
                           className="btn-block btn-info"
                           onClick={() =>
-                            handleAnswerOptionClick(answerOption.isCorrect)
+                            handleAnswerOptionClick(answerOption.answerOption)
                           }
                         >
                           {answerOption.answerText}
@@ -254,7 +248,7 @@ function Quiz() {
                       </Row>
                     );
                   }
-                )}
+                )} */}
                 <Button color="danger" onClick={() => confirmCancel()}>
                   Batalkan Quiz
                 </Button>

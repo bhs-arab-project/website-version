@@ -19,19 +19,15 @@ import {
 import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useAlert } from "react-alert";
-import BackComponent from "../../../utils/BackComponent";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import TransparentFooter from "components/Footers/TransparentFooter";
 import BackButton from "../../../utils/BackComponent";
 import { useHistory } from "react-router-dom";
 
-export default function CreateMateri() {
+export default function CreateMateri(props) {
   const alert = useAlert();
-  const guru = localStorage.getItem("token");
-  const guruToken = JSON.parse(guru);
-  const access_token = guruToken?.token?.token;
-  const userId = guruToken?.user?.id;
+  const { token, userId } = props;
 
   const history = useHistory();
 
@@ -51,13 +47,11 @@ export default function CreateMateri() {
     return listL.user_id == userId;
   });
 
-  console.log(materi);
-
   async function fetchData() {
     axios
       .get(`${API_URL}pelajaran`, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -78,7 +72,7 @@ export default function CreateMateri() {
 
   let bodyFormData = new FormData();
   bodyFormData.set("lesson_id", lessonId);
-  bodyFormData.set("user_id", guruToken?.user?.id);
+  bodyFormData.set("user_id", userId);
   bodyFormData.set("judul_bab", judulMateri);
   bodyFormData.set("materi", materi);
 
@@ -105,7 +99,7 @@ export default function CreateMateri() {
       headers: {
         ContentType: "multipart/form-data",
         Accept: "application/json",
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then(function (response) {
@@ -114,7 +108,6 @@ export default function CreateMateri() {
 
         history.goBack();
         //handle success
-        console.log(response);
       })
       .catch(function (response) {
         setLoggedIn(false);
@@ -135,7 +128,7 @@ export default function CreateMateri() {
       <div className="section ">
         <Container>
           <br />
-          <div clasName="mt-2">
+          <div className="mt-2">
             <BackButton />
             <h2>Buat Materi</h2>
             <hr />
@@ -149,7 +142,7 @@ export default function CreateMateri() {
                       <DropdownMenu>
                         {load === false ? (
                           filterListL?.length === 0 ? (
-                            <DropdownItem text className="text-danger" disabled>
+                            <DropdownItem className="text-danger" disabled>
                               Buat Kelas Terlebih Dahulu
                             </DropdownItem>
                           ) : (
@@ -170,9 +163,7 @@ export default function CreateMateri() {
                             })
                           )
                         ) : (
-                          <DropdownItem text disabled>
-                            Loading...
-                          </DropdownItem>
+                          <DropdownItem disabled>Loading...</DropdownItem>
                         )}
                       </DropdownMenu>
                     </Dropdown>
@@ -186,8 +177,6 @@ export default function CreateMateri() {
                     <Label>Judul Materi</Label>
                     <Input
                       required
-                      oninvalid="Judul Materi Harus di isi"
-                      onvalid="this.setCustomValidity('')"
                       placeholder="Judul Materi"
                       type="text"
                       onInput={(e) => setJudulMateri(e.target.value)}

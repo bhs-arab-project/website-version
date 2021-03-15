@@ -17,17 +17,15 @@ function MateriPage(props) {
   // const [load, setLoad] = useState(false);
   // console.log("indexx", arrayNum);
 
-  const user = localStorage.getItem("token");
-  const userid = JSON.parse(user);
-  const access_token = userid?.token?.token;
-  const roleUser = userid?.user?.role;
+  const { token, roleUser } = props;
+
   const history = useHistory();
 
   async function fetchDataPel() {
     axios
       .get(`${API_URL}pelajaran/${id}`, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -143,7 +141,7 @@ function MateriPage(props) {
                   <i className="now-ui-icons arrows-1_minimal-left"></i> Kembali
                   Ke Detail Bab
                 </Button>
-                {currentChapter == 0 ? (
+                {currentChapter === 0 ? (
                   <></>
                 ) : (
                   <Button color="primary" onClick={previousChap}>
@@ -152,7 +150,7 @@ function MateriPage(props) {
                   </Button>
                 )}
 
-                {currentChapter == detailLesson?.chapter?.length - 1 ? (
+                {currentChapter === detailLesson?.chapter?.length - 1 ? (
                   detailLesson?.quiz?.length === 0 ? (
                     <Button color="danger" disabled className="not-allowed">
                       Ujian Belum Tersedia{" "}

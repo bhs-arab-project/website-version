@@ -11,11 +11,12 @@ import Tabs from "./murid/ListMateri.js";
 
 import "../styles.css";
 import TransparentFooter from "components/Footers/TransparentFooter.js";
-import ShowAllUsersBeta from "./admin/ShowAllTeachers.js";
 import ShowAllLessonBeta from "./guru/ShowAllLesson2.js";
 import ListControl from "./admin/ListControl.js";
 
-function Index() {
+function Index(props) {
+  console.log(props);
+  const { userRole, token, userId } = props;
   React.useEffect(() => {
     document.body.classList.add("index-page");
     document.body.classList.add("sidebar-collapse");
@@ -27,13 +28,11 @@ function Index() {
       document.body.classList.remove("sidebar-collapse");
     };
   });
-  const user = localStorage.getItem("token");
-  const userName = JSON.parse(user);
-  const role = userName?.user?.role;
+
   return (
     <>
       <IndexNavbar />
-      {role === "user" ? (
+      {userRole === "user" ? (
         <div className="wrapper">
           <IndexHeader />
           <div className="main">
@@ -54,10 +53,14 @@ function Index() {
           </div>
           <TransparentFooter />
         </div>
-      ) : role === "teacher" ? (
+      ) : userRole === "teacher" ? (
         <div className="wrapper">
           <IndexHeader />
-          <ShowAllLessonBeta />
+          <ShowAllLessonBeta
+            userRole={userRole}
+            token={token}
+            userId={userId}
+          />
           {/* <HookButtonSwitch /> */}
           <TransparentFooter />
         </div>

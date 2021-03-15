@@ -25,12 +25,19 @@ import Quiz from "./user/murid/quiz/quiz";
 import CreateQuiz from "./user/guru/CreateQuiz";
 import EditMateri from "./user/guru/CRUDMateri/EditMateri";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+import Haha from "user/guru/CreateAnswer.js";
 
 function App() {
   const { token, setToken } = useToken();
   let history = document.URL.split("/");
 
-  // const roleUser = userJson?.token?.role[0];
+  const user = localStorage.getItem("token");
+  const userJson = JSON.parse(user);
+  const roleUser = userJson?.user?.role;
+  const userName = userJson?.user?.name;
+  const userEmail = userJson?.user?.email;
+  const access_token = userJson?.token?.token;
+  const id = userJson?.user?.id;
 
   if (
     !token &&
@@ -55,27 +62,75 @@ function App() {
       <AlertProvider template={AlertTemplate} {...options}>
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <Home
+                  userRole={roleUser}
+                  name={userName}
+                  emailUser={userEmail}
+                  token={access_token}
+                  userId={id}
+                />
+              )}
+            />
 
             {/* start User Route */}
 
-            <Route exact path="/bab" component={BabPage} />
-            <Route exact path="/detail-bab/:id" component={DetailBab} />
-            <Route exact path="/quiz/:id" component={Quiz} />
+            <Route
+              exact
+              path="/bab"
+              render={() => <BabPage token={access_token} />}
+            />
+            <Route
+              exact
+              path="/detail-bab/:id"
+              render={() => <DetailBab token={access_token} />}
+            />
+            <Route
+              exact
+              path="/quiz/:id"
+              render={() => <Quiz token={access_token} roleUser={roleUser} />}
+            />
 
             {/* end User route */}
 
             {/* start Teacher route */}
 
-            <Route exact path="/create-lesson" component={CreateLesson} />
-            <Route exact path="/create-chapter" component={CreateMateri} />
-            <Route exact path="/edit-lesson/:id" component={EditLesson} />
-            <Route exact path="/edit-materi/:id" component={EditMateri} />
-            <Route path="/detail-lesson/:id" render={() => <DetailLesson />} />
+            <Route
+              exact
+              path="/create-lesson"
+              render={() => (
+                <CreateLesson name={userName} token={access_token} id={id} />
+              )}
+            />
+            <Route
+              exact
+              path="/create-chapter"
+              render={() => <CreateMateri token={access_token} userId={id} />}
+            />
+            <Route
+              path="/edit-lesson/:id"
+              render={() => (
+                <EditLesson token={access_token} idUser={id} name={userName} />
+              )}
+            />
+            <Route
+              path="/edit-materi/:id"
+              render={() => <EditMateri token={access_token} userId={id} />}
+            />
+            <Route
+              path="/detail-lesson/:id"
+              render={() => <DetailLesson token={access_token} idUser={id} />}
+            />
 
-            <Route path="/create-question" render={() => <CreateQuiz />} />
+            <Route
+              path="/create-question"
+              render={() => <CreateQuiz token={access_token} userId={id} />}
+            />
 
-            <Route path="/create-answer" render={() => <CreateQuiz />} />
+            <Route path="/create-answer" render={() => <Haha />} />
 
             {/* end Teacher route */}
             {/* start Admin route */}
@@ -86,10 +141,20 @@ function App() {
             <Route
               exact
               path="/profile-page"
-              component={ProfilePage}
-              setToken={setToken}
+              render={() => (
+                <ProfilePage
+                  role={roleUser}
+                  name={userName}
+                  emailUser={userEmail}
+                  token={access_token}
+                  id={id}
+                />
+              )}
             />
-            <Route exact path="/bab-materi/:id" component={Materi} />
+            <Route
+              path="/bab-materi/:id"
+              render={() => <Materi token={access_token} roleUser={roleUser} />}
+            />
             <Route path="/forgot-password" render={() => <ForgotPassword />} />
             <Route path="*" render={() => <NotFound />} />
           </Switch>

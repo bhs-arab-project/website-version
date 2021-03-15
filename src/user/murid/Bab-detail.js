@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Container } from "reactstrap";
 import IndexNavbar from "../../components/Navbars/IndexNavbar";
 import { API_URL } from "utils/constants";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { BulletList } from "react-content-loader";
 import AvatarWithText from "../../components/loader/loaderAvatarWithText";
@@ -14,20 +14,17 @@ import BackButton from "utils/BackComponent";
 
 const MyBulletListLoader = () => <BulletList />;
 
-const BabDetail = () => {
+const BabDetail = (props) => {
   let { id } = useParams();
   let [detailLesson, setDetailLesson] = React.useState([]);
   const [load, setLoad] = useState(true);
-  const user = localStorage.getItem("token");
-  const userid = JSON.parse(user);
-  const access_token = userid?.token?.token;
-  const history = useHistory();
+  const { token } = props;
 
   async function fetchData() {
     axios
       .get(`${API_URL}pelajaran/${id}`, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -49,10 +46,6 @@ const BabDetail = () => {
   let pageHeader = React.createRef();
   // console.log(detailLesson?.chapter, "snjn");
   const pelajaran = detailLesson.pelajaran;
-
-  const handleSub = () => {
-    history.push("/");
-  };
 
   return (
     <div>

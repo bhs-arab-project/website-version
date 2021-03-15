@@ -15,17 +15,13 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 
-const ShowAllLessonBeta = () => {
+const ShowAllLessonBeta = (props) => {
   const [load, setLoad] = useState(true);
   let [listTable, setListTable] = React.useState([]);
   let [typeList, setTypeList] = React.useState("AllClass");
   const { SearchBar } = Search;
 
-  const user = localStorage.getItem("token");
-  const userVal = JSON.parse(user);
-  const access_token = userVal?.token?.token;
-  const userRole = userVal?.user?.role;
-  const userId = userVal?.user?.id;
+  const { userRole, token, userId } = props;
 
   const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total py-2 px-2">
@@ -71,7 +67,7 @@ const ShowAllLessonBeta = () => {
     axios
       .get(`${API_URL}pelajaran`, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -103,7 +99,7 @@ const ShowAllLessonBeta = () => {
         axios
           .delete(`${API_URL}pelajaran/${id}`, {
             headers: {
-              Authorization: `Bearer ${access_token}`,
+              Authorization: `Bearer ${token}`,
             },
           })
           .then((res) => {
@@ -243,7 +239,7 @@ const ShowAllLessonBeta = () => {
       formatter: (rowContent, row) => {
         return (
           <>
-            {row.user_id === userVal?.user?.id || userRole === "admin" ? (
+            {row.user_id === userId || userRole === "admin" ? (
               <div className="td-actions text-center">
                 <Link to={`/detail-lesson/${row.id}`}>
                   <button type="button" rel="tooltip" className="btn btn-info">

@@ -1,6 +1,5 @@
 import DetailHeader from "components/Headers/DetailHeader";
 import React, { useState } from "react";
-import BackComponent from "../../../utils/BackComponent";
 import { Form } from "react-bootstrap";
 import axios from "axios";
 // reactstrap components
@@ -20,23 +19,19 @@ import { useAlert } from "react-alert";
 import TransparentFooter from "components/Footers/TransparentFooter";
 import BackButton from "../../../utils/BackComponent";
 
-export default function EditLesson() {
+export default function EditLesson(props) {
   let { id } = useParams();
   const history = useHistory();
   const alert = useAlert();
-  const guru = localStorage.getItem("token");
-  const guruToken = JSON.parse(guru);
-  const access_token = guruToken?.token?.token;
-
+  const { token, name } = props;
   const [detailL, setDetailL] = useState();
-
   const [load, setLoad] = useState(false);
 
   async function fetchData() {
     axios
       .get(`${API_URL}pelajaran/${id}`, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -73,12 +68,12 @@ export default function EditLesson() {
         pelajaran: pelajaran,
         tingkatan: kesulitan,
         deskripsi: deskripsi,
-        guru: guruToken?.user?.name,
+        guru: name,
       },
       headers: {
         ContentType: "multipart/form-data",
         Accept: "application/json",
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then(function (response) {

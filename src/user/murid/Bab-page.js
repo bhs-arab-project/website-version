@@ -6,7 +6,8 @@ import DetailHeader from "components/Headers/DetailHeader.js";
 import TransparentFooter from "components/Footers/TransparentFooter";
 import { withAuthUser } from "./../../auth/RouteAccess";
 
-function LandingPage() {
+function LandingPage(props) {
+  const { token } = props;
   React.useEffect(() => {
     document.body.classList.add("landing-page");
     document.body.classList.add("sidebar-collapse");
@@ -26,7 +27,7 @@ function LandingPage() {
           subHeader="pilih bab materi di bawah untuk mempelajarinya!"
           img={require("assets/img/bab-header.jpg")}
         />
-        <ListMateri />
+        <ListMateri token={token} />
         <TransparentFooter />
       </div>
     </>

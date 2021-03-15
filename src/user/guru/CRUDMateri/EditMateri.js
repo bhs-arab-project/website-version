@@ -20,20 +20,16 @@ import Spinner from "reactstrap/lib/Spinner";
 import { API_URL } from "utils/constants";
 import { useHistory, useParams } from "react-router-dom";
 import { useAlert } from "react-alert";
-import BackComponent from "../../../utils/BackComponent";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import TransparentFooter from "components/Footers/TransparentFooter";
 import BackButton from "../../../utils/BackComponent";
 
-export default function EditMateri() {
+export default function EditMateri(props) {
   let { id } = useParams();
   const history = useHistory();
   const alert = useAlert();
-  const guru = localStorage.getItem("token");
-  const guruToken = JSON.parse(guru);
-  const access_token = guruToken?.token?.token;
-  const userId = guruToken?.user?.id;
+  const { token, userId } = props;
 
   const [detailM, setDetailM] = useState();
   const [valButton, setValB] = useState(detailM?.pelajaran);
@@ -56,7 +52,7 @@ export default function EditMateri() {
     axios
       .get(`${API_URL}bab/${id}`, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -73,7 +69,7 @@ export default function EditMateri() {
     axios
       .get(`${API_URL}pelajaran`, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -95,7 +91,7 @@ export default function EditMateri() {
 
   let bodyFormData = new FormData();
   bodyFormData.set("lesson_id", lessonId);
-  bodyFormData.set("user_id", guruToken?.user?.id);
+  bodyFormData.set("user_id", userId);
   bodyFormData.set("judul_bab", judulMateri);
   bodyFormData.set("materi", materi);
 
@@ -120,7 +116,7 @@ export default function EditMateri() {
       headers: {
         ContentType: "multipart/form-data",
         Accept: "application/json",
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then(function (response) {
@@ -165,7 +161,7 @@ export default function EditMateri() {
                       <DropdownMenu>
                         {load === false ? (
                           filterListL?.length === 0 ? (
-                            <DropdownItem text className="text-danger" disabled>
+                            <DropdownItem className="text-danger" disabled>
                               Buat Kelas Terlebih Dahulu
                             </DropdownItem>
                           ) : (
@@ -186,9 +182,7 @@ export default function EditMateri() {
                             })
                           )
                         ) : (
-                          <DropdownItem text disabled>
-                            Loading...
-                          </DropdownItem>
+                          <DropdownItem disabled>Loading...</DropdownItem>
                         )}
                       </DropdownMenu>
                     </Dropdown>
@@ -205,8 +199,6 @@ export default function EditMateri() {
                       defaultValue={detailM?.judul_bab}
                       // value={detailM?.judul_bab}
                       required
-                      oninvalid="Judul Materi Harus di isi"
-                      onvalid="this.setCustomValidity('')"
                       placeholder="Judul Materi"
                       type="text"
                       onInput={(e) => setJudulMateri(e.target.value)}

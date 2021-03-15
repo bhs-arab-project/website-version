@@ -17,20 +17,16 @@ import { Link } from "react-router-dom";
 import loaderListMateri from "components/loader/loaderListMateri";
 import { withAuthUser } from "./../../auth/RouteAccess";
 
-const ListMateri = () => {
+const ListMateri = (props) => {
   const [load, setLoad] = useState(true);
   let [lesson, setLesson] = React.useState([]);
-
-  const user = localStorage.getItem("token");
-  const userid = JSON.parse(user);
-
-  const access_token = userid?.token?.token;
+  const { token } = props;
 
   async function fetchData() {
     axios
       .get(`${API_URL}pelajaran`, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {

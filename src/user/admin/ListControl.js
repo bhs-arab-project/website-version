@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container, Row, Col } from "reactstrap";
+import { Button, Container } from "reactstrap";
 import ShowAllLessonBeta from "user/guru/ShowAllLesson2.js";
 import ShowAllUsersBeta from "./ShowAllTeachers";
 import ShowAllStudents from "./ShowAllStudents";
