@@ -18,6 +18,7 @@ function Quiz(props) {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
+  const [showTerm, setShowTerm] = useState(true);
   const [score, setScore] = useState(0);
   const [scoreTotal, setScoreT] = useState(0);
   const [load, setLoad] = useState();
@@ -65,7 +66,7 @@ function Quiz(props) {
   }, []);
 
   const handleAnswerOptionClick = (isCorrect) => {
-    if (isCorrect) {
+    if (isCorrect === "true") {
       setScore(score + 1);
       let e = ((score + 1) / questions.length) * 100;
       setScoreT(e);
@@ -98,7 +99,22 @@ function Quiz(props) {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        history.push("/bab");
+        history.push("/");
+      }
+    });
+  }
+
+  function confirmQuiz() {
+    swal({
+      title: "Mulai Ujian",
+      text: "Apakah Kamu Yakin Untuk Memulai Ujian?",
+      icon: "warning",
+      buttons: true,
+
+      dangerMode: true,
+    }).then((response) => {
+      if (response) {
+        setShowTerm(false);
       }
     });
   }
@@ -108,9 +124,17 @@ function Quiz(props) {
     window.location.reload();
   };
 
-  // const dataAnswer = questions[0]?.answer_options;
-  // const answerOption = JSON.parse(dataAnswer);
-  // console.log("ans", answerOption?.answer_text);
+  // useEffect(() => {
+  //   try {
+  //     for (let index = 0; index < questions.length; index++) {
+  //       questions[index].answer_options = JSON.parse(
+  //         questions[index].answer_options
+  //       );
+  //     }
+  //     console.log(questions);
+  //   } catch (error) {}
+  // }, [questions]);
+
   return (
     <div>
       {load === false ? (
@@ -166,7 +190,7 @@ function Quiz(props) {
                       <h3>Selamat, Kamu Lolos!</h3>
                     )}
                     <h5>
-                      Kamu Benar {score} dari {questions.length} | Nilai{" "}
+                      Kamu Benar {score} dari {questions.length} Soal | Nilai{" "}
                       {averageScore}
                     </h5>
                     {averageScore < 60 ? (
@@ -212,8 +236,14 @@ function Quiz(props) {
                 <Row>
                   <Col>
                     <h2 className="mt-4">
-                      Kelas {questions[currentQuestion]?.pelajaran} | Soal Ke{" "}
-                      {currentQuestion + 1} dari {questions.length}
+                      {showTerm === true ? (
+                        "Pendahuluan | Al-Qolam"
+                      ) : (
+                        <>
+                          Kelas {questions[currentQuestion]?.pelajaran} | Soal
+                          Ke {currentQuestion + 1} dari {questions.length}
+                        </>
+                      )}
                     </h2>
                   </Col>
                   <Col>
@@ -225,33 +255,73 @@ function Quiz(props) {
                     ></img>
                   </Col>
                 </Row>
-                <div className="question-count">
-                  {" "}
-                  {/* <Countdown date={Date.now() + 10000} renderer={renderer} onComplete={completeCount}/> */}
+                {showTerm === true ? (
+                  <>
+                    <Row>
+                      <Col md="8">
+                        <ul>
+                          <li>Awali mengerjakan soal ujian dengan berdoa.</li>
+                          <li>Pilih salah satu jawaban yang dianggap benar.</li>
+                          <li>
+                            Kerjakan ujian dengan cermat dan bacalah pertanyaan
+                            dengan teliti, pahami makna dari soal tersebut,
+                            jangan terburu-buru.
+                          </li>
+                          <li>
+                            Dilarang mencontek, kerjakan ujian dengan jujur,
+                            kerjakan soal ujian sesuai dengan keyakinan dan
+                            kemampuan Anda sendiri.
+                          </li>
+                          <li>
+                            Jika Nilai dibawah 60 maka peserta dianggap tidak
+                            lolos dan dapat mengulang ujian tersebut.
+                          </li>
+                        </ul>
+                      </Col>
+                    </Row>
+                  </>
+                ) : (
+                  <>
+                    <div className="question-count">
+                      {" "}
+                      {/* <Countdown date={Date.now() + 10000} renderer={renderer} onComplete={completeCount}/> */}
+                    </div>
+                    <div className="question-text">
+                      <h5>{questions[currentQuestion]?.question_text}</h5>
+                      {/* <span>{questions[currentQuestion]?.answer_options}</span> */}
+                    </div>
+                    {JSON.parse(
+                      questions[currentQuestion]?.answer_options
+                    ).list?.map((data, index) => {
+                      return (
+                        <Row className="ml-1" key={index}>
+                          <Button
+                            className="btn-block btn-info"
+                            onClick={() =>
+                              handleAnswerOptionClick(data?.isCorrect)
+                            }
+                          >
+                            {data?.answerText}
+                          </Button>
+                        </Row>
+                      );
+                    })}
+                  </>
+                )}
+                <div className="d-flex justify-content-between">
+                  <Button color="danger" onClick={() => confirmCancel()}>
+                    <i className="now-ui-icons arrows-1_minimal-left"></i>{" "}
+                    Batalkan Ujian
+                  </Button>
+                  {showTerm === true ? (
+                    <Button color="info" onClick={() => confirmQuiz()}>
+                      Mulai Ujian{" "}
+                      <i className="now-ui-icons arrows-1_minimal-right"></i>
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
                 </div>
-                <div className="question-text">
-                  <h5>{questions[currentQuestion]?.question_text}</h5>
-                  <span>{questions[currentQuestion]?.answer_options}</span>
-                </div>
-                {/* {JSON.parse(questions[currentQuestion]?.answer_options).map(
-                  (answerOption, index) => {
-                    return (
-                      <Row className="ml-1" key={index}>
-                        <Button
-                          className="btn-block btn-info"
-                          onClick={() =>
-                            handleAnswerOptionClick(answerOption.answerOption)
-                          }
-                        >
-                          {answerOption.answerText}
-                        </Button>
-                      </Row>
-                    );
-                  }
-                )} */}
-                <Button color="danger" onClick={() => confirmCancel()}>
-                  Batalkan Quiz
-                </Button>
               </Container>
             </div>
             <TransparentFooter />

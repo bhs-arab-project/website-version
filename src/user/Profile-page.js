@@ -20,7 +20,7 @@ import TransparentFooter from "components/Footers/TransparentFooter";
 import axios from "axios";
 import { API_URL } from "utils/constants";
 import { useAlert } from "react-alert";
-import { ChangePassForm } from "./ChangePassForm";
+import { ChangePassForm } from "../auth/ChangePassForm";
 import BackButton from "../utils/BackComponent";
 
 function ProfilePage(props) {

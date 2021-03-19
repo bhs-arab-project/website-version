@@ -62,7 +62,13 @@ function ProfilePageHeader(props) {
           <div className="photo-container">
             <img alt="..." src={require("assets/img/muslim.png")}></img>
           </div>
-          <h3 className="title text-capitalize">{props.name}</h3>
+          <h3 className="title text-capitalize">
+            {props.name === undefined ? (
+              <p className="text-secondary">memuat...</p>
+            ) : (
+              props.name
+            )}
+          </h3>
           {props.roleUser === "teacher" ? (
             <p className="category">Pengajar</p>
           ) : (

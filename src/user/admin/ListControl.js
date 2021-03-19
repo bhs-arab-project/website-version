@@ -7,22 +7,43 @@ import ShowAllStudents from "./ShowAllStudents";
 const ListControl = () => {
   let [typeList, setTypeList] = React.useState("TeachersList");
 
+  const user = localStorage.getItem("token");
+  const userJson = JSON.parse(user);
+  const roleUser = userJson?.user?.role;
+  const access_token = userJson?.token?.token;
+  const id = userJson?.user?.id;
+
   return (
     <>
       <div className="section section-tabs" id={"sectionList"}>
         <Container>
-          <Button color="info" onClick={(e) => setTypeList("TeachersList")}>
+          <button
+            className={`btn ${
+              typeList === "TeachersList" ? "btn-info" : "btn-outline-info"
+            }`}
+            onClick={(e) => setTypeList("TeachersList")}
+          >
             <i className="now-ui-icons ow-ui-icons travel_info"></i> Daftar
             Pengajar
-          </Button>
-          <Button color="success" onClick={(e) => setTypeList("StudentsList")}>
+          </button>
+          <button
+            className={`btn ${
+              typeList === "StudentsList" ? "btn-info" : "btn-outline-info"
+            }`}
+            onClick={(e) => setTypeList("StudentsList")}
+          >
             <i className="now-ui-icons ow-ui-icons travel_info"></i> Daftar
-            Pelajar
-          </Button>
-          <Button color="primary" onClick={(e) => setTypeList("LessonsList")}>
+            Murid
+          </button>
+          <button
+            className={`btn ${
+              typeList === "LessonsList" ? "btn-info" : "btn-outline-info"
+            }`}
+            onClick={(e) => setTypeList("LessonsList")}
+          >
             <i className="now-ui-icons ow-ui-icons travel_info"></i> Daftar
             Kelas
-          </Button>
+          </button>
         </Container>
         {(() => {
           // eslint-disable-next-line
@@ -32,7 +53,13 @@ const ListControl = () => {
             case "StudentsList":
               return <ShowAllStudents />;
             case "LessonsList":
-              return <ShowAllLessonBeta />;
+              return (
+                <ShowAllLessonBeta
+                  userRole={roleUser}
+                  token={access_token}
+                  userId={id}
+                />
+              );
           }
         })()}
       </div>

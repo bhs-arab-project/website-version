@@ -84,8 +84,8 @@ const ShowAllStudents = () => {
 
   async function deleteStudent(id) {
     swal({
-      title: "Menghapus Guru",
-      text: `Apakah Kamu Yakin Menghapus User?`,
+      title: "Menghapus Pelajar",
+      text: `Apakah Kamu Yakin Menghapus Pelajar Ini?`,
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -100,7 +100,7 @@ const ShowAllStudents = () => {
           .then((res) => {
             swal({
               title: "Berhasil!",
-              text: "User Terhapus!",
+              text: "Pelajar Terhapus!",
               icon: "success",
               timer: 2000,
               button: false,
@@ -111,7 +111,7 @@ const ShowAllStudents = () => {
           .catch(() => {
             swal({
               title: "Gagal!",
-              text: "Gagal Menghapus User, Silahkan Coba Lagi",
+              text: "Gagal Menghapus Pelajar, Silahkan Coba Lagi",
               icon: "error",
               timer: 2000,
               button: false,
@@ -131,12 +131,12 @@ const ShowAllStudents = () => {
   const columnsUser = [
     {
       dataField: "name",
-      text: "Nama Pelajar",
+      text: "Nama Murid",
       sort: true,
     },
     {
       dataField: "email",
-      text: "Email Pelajar",
+      text: "Email Murid",
       sort: true,
     },
     {
@@ -182,7 +182,7 @@ const ShowAllStudents = () => {
                 <div>
                   <Row>
                     <Col>
-                      <h2>Daftar Pelajar</h2>
+                      <h2>Daftar Murid</h2>
                     </Col>
                     <Col>
                       <div className="float-right">

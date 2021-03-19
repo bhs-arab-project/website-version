@@ -27,6 +27,7 @@ export default function LoginPage({ setToken }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loggedIn, setLoggedIn] = useState();
+  const [typeInput, setTypeInput] = useState("pw");
 
   React.useEffect(() => {
     document.body.classList.add("login-page");
@@ -85,6 +86,14 @@ export default function LoginPage({ setToken }) {
     }
   };
 
+  function pwToggle() {
+    if (typeInput === "text") {
+      setTypeInput("pw");
+    } else {
+      setTypeInput("text");
+    }
+  }
+
   return (
     <>
       <ExamplesNavbar />
@@ -127,12 +136,7 @@ export default function LoginPage({ setToken }) {
                         onBlur={() => setFirstFocus(false)}
                       ></Input>
                     </InputGroup>
-                    <InputGroup
-                      className={
-                        "no-border input-md" +
-                        (lastFocus ? " input-group-focus" : "")
-                      }
-                    >
+                    <InputGroup className={"no-border input-md"}>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="now-ui-icons ui-1_lock-circle-open"></i>
@@ -140,12 +144,24 @@ export default function LoginPage({ setToken }) {
                       </InputGroupAddon>
                       <Input
                         placeholder="Password"
-                        type="password"
+                        type={typeInput === "text" ? "text" : "password"}
                         onInput={(e) => setPassword(e.target.value)}
                         onFocus={() => setLastFocus(true)}
                         onBlur={() => setLastFocus(false)}
                         required
                       ></Input>
+
+                      <a className="link aButton mt-2 ml-2" onClick={pwToggle}>
+                        <img
+                          width="20rem"
+                          src={
+                            typeInput === "pw"
+                              ? "./locked.png"
+                              : "./unlocked.png"
+                          }
+                          alt="..."
+                        />
+                      </a>
                     </InputGroup>
                   </CardBody>
                   <CardFooter className="text-center">

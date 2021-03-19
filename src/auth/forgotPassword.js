@@ -21,11 +21,13 @@ import { useAlert } from "react-alert";
 import axios from "axios";
 import { API_URL } from "utils/constants";
 import Spinner from "reactstrap/lib/Spinner";
+import { useHistory } from "react-router-dom";
 
 function LoginPage() {
   const [email, setEmail] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const alert = useAlert();
+  const history = useHistory();
 
   let bodyFormData = new FormData();
   bodyFormData.set("email", email);
@@ -45,6 +47,7 @@ function LoginPage() {
         alert.success(
           <div className="notif">Terkirim!, Silahkan Cek Email Kamu</div>
         );
+        history.goBack();
 
         //handle success
         console.log(response);
@@ -62,14 +65,6 @@ function LoginPage() {
             </div>
           );
         }
-        // } else if (response === "Error: Request failed with status code 404") {
-        //   alert.error(
-        //     <div className="notif">
-        //       Gagal Mengirim, silahkan coba lagi, 404 error
-        //     </div>
-        //   );
-        // }
-        // alert.error(<div className="notif">Gagal Registrasi</div>);
       });
 
     e.preventDefault();
@@ -85,6 +80,7 @@ function LoginPage() {
       document.body.classList.remove("sidebar-collapse");
     };
   }, []);
+
   return (
     <>
       <ExamplesNavbar />
@@ -135,7 +131,11 @@ function LoginPage() {
                       </Button>
                     )}
                     <p>
-                      <a className="link" href="/">
+                      <a
+                        href="/#"
+                        className="link"
+                        onClick={() => (window.location.href = "/")}
+                      >
                         Kembali Ke Login
                       </a>
                     </p>

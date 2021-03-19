@@ -6,7 +6,7 @@ import DetailHeader from "components/Headers/DetailHeader.js";
 import TransparentFooter from "components/Footers/TransparentFooter";
 import { withAuthUser } from "./../../auth/RouteAccess";
 
-function LandingPage(props) {
+function BabPage(props) {
   const { token } = props;
   React.useEffect(() => {
     document.body.classList.add("landing-page");
@@ -34,4 +34,4 @@ function LandingPage(props) {
   );
 }
 
-export default withAuthUser(LandingPage);
+export default withAuthUser(BabPage);

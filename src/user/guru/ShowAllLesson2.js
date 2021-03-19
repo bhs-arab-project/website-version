@@ -181,6 +181,26 @@ const ShowAllLessonBeta = (props) => {
     return <span>{cell}</span>;
   }
 
+  function tingkatFormatter(cell, row) {
+    if (row.tingkatan) {
+      return (
+        <span
+          className={` badge mt-2 ${
+            cell === "mudah"
+              ? "badge-success"
+              : cell === "menengah"
+              ? "badge-warning"
+              : "badge-danger"
+          }`}
+        >
+          {cell}
+        </span>
+      );
+    }
+
+    return <span>{cell}</span>;
+  }
+
   function quizFormatter(cell, row) {
     if (row.quiz.length === 0) {
       return <span>-</span>;
@@ -202,9 +222,16 @@ const ShowAllLessonBeta = (props) => {
       dataField: "pelajaran",
       text: "Nama Kelas",
       sort: true,
+    },
+    {
+      dataField: "tingkatan",
+      text: "Tingkat Kesulitan",
+      sort: true,
       headerStyle: () => {
-        return { width: "20%" };
+        return { width: "17%" };
       },
+      align: "center",
+      formatter: tingkatFormatter,
     },
     {
       dataField: "guru",
@@ -222,7 +249,7 @@ const ShowAllLessonBeta = (props) => {
     },
     {
       dataField: "quiz.length",
-      text: "Jumlah Soal Quiz",
+      text: "Jumlah Soal",
       sort: true,
       align: "center",
       headerAlign: "center",
@@ -234,7 +261,7 @@ const ShowAllLessonBeta = (props) => {
       align: "center",
       headerAlign: "center",
       headerStyle: () => {
-        return { width: "30%" };
+        return { width: "28%" };
       },
       formatter: (rowContent, row) => {
         return (
@@ -282,6 +309,15 @@ const ShowAllLessonBeta = (props) => {
       },
     },
   ];
+
+  const expandRow = {
+    renderer: (row) => (
+      <div>
+        <h5>{`Deskripsi Kelas ${row.pelajaran}`}</h5>
+        <p className="font-weight-normal">{row.deskripsi}</p>
+      </div>
+    ),
+  };
 
   React.useEffect(() => {
     setLoad(true);
@@ -395,6 +431,7 @@ const ShowAllLessonBeta = (props) => {
                     <BootstrapTable
                       hover
                       bordered={false}
+                      expandRow={expandRow}
                       {...props.baseProps}
                       pagination={paginationFactory(options)}
                       noDataIndication={

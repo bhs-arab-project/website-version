@@ -23,15 +23,14 @@ import axios from "axios";
 import Spinner from "reactstrap/lib/Spinner";
 import { useAlert } from "react-alert";
 import { API_URL } from "utils/constants";
-import { useHistory } from "react-router-dom";
 
 export default function SignUpPage() {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [typeInput, setTypeInput] = useState("pw");
   const alert = useAlert();
-  const history = useHistory();
 
   const required = (value) => {
     if (!value.toString().trim().length) {
@@ -51,13 +50,13 @@ export default function SignUpPage() {
 
     setLoggedIn(true);
 
-    // if (password.length < 6) {
-    //   setLoggedIn(false);
-    //   alert.error(
-    //     <div className="notif">Password Harus Lebih Dari 6 Karakter</div>
-    //   );
-    //   return false;
-    // }
+    if (password.length < 6) {
+      setLoggedIn(false);
+      alert.error(
+        <div className="notif">Password Harus Lebih Dari 6 Karakter</div>
+      );
+      return false;
+    }
 
     axios({
       method: "post",
@@ -67,12 +66,14 @@ export default function SignUpPage() {
     })
       .then(function (response) {
         setLoggedIn(false);
-        history.push("/login-page");
         alert.success(
           <div className="notif">
             Registrasi Berhasil, silahkan Cek Email anda
           </div>
         );
+      })
+      .then(() => {
+        document.getElementById("signUpForm").reset();
       })
       .catch(function (error) {
         setLoggedIn(false);
@@ -93,6 +94,14 @@ export default function SignUpPage() {
     };
   }, []);
 
+  function pwToggle() {
+    if (typeInput === "text") {
+      setTypeInput("pw");
+    } else {
+      setTypeInput("text");
+    }
+  }
+
   return (
     <>
       <ExamplesNavbar />
@@ -107,7 +116,7 @@ export default function SignUpPage() {
           <Container>
             <Col className="ml-auto mr-auto" md="6" xl="4">
               <Card className="card-login card-plain">
-                <Form className="form" onSubmit={handleSubmit}>
+                <Form className="form" onSubmit={handleSubmit} id="signUpForm">
                   <CardHeader className="text-center">
                     <h2>Daftar Akun</h2>
                     <h6 className="text-lowercase font-weight-normal">
@@ -152,10 +161,21 @@ export default function SignUpPage() {
                       <Input
                         validations={[required]}
                         placeholder="Password"
-                        type="password"
+                        type={typeInput === "text" ? "text" : "password"}
                         onInput={(e) => setPassword(e.target.value)}
                         autofocus
                       ></Input>
+                      <a className="link aButton mt-2 ml-2" onClick={pwToggle}>
+                        <img
+                          width="20rem"
+                          src={
+                            typeInput === "pw"
+                              ? "./locked.png"
+                              : "./unlocked.png"
+                          }
+                          alt="..."
+                        />
+                      </a>
                     </InputGroup>
                   </CardBody>
                   <CardFooter className="text-center">
@@ -164,6 +184,7 @@ export default function SignUpPage() {
                     ) : (
                       <Button
                         block
+                        type="submit"
                         className="btn-round"
                         color="info"
                         // onClick={(e) => e.preventDefault()}
@@ -174,9 +195,10 @@ export default function SignUpPage() {
                     )}
                     <p>
                       <a
-                        className="link"
-                        href="/"
-                        // onClick={(e) => e.preventDefault()}
+                        href="/#"
+                        className="link aButton"
+                        // onClick={history.goBack()}
+                        onClick={() => (window.location.href = "/")}
                       >
                         Sudah Punya Akun? Login
                       </a>

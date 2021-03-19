@@ -17,6 +17,7 @@ import { API_URL } from "utils/constants";
 import { useAlert } from "react-alert";
 import BackComponent from "../../utils/BackComponent";
 import TransparentFooter from "components/Footers/TransparentFooter";
+import { useHistory } from "react-router-dom";
 
 export default function CreateTeacher() {
   const [name, setName] = useState();
@@ -24,6 +25,8 @@ export default function CreateTeacher() {
   const [password, setPassword] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const alert = useAlert();
+  const history = useHistory();
+  const [typeInput, setTypeInput] = useState("pw");
 
   let bodyFormData = new FormData();
   bodyFormData.set("name", name);
@@ -49,7 +52,7 @@ export default function CreateTeacher() {
         alert.success(
           <div className="notif">Registrasi Guru Berhasil! Cek Email Guru</div>
         );
-        window.location.href = "/#sectionList";
+        history.goBack();
       })
       .catch(function (response) {
         setLoggedIn(false);
@@ -73,11 +76,19 @@ export default function CreateTeacher() {
     e.preventDefault();
   };
 
+  function pwToggle() {
+    if (typeInput === "text") {
+      setTypeInput("pw");
+    } else {
+      setTypeInput("text");
+    }
+  }
+
   return (
     <>
       <DetailHeader
-        header="Registrasi Guru"
-        subHeader="Admin bisa mendaftarkan guru baru!"
+        header="Registrasi Pengajar"
+        subHeader="Admin bisa mendaftarkan Pengajar baru!"
         img={require("assets/img/my-bab.jpg")}
       />
       <div className="section ">
@@ -85,7 +96,7 @@ export default function CreateTeacher() {
           <BackComponent />
           <br />
           <div clasName="mt-2">
-            <h2>Register Guru</h2>
+            <h2>Register Pengajar</h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>
               <Row>
@@ -115,11 +126,29 @@ export default function CreateTeacher() {
                     <Input
                       id="pw"
                       placeholder="password"
-                      type="password"
+                      type={typeInput === "text" ? "text" : "password"}
                       onInput={(e) => setPassword(e.target.value)}
                     ></Input>
                   </FormGroup>
+                  <a
+                    className="link aButton mt-3 float-right"
+                    onClick={pwToggle}
+                  >
+                    <img
+                      width="20rem"
+                      src={
+                        typeInput === "pw"
+                          ? "./locked-bl.png"
+                          : "./unlocked-bl.png"
+                      }
+                      alt="..."
+                    />
+                    {typeInput === "pw"
+                      ? "Tampilkan Password"
+                      : "Sembunyikan Password"}
+                  </a>
                 </Col>
+                <Col></Col>
               </Row>
 
               <div>

@@ -21,8 +21,15 @@ function DetailHeader(props) {
         ></div>
         <div className="content-center">
           <Container>
-            <h1 className="title">{props.header}</h1>
-            <div className="text-center">{props.subHeader}</div>
+            {props.header === undefined ? (
+              <h1 className="title text-secondary">Memuat...</h1>
+            ) : (
+              <>
+                {" "}
+                <h1 className="title">{props.header}</h1>
+                <div className="text-center">{props.subHeader}</div>
+              </>
+            )}
           </Container>
         </div>
       </div>

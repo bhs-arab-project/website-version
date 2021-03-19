@@ -105,7 +105,7 @@ const DetailLesson = (props) => {
               </Col>
               {detailLesson?.chapter?.length === 0 ? (
                 <></>
-              ) : (
+              ) : load === false ? (
                 <Col>
                   <div
                     class="myDiv rounded"
@@ -128,6 +128,8 @@ const DetailLesson = (props) => {
                     </div>
                   </div>
                 </Col>
+              ) : (
+                <></>
               )}
             </Row>
           </div>
@@ -237,6 +239,21 @@ const DetailLesson = (props) => {
             )
           ) : (
             <MyBulletListLoader />
+          )}
+          {load === true ? (
+            <></>
+          ) : detailLesson?.quiz?.length !== 0 ? (
+            <div className="text-center">
+              <Link
+                to={{
+                  pathname: `/quiz-list/${id}`,
+                }}
+              >
+                <Button color="primary">Lihat Semua Soal Quiz</Button>
+              </Link>
+            </div>
+          ) : (
+            <></>
           )}
         </Container>
       </div>

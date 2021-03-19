@@ -14,11 +14,13 @@ import BackButton from "utils/BackComponent";
 
 const MyBulletListLoader = () => <BulletList />;
 
-const BabDetail = (props) => {
+function BabDetail() {
   let { id } = useParams();
   let [detailLesson, setDetailLesson] = React.useState([]);
   const [load, setLoad] = useState(true);
-  const { token } = props;
+  const user = localStorage.getItem("token");
+  const userJson = JSON.parse(user);
+  const token = userJson?.token?.token;
 
   async function fetchData() {
     axios
@@ -186,6 +188,6 @@ const BabDetail = (props) => {
       <TransparentFooter />
     </div>
   );
-};
+}
 
 export default withAuthUser(BabDetail);

@@ -7,7 +7,7 @@ import { Container } from "reactstrap";
 import IndexNavbar from "components/Navbars/IndexNavbar.js";
 import IndexHeader from "components/Headers/IndexHeader.js";
 
-import Tabs from "./murid/ListMateri.js";
+import ListMateri from "./murid/ListMateri.js";
 
 import "../styles.css";
 import TransparentFooter from "components/Footers/TransparentFooter.js";
@@ -15,7 +15,6 @@ import ShowAllLessonBeta from "./guru/ShowAllLesson2.js";
 import ListControl from "./admin/ListControl.js";
 
 function Index(props) {
-  console.log(props);
   const { userRole, token, userId } = props;
   React.useEffect(() => {
     document.body.classList.add("index-page");
@@ -49,7 +48,7 @@ function Index(props) {
                 </blockquote>
               </Container>
             </div>
-            <Tabs />
+            <ListMateri />
           </div>
           <TransparentFooter />
         </div>

@@ -17,15 +17,17 @@ function MateriPage(props) {
   // const [load, setLoad] = useState(false);
   // console.log("indexx", arrayNum);
 
-  const { token, roleUser } = props;
-
+  const user = localStorage.getItem("token");
+  const userid = JSON.parse(user);
+  const access_token = userid?.token?.token;
+  const roleUser = userid?.user?.role;
   const history = useHistory();
 
   async function fetchDataPel() {
     axios
       .get(`${API_URL}pelajaran/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${access_token}`,
         },
       })
       .then((response) => {

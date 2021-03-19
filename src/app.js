@@ -8,7 +8,6 @@ import ForgotPassword from "auth/forgotPassword";
 import BabPage from "./user/murid/Bab-page";
 import ProfilePage from "./user/Profile-page";
 import SignUp from "./auth/SignUpPage.js";
-import DetailBab from "./user/murid/Bab-detail.js";
 import Materi from "./user/murid/materi.js";
 import NotFound from "components/NotFound/notFound";
 
@@ -21,11 +20,13 @@ import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import CreateMateri from "./user/guru/CRUDMateri/CreateMateri";
 import CreateTeacher from "user/admin/createTeacher.js";
-import Quiz from "./user/murid/quiz/quiz";
-import CreateQuiz from "./user/guru/CreateQuiz";
+import Quiz from "./user/guru/CRUDQuiz/Quiz";
+import CreateQuiz from "./user/guru/CRUDQuiz/CreateQuiz";
 import EditMateri from "./user/guru/CRUDMateri/EditMateri";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import Haha from "user/guru/CreateAnswer.js";
+import BabDetail from "./user/murid/Bab-detail.js";
+import MyQuizList from "user/guru/CRUDQuiz/Quizlist.js";
+import EditSoalQuiz from "user/guru/CRUDQuiz/EditQuiz.js";
 
 function App() {
   const { token, setToken } = useToken();
@@ -78,16 +79,8 @@ function App() {
 
             {/* start User Route */}
 
-            <Route
-              exact
-              path="/bab"
-              render={() => <BabPage token={access_token} />}
-            />
-            <Route
-              exact
-              path="/detail-bab/:id"
-              render={() => <DetailBab token={access_token} />}
-            />
+            <Route exact path="/bab" render={() => <BabPage />} />
+            <Route exact path="/detail-bab/:id" render={() => <BabDetail />} />
             <Route
               exact
               path="/quiz/:id"
@@ -130,7 +123,16 @@ function App() {
               render={() => <CreateQuiz token={access_token} userId={id} />}
             />
 
-            <Route path="/create-answer" render={() => <Haha />} />
+            <Route
+              path="/edit-answer/:id"
+              render={() => <EditSoalQuiz token={access_token} userId={id} />}
+            />
+
+            <Route
+              exact
+              path="/quiz-list/:id"
+              render={() => <MyQuizList token={access_token} idUser={id} />}
+            />
 
             {/* end Teacher route */}
             {/* start Admin route */}
@@ -151,10 +153,7 @@ function App() {
                 />
               )}
             />
-            <Route
-              path="/bab-materi/:id"
-              render={() => <Materi token={access_token} roleUser={roleUser} />}
-            />
+            <Route path="/bab-materi/:id" component={Materi} />
             <Route path="/forgot-password" render={() => <ForgotPassword />} />
             <Route path="*" render={() => <NotFound />} />
           </Switch>

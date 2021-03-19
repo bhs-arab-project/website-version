@@ -26,6 +26,9 @@ export default function EditLesson(props) {
   const { token, name } = props;
   const [detailL, setDetailL] = useState();
   const [load, setLoad] = useState(false);
+  const [pelajaran, setPelajaran] = useState("");
+  const [kesulitan, setKesulitan] = useState("");
+  const [deskripsi, setDeskripsi] = useState("");
 
   async function fetchData() {
     axios
@@ -37,19 +40,15 @@ export default function EditLesson(props) {
       .then((response) => {
         setLoad(false);
         setDetailL(response.data);
+        setPelajaran(response.data.pelajaran);
+        setKesulitan(response.data.tingkatan);
+        setDeskripsi(response.data.deskripsi);
       })
       .catch((error) => {
         let message = error.response;
         console.log(message);
       });
   }
-  let dataPel = detailL?.pelajaran;
-  let dataKes = detailL?.kesulitan;
-  let dataDesk = detailL?.deskripsi;
-  const [pelajaran, setPelajaran] = useState(dataPel);
-  const [kesulitan, setKesulitan] = useState(dataKes);
-  const [deskripsi, setDeskripsi] = useState(dataDesk);
-  console.log(pelajaran);
 
   React.useEffect(() => {
     setLoad(true);
@@ -117,6 +116,7 @@ export default function EditLesson(props) {
                       defaultValue={detailL?.pelajaran}
                       placeholder="Nama Kelas"
                       type="text"
+                      name="namaKelas"
                       onInput={(e) => setPelajaran(e.target.value)}
                     ></Input>
                   </FormGroup>
@@ -175,6 +175,7 @@ export default function EditLesson(props) {
                   <Label>Deskripsi Kelas</Label>
                   <textarea
                     defaultValue={detailL?.deskripsi}
+                    name="deskripsi"
                     onInput={(e) => setDeskripsi(e.target.value)}
                     className="form-control"
                     rows="5"

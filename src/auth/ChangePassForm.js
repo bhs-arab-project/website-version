@@ -21,6 +21,7 @@ export function ChangePassForm(props) {
   const [load, setLoad] = useState(false);
   const history = useHistory();
   const alert = useAlert();
+  const [typeInput, setTypeInput] = useState("pw");
 
   const { token } = props;
 
@@ -70,6 +71,14 @@ export function ChangePassForm(props) {
 
     e.preventDefault();
   };
+
+  function pwToggle() {
+    if (typeInput === "text") {
+      setTypeInput("pw");
+    } else {
+      setTypeInput("text");
+    }
+  }
   return (
     <div clasName="mt-2">
       <h2>Ubah Password</h2>
@@ -81,7 +90,7 @@ export function ChangePassForm(props) {
               <Label>Password Lama</Label>
               <Input
                 placeholder="Konfirmasi Password"
-                type="password"
+                type={typeInput === "text" ? "text" : "password"}
                 onInput={(e) => setOldPass(e.target.value)}
               ></Input>
             </FormGroup>
@@ -91,7 +100,7 @@ export function ChangePassForm(props) {
               <Label>Password Baru</Label>
               <Input
                 placeholder="Password"
-                type="password"
+                type={typeInput === "text" ? "text" : "password"}
                 onInput={(e) => setNewPass(e.target.value)}
               ></Input>
             </FormGroup>
@@ -101,10 +110,21 @@ export function ChangePassForm(props) {
               <Label>Konfirmasi Password Baru</Label>
               <Input
                 placeholder="Konfirmasi Password"
-                type="password"
+                type={typeInput === "text" ? "text" : "password"}
                 onInput={(e) => setConfPass(e.target.value)}
               ></Input>
             </FormGroup>
+          </Col>
+          <Col>
+            <Button
+              color="success"
+              onClick={pwToggle}
+              className="mt-4  btn-round"
+            >
+              {typeInput === "pw"
+                ? "Tampilkan Password"
+                : "Sembunyikan Password"}
+            </Button>
           </Col>
         </Row>
 
