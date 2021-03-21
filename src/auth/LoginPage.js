@@ -22,7 +22,7 @@ import swal from "sweetalert";
 
 export default function LoginPage({ setToken }) {
   const [firstFocus, setFirstFocus] = React.useState(false);
-  const [lastFocus, setLastFocus] = React.useState(false);
+  // const [lastFocus, setLastFocus] = React.useState(false);
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -146,11 +146,11 @@ export default function LoginPage({ setToken }) {
                         placeholder="Password"
                         type={typeInput === "text" ? "text" : "password"}
                         onInput={(e) => setPassword(e.target.value)}
-                        onFocus={() => setLastFocus(true)}
-                        onBlur={() => setLastFocus(false)}
+                        // onFocus={() => setLastFocus(true)}
+                        // onBlur={() => setLastFocus(false)}
                         required
                       ></Input>
-
+                      {/* eslint-disable-next-line */}
                       <a className="link aButton mt-2 ml-2" onClick={pwToggle}>
                         <img
                           width="20rem"

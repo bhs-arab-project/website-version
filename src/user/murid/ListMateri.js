@@ -24,8 +24,8 @@ import { withAuthUser } from "./../../auth/RouteAccess";
 const ListMateri = () => {
   const [load, setLoad] = useState(true);
   let [lesson, setLesson] = React.useState([]);
-  let [listType, setListType] = React.useState("AllChap");
-  let [valB, setValB] = React.useState("Semua Pelajaran");
+  let [listType, setListType] = React.useState("exist");
+  let [valB, setValB] = React.useState("Materi Yang Tersedia");
   const user = localStorage.getItem("token");
   const userJson = JSON.parse(user);
   const token = userJson?.token?.token;
@@ -84,10 +84,10 @@ const ListMateri = () => {
                     checked={listType === "exist"}
                     onClick={() => {
                       setListType("exist");
-                      setValB("Tersedia Materi");
+                      setValB("Materi Yang Tersedia");
                     }}
                   >
-                    Tersedia Materi
+                    Materi Yang Tersedia
                   </DropdownItem>
                   <DropdownItem
                     checked={listType === "AllChap"}

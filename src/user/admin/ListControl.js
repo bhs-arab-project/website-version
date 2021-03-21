@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container } from "reactstrap";
+import { Container } from "reactstrap";
 import ShowAllLessonBeta from "user/guru/ShowAllLesson2.js";
 import ShowAllUsersBeta from "./ShowAllTeachers";
 import ShowAllStudents from "./ShowAllStudents";
@@ -18,7 +18,7 @@ const ListControl = () => {
       <div className="section section-tabs" id={"sectionList"}>
         <Container>
           <button
-            className={`btn ${
+            className={`btn mr-2 ${
               typeList === "TeachersList" ? "btn-info" : "btn-outline-info"
             }`}
             onClick={(e) => setTypeList("TeachersList")}
@@ -27,7 +27,7 @@ const ListControl = () => {
             Pengajar
           </button>
           <button
-            className={`btn ${
+            className={`btn mr-2 ${
               typeList === "StudentsList" ? "btn-info" : "btn-outline-info"
             }`}
             onClick={(e) => setTypeList("StudentsList")}

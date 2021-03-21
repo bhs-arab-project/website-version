@@ -130,7 +130,9 @@ export default function CreateTeacher() {
                       onInput={(e) => setPassword(e.target.value)}
                     ></Input>
                   </FormGroup>
+                  {/* eslint-disable-next-line */}
                   <a
+                    href="#"
                     className="link aButton mt-3 float-right"
                     onClick={pwToggle}
                   >

@@ -1,68 +1,39 @@
-import React, { useState } from "react";
-import { Button } from "reactstrap";
+import React from "react";
+import { useState, useEffect } from "react";
 
-export default function HookButtonSwitch(props) {
-  const [resultatContenu, setResultatContenu] = useState("Content initial");
-  const [state, setState] = useState(false);
-  const [userType, setUserType] = useState("Admin");
+const Timer = () => {
+  // const { initialMinute = 0, initialSeconds = 0 } = props;
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(15);
+  useEffect(() => {
+    let myInterval = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(myInterval);
+        } else {
+          setMinutes(minutes - 1);
+          setSeconds(59);
+        }
+      }
+    }, 1000);
+    return () => {
+      clearInterval(myInterval);
+    };
+  });
 
-  function handleEventSwitchButton(event, condition) {
-    // this.setState({ buttonSwitch: condition });
-
-    switch (event.target.id) {
-      case "stats":
-        console.log("Coucou Stats");
-        return <p>halo</p>;
-      case "list":
-        console.log("Coucou List");
-        return <p>hai handleAnswerOptionClick</p>;
-    }
-  }
-
-  const toggle = () => setState(!state);
-  // const { buttonSwitch = false } = this?.state;
   return (
     <div>
-      <br />
-
-      <Button
-        id="list"
-        variant="light"
-        className="border-radius-left"
-        // style={buttonSwitch && { backgroundColor: "black" }}
-        onClick={(e) => setUserType("Manager")}
-      >
-        Semua Kelas
-      </Button>
-
-      <Button
-        id="stats"
-        variant="light"
-        className="border-radius-right"
-        // style={!buttonSwitch && { backgroundColor: "black" }}
-        onClick={(e) => setUserType("Admin")}
-      >
-        Kelas Saya
-      </Button>
-
-      {(() => {
-        switch (userType) {
-          case "Admin":
-            return <div>You are a Admin.</div>;
-          case "Manager":
-            return <div>You are a Manager.</div>;
-          default:
-            return <div>You are a User.</div>;
-        }
-      })()}
-
-      <p>-------</p>
-
-      <div onClick={toggle}>
-        <div className="toggle">
-          {state ? <div>Yes! 👍 </div> : <div>No! 👎</div>}
-        </div>
-      </div>
+      {minutes === 0 && seconds === 0 ? null : (
+        <h1>
+          {" "}
+          {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+        </h1>
+      )}
     </div>
   );
-}
+};
+
+export default Timer;

@@ -35,6 +35,7 @@ export default function CreateMateri(props) {
   const [judulMateri, setJudulMateri] = useState();
   const [materi, setMateri] = useState();
   const [lessonId, setLessonId] = useState("");
+  const [pel, setPel] = useState("");
   const [listLesson, setListLesson] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [load, setLoad] = useState(false);
@@ -73,6 +74,7 @@ export default function CreateMateri(props) {
   let bodyFormData = new FormData();
   bodyFormData.set("lesson_id", lessonId);
   bodyFormData.set("user_id", userId);
+  bodyFormData.set("pelajaran", pel);
   bodyFormData.set("judul_bab", judulMateri);
   bodyFormData.set("materi", materi);
 
@@ -155,6 +157,7 @@ export default function CreateMateri(props) {
                                   onClick={() => {
                                     setLessonId(list.id);
                                     setValB(list.pelajaran);
+                                    setPel(list.pelajaran);
                                   }}
                                 >
                                   {list.pelajaran}

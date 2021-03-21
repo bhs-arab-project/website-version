@@ -12,7 +12,6 @@ import Materi from "./user/murid/materi.js";
 import NotFound from "components/NotFound/notFound";
 
 import CreateLesson from "./user/guru/CRUDLesson/CreateLesson";
-import EditLesson from "./user/guru/CRUDLesson/EditLesson";
 import DetailLesson from "./user/guru/CRUDLesson/DetailLesson";
 
 import useToken from "./auth/useToken";
@@ -103,12 +102,7 @@ function App() {
               path="/create-chapter"
               render={() => <CreateMateri token={access_token} userId={id} />}
             />
-            <Route
-              path="/edit-lesson/:id"
-              render={() => (
-                <EditLesson token={access_token} idUser={id} name={userName} />
-              )}
-            />
+
             <Route
               path="/edit-materi/:id"
               render={() => <EditMateri token={access_token} userId={id} />}

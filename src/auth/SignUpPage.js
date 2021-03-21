@@ -25,11 +25,13 @@ import { useAlert } from "react-alert";
 import { API_URL } from "utils/constants";
 
 export default function SignUpPage() {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("qkjs@ksk.msk");
+  const [password, setPassword] = useState(6);
+  const [confPass, setConfPass] = useState(6);
   const [loggedIn, setLoggedIn] = useState(false);
   const [typeInput, setTypeInput] = useState("pw");
+  const [typeInputC, setTypeInputC] = useState("pw");
   const alert = useAlert();
 
   const required = (value) => {
@@ -43,20 +45,29 @@ export default function SignUpPage() {
   bodyFormData.set("name", name);
   bodyFormData.set("email", email);
   bodyFormData.set("password", password);
-  bodyFormData.set("role", "user");
+  bodyFormData.set("role", "admin");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setLoggedIn(true);
-
-    if (password.length < 6) {
-      setLoggedIn(false);
-      alert.error(
-        <div className="notif">Password Harus Lebih Dari 6 Karakter</div>
-      );
+    if (email === "qkjs@ksk.msk") {
       return false;
     }
+    if (
+      RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(email) === false
+    ) {
+      return false;
+    }
+    if (password === 6 || confPass === 6) {
+      return false;
+    }
+    if (password !== confPass) {
+      return false;
+    }
+    if (password.length < 6) {
+      return false;
+    }
+    setLoggedIn(true);
 
     axios({
       method: "post",
@@ -74,6 +85,8 @@ export default function SignUpPage() {
       })
       .then(() => {
         document.getElementById("signUpForm").reset();
+        setName("");
+        setEmail("qkjs@ksk.msk");
       })
       .catch(function (error) {
         setLoggedIn(false);
@@ -102,6 +115,14 @@ export default function SignUpPage() {
     }
   }
 
+  function pwToggleC() {
+    if (typeInputC === "text") {
+      setTypeInputC("pw");
+    } else {
+      setTypeInputC("text");
+    }
+  }
+
   return (
     <>
       <ExamplesNavbar />
@@ -112,15 +133,15 @@ export default function SignUpPage() {
             backgroundImage: "url(" + require("assets/img/header2.jpg") + ")",
           }}
         ></div>
-        <div className="content">
-          <Container>
+        <div className="row mt-5">
+          <Container className="mt-5">
             <Col className="ml-auto mr-auto" md="6" xl="4">
               <Card className="card-login card-plain">
                 <Form className="form" onSubmit={handleSubmit} id="signUpForm">
                   <CardHeader className="text-center">
                     <h2>Daftar Akun</h2>
                     <h6 className="text-lowercase font-weight-normal">
-                      dartar akunmu sekarang juga!
+                      daftar akunmu sekarang juga!
                     </h6>
                   </CardHeader>
                   <CardBody>
@@ -136,6 +157,7 @@ export default function SignUpPage() {
                         type="text"
                         onInput={(e) => setName(e.target.value)}
                         autofocus
+                        required
                       ></Input>
                     </InputGroup>
                     <InputGroup className={"no-border input-md"}>
@@ -165,7 +187,12 @@ export default function SignUpPage() {
                         onInput={(e) => setPassword(e.target.value)}
                         autofocus
                       ></Input>
-                      <a className="link aButton mt-2 ml-2" onClick={pwToggle}>
+                      {/* eslint-disable-next-line */}
+                      <a
+                        href=""
+                        className="link aButton mt-2 ml-2"
+                        onClick={pwToggle}
+                      >
                         <img
                           width="20rem"
                           src={
@@ -177,6 +204,49 @@ export default function SignUpPage() {
                         />
                       </a>
                     </InputGroup>
+                    <InputGroup className={"no-border input-md"}>
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="now-ui-icons ui-1_lock-circle-open"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        validations={[required]}
+                        placeholder="Konfirmasi Password"
+                        type={typeInputC === "text" ? "text" : "password"}
+                        onInput={(e) => setConfPass(e.target.value)}
+                        autofocus
+                      ></Input>
+                      {/* eslint-disable-next-line */}
+                      <a className="link aButton mt-2 ml-2" onClick={pwToggleC}>
+                        <img
+                          width="20rem"
+                          src={
+                            typeInputC === "pw"
+                              ? "./locked.png"
+                              : "./unlocked.png"
+                          }
+                          alt="..."
+                        />
+                      </a>
+                    </InputGroup>
+                    {RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(
+                      email
+                    ) === false ? (
+                      <h6 className="text-lowercase text-danger font-weight-normal">
+                        Masukkan email yang valid
+                      </h6>
+                    ) : password?.length < 6 ? (
+                      <h6 className="text-lowercase text-danger font-weight-normal">
+                        Password harus lebih dari 6 karakter
+                      </h6>
+                    ) : password !== confPass ? (
+                      <h6 className="text-lowercase text-danger font-weight-normal">
+                        Password dan Konfirmasi Password Tidak Cocok
+                      </h6>
+                    ) : (
+                      ""
+                    )}
                   </CardBody>
                   <CardFooter className="text-center">
                     {loggedIn === true ? (
@@ -195,7 +265,7 @@ export default function SignUpPage() {
                     )}
                     <p>
                       <a
-                        href="/#"
+                        href="/"
                         className="link aButton"
                         // onClick={history.goBack()}
                         onClick={() => (window.location.href = "/")}

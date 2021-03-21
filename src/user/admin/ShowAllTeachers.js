@@ -145,7 +145,7 @@ const ShowAllTeachers = () => {
       text: "Aksi",
       formatter: (rowContent, row) => {
         return (
-          <div>
+          <div className="d-flex">
             <button
               type="button"
               rel="tooltip"
@@ -219,7 +219,6 @@ const ShowAllTeachers = () => {
               )}
             </ToolkitProvider>
           </Row>
-          <hr />
         </Container>
       </div>
     </>

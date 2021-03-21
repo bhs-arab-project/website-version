@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // reactstrap components
-import { Container, Row } from "reactstrap";
+import { Container, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 import { API_URL } from "utils/constants";
 import BootstrapCardDataTable from "../../components/loader/loaderTable";
@@ -14,6 +14,8 @@ import ButtonGroup from "reactstrap/lib/ButtonGroup";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
+import Spinner from "reactstrap/lib/Spinner";
+import { useAlert } from "react-alert";
 
 const ShowAllLessonBeta = (props) => {
   const [load, setLoad] = useState(true);
@@ -21,7 +23,7 @@ const ShowAllLessonBeta = (props) => {
   let [typeList, setTypeList] = React.useState("AllClass");
   const { SearchBar } = Search;
 
-  const { userRole, token, userId } = props;
+  const { userRole, token, userId, name } = props;
 
   const customTotal = (from, to, size) => (
     <span className="react-bootstrap-table-pagination-total py-2 px-2">
@@ -223,20 +225,13 @@ const ShowAllLessonBeta = (props) => {
       text: "Nama Kelas",
       sort: true,
     },
-    {
-      dataField: "tingkatan",
-      text: "Tingkat Kesulitan",
-      sort: true,
-      headerStyle: () => {
-        return { width: "17%" };
-      },
-      align: "center",
-      formatter: tingkatFormatter,
-    },
+
     {
       dataField: "guru",
       text: "Dibuat Oleh",
       sort: true,
+      align: "center",
+      headerAlign: "center",
       formatter: createdFormatter,
     },
     {
@@ -256,6 +251,17 @@ const ShowAllLessonBeta = (props) => {
       formatter: quizFormatter,
     },
     {
+      dataField: "tingkatan",
+      text: "Tingkat Kesulitan",
+      sort: true,
+      headerStyle: () => {
+        return { width: "17%" };
+      },
+      align: "center",
+      headerAlign: "center",
+      formatter: tingkatFormatter,
+    },
+    {
       dataField: "link",
       text: "Aksi",
       align: "center",
@@ -266,26 +272,14 @@ const ShowAllLessonBeta = (props) => {
       formatter: (rowContent, row) => {
         return (
           <>
-            {row.user_id === userId || userRole === "admin" ? (
-              <div className="td-actions text-center">
-                <Link to={`/detail-lesson/${row.id}`}>
-                  <button type="button" rel="tooltip" className="btn btn-info">
-                    <i className="now-ui-icons travel_info"></i> Lihat
-                  </button>
-                </Link>
-                {userRole === "admin" ? (
-                  <></>
-                ) : (
-                  <Link to={`/edit-lesson/${row.id}`}>
-                    <button
-                      type="button"
-                      rel="tooltip"
-                      className="btn btn-success"
-                    >
-                      <i className="now-ui-icons ui-2_settings-90"></i> Edit
-                    </button>
-                  </Link>
-                )}
+            <div className="td-actions text-center">
+              <Link to={`/detail-lesson/${row.id}`}>
+                <button type="button" rel="tooltip" className="btn btn-info">
+                  <i className="now-ui-icons travel_info"></i> Lihat Materi
+                </button>
+              </Link>
+
+              {row.user_id === userId || userRole === "admin" ? (
                 <button
                   type="button"
                   rel="tooltip"
@@ -293,30 +287,207 @@ const ShowAllLessonBeta = (props) => {
                   onClick={() => deleteLesson(row.id)}
                 >
                   <i className="now-ui-icons ui-1_simple-remove"></i> Hapus
+                  Kelas
                 </button>
-              </div>
-            ) : (
-              <div className="td-actions text-center">
-                <Link to={`/detail-lesson/${row.id}`}>
-                  <button type="button" rel="tooltip" className="btn btn-info">
-                    <i className="now-ui-icons travel_info"></i> Lihat
-                  </button>
-                </Link>
-              </div>
-            )}
+              ) : (
+                <></>
+              )}
+            </div>
           </>
         );
       },
     },
   ];
 
+  const [pelajaran, setPelajaran] = useState("");
+  const [kesulitan, setKesulitan] = useState("");
+  const [deskripsi, setDeskripsi] = useState("");
+  const [detailL, setDetailL] = useState([]);
+  const [loadSub, setLoadSub] = useState(false);
+  const [idEdit, setIdEdit] = useState(0);
+  const alert = useAlert();
+
+  function detailEdit(detailId) {
+    axios
+      .get(`${API_URL}pelajaran/${detailId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setLoad(false);
+        setDetailL(response.data);
+        setPelajaran(response.data.pelajaran);
+        setKesulitan(response.data.tingkatan);
+        setDeskripsi(response.data.deskripsi);
+        console.log("success");
+      })
+      .catch((error) => {
+        let message = error.response;
+        console.log(message);
+      });
+  }
+
+  const rowEvents = {
+    onClick: (e, row) => {
+      setDetailL("");
+      setPelajaran("");
+      setKesulitan("");
+      setDeskripsi("");
+      setIdEdit(0);
+      setIdEdit(row.id);
+      detailEdit(row.id);
+    },
+  };
+
+  const handleSubmitEdit = async (e) => {
+    e.preventDefault();
+    setLoad(true);
+
+    axios({
+      method: "put",
+      url: `${API_URL}pelajaran/${idEdit}`,
+      data: {
+        pelajaran: pelajaran,
+        tingkatan: kesulitan,
+        deskripsi: deskripsi,
+        guru: name,
+      },
+      headers: {
+        ContentType: "multipart/form-data",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(function (response) {
+        setLoadSub(false);
+        alert.success(<div className="notif">Berhasil mengedit Kelas!</div>);
+        //handle success
+        console.log(response);
+      })
+      .then(() => {
+        fetchData();
+      })
+      .catch(function (error) {
+        setLoadSub(false);
+        alert.error(
+          <div className="notif">Gagal mengedit Kelas Silahkan Coba Lagi</div>
+        );
+        console.log(error.response);
+        fetchData();
+      });
+
+    e.preventDefault();
+  };
+
   const expandRow = {
-    renderer: (row) => (
-      <div>
-        <h5>{`Deskripsi Kelas ${row.pelajaran}`}</h5>
-        <p className="font-weight-normal">{row.deskripsi}</p>
-      </div>
-    ),
+    // className: "bg-info text-white",
+    // parentClassName: "bg-secondary",
+    onlyOneExpanding: true,
+    renderer: (row) =>
+      row.user_id === userId ? (
+        <div className="container mt-2">
+          <h2>
+            Edit Kelas{" "}
+            {detailL?.pelajaran === undefined ? (
+              <span className="text-secondary">Memuat...</span>
+            ) : (
+              detailL.pelajaran
+            )}
+          </h2>
+          <hr />
+          <Form className="form" onSubmit={handleSubmitEdit}>
+            <Row>
+              <Col lg="5" sm="10">
+                <FormGroup>
+                  <Label>Nama Kelas</Label>
+                  <Input
+                    defaultValue={detailL?.pelajaran}
+                    placeholder="Nama Kelas"
+                    type="text"
+                    name="namaKelas"
+                    onInput={(e) => setPelajaran(e.target.value)}
+                  ></Input>
+                </FormGroup>
+              </Col>
+              <Label>Tingkat Kesulitan : </Label>
+              <Row className="mt-4">
+                <FormGroup check className="form-check-radio ">
+                  <Label check>
+                    <Input
+                      defaultValue={detailL?.kesulitan}
+                      type="radio"
+                      label="mudah"
+                      checked={kesulitan === "mudah"}
+                      onClick={() => setKesulitan("mudah")}
+                    ></Input>
+                    <span className="form-check-sign "></span>
+                    Mudah
+                  </Label>
+                </FormGroup>
+                <FormGroup check className="form-check-radio ml-2">
+                  <Label check>
+                    <Input
+                      defaultChecked
+                      defaultValue={detailL?.kesulitan}
+                      type="radio"
+                      label="menengah"
+                      checked={kesulitan === "menengah"}
+                      onClick={() => setKesulitan("menengah")}
+                    ></Input>
+                    <span className="form-check-sign"></span>
+                    Menengah
+                  </Label>
+                </FormGroup>
+                <FormGroup check className="form-check-radio ml-2">
+                  <Label check>
+                    <Input
+                      defaultChecked
+                      defaultValue={detailL?.kesulitan}
+                      name="level"
+                      type="radio"
+                      label="sulit"
+                      checked={kesulitan === "sulit"}
+                      onClick={() => setKesulitan("sulit")}
+                    ></Input>
+                    <span className="form-check-sign"></span>
+                    Sulit
+                  </Label>
+                </FormGroup>
+              </Row>
+            </Row>
+            <Col>
+              <FormGroup>
+                <Label>Deskripsi Kelas</Label>
+                <textarea
+                  defaultValue={detailL?.deskripsi}
+                  name="deskripsi"
+                  onInput={(e) => setDeskripsi(e.target.value)}
+                  className="form-control"
+                  rows="5"
+                ></textarea>
+              </FormGroup>
+            </Col>
+            <div>
+              {loadSub === true ? (
+                <div className="float-right">
+                  <Spinner></Spinner>
+                </div>
+              ) : (
+                <Button
+                  className="btn-round float-right"
+                  color="info"
+                  size="md"
+                >
+                  Submit
+                </Button>
+              )}
+            </div>
+          </Form>
+        </div>
+      ) : (
+        <span className="text-danger">Hanya Bisa Mengedit Kelas Anda</span>
+      ),
   };
 
   React.useEffect(() => {
@@ -356,6 +527,7 @@ const ShowAllLessonBeta = (props) => {
                       ) : (
                         <ButtonGroup>
                           <button
+                            title="Daftar Kelas Saya"
                             type="button"
                             className={`btn ${
                               typeList === "AllClass"
@@ -375,6 +547,7 @@ const ShowAllLessonBeta = (props) => {
                             />
                           </button>
                           <button
+                            title="Daftar Semua Kelas"
                             type="button"
                             className={`btn ${
                               typeList === "AllClass"
@@ -395,11 +568,16 @@ const ShowAllLessonBeta = (props) => {
                           </button>
                         </ButtonGroup>
                       )}
+
                       <span className="ml-2">Cari : </span>
                       <SearchBar
                         {...props.searchProps}
+                        className="bg-white"
                         placeholder="Search .."
                       />
+                      <span className="ml-2 font-weight-bold">
+                        Klik Tabel 2x Untuk Mengedit Kelas
+                      </span>
                       {userRole === "admin" ? (
                         <></>
                       ) : (
@@ -432,6 +610,7 @@ const ShowAllLessonBeta = (props) => {
                       hover
                       bordered={false}
                       expandRow={expandRow}
+                      rowEvents={rowEvents}
                       {...props.baseProps}
                       pagination={paginationFactory(options)}
                       noDataIndication={

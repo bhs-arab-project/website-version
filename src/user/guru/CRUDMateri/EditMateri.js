@@ -32,7 +32,7 @@ export default function EditMateri(props) {
   const { token, userId } = props;
 
   const [detailM, setDetailM] = useState();
-  const [valButton, setValB] = useState(detailM?.pelajaran);
+  const [valButton, setValB] = useState("");
   const [judulMateri, setJudulMateri] = useState();
   const [materi, setMateri] = useState();
   const [lessonId, setLessonId] = useState();
@@ -58,6 +58,10 @@ export default function EditMateri(props) {
       .then((response) => {
         setLoad(false);
         setDetailM(response.data);
+        setMateri(response.data.materi);
+        setJudulMateri(response.data.judul_bab);
+        setLessonId(response.data.lesson_id);
+        setValB(response.data.pelajaran);
       })
       .catch((error) => {
         let message = error.response;
@@ -75,9 +79,11 @@ export default function EditMateri(props) {
       .then((response) => {
         setLoad(false);
         setListLesson(response.data);
+
+        // setValB(questions.pelajaran);
       })
       .catch((error) => {
-        let message = error.response.data;
+        let message = error.response;
         console.log(message);
       });
   }
@@ -88,16 +94,6 @@ export default function EditMateri(props) {
     fetchData();
     // eslint-disable-next-line
   }, []);
-
-  let bodyFormData = new FormData();
-  bodyFormData.set("lesson_id", lessonId);
-  bodyFormData.set("user_id", userId);
-  bodyFormData.set("judul_bab", judulMateri);
-  bodyFormData.set("materi", materi);
-
-  for (var pair of bodyFormData.entries()) {
-    console.log(pair[0] + ", " + pair[1]);
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,7 +118,7 @@ export default function EditMateri(props) {
       .then(function (response) {
         setLoggedIn(false);
         alert.success(<div className="notif">Berhasil mengedit Bab!</div>);
-        history.push("/");
+        history.goBack();
         //handle success
         console.log(response);
       })
@@ -147,7 +143,7 @@ export default function EditMateri(props) {
       <div className="section ">
         <Container>
           <br />
-          <div clasName="mt-2">
+          <div className="mt-2">
             <BackButton />
             <h2>Edit Materi {detailM?.judul_bab}</h2>
             <hr />
@@ -196,7 +192,7 @@ export default function EditMateri(props) {
                     <Label>Judul Materi</Label>
                     <Input
                       // data={detailM?.judul_bab}
-                      defaultValue={detailM?.judul_bab}
+                      defaultValue={judulMateri}
                       // value={detailM?.judul_bab}
                       required
                       placeholder="Judul Materi"
@@ -211,7 +207,7 @@ export default function EditMateri(props) {
                   <Label>Materi</Label>
                   <CKEditor
                     required
-                    data={detailM?.materi}
+                    data={materi}
                     editor={ClassicEditor}
                     onChange={(event, editor) => {
                       const data = editor.getData();

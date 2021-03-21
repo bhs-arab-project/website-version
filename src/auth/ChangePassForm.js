@@ -15,9 +15,9 @@ import { useAlert } from "react-alert";
 import { useHistory } from "react-router-dom";
 
 export function ChangePassForm(props) {
-  const [newPass, setNewPass] = useState("");
-  const [oldPass, setOldPass] = useState("");
-  const [confPass, setConfPass] = useState("");
+  const [newPass, setNewPass] = useState(6);
+  const [oldPass, setOldPass] = useState(6);
+  const [confPass, setConfPass] = useState(6);
   const [load, setLoad] = useState(false);
   const history = useHistory();
   const alert = useAlert();
@@ -27,20 +27,13 @@ export function ChangePassForm(props) {
 
   const handleS = async (e) => {
     e.preventDefault();
-    setLoad(true);
 
-    if (oldPass === "") {
-      setLoad(false);
-      return alert.error(<div className="notif">Masukkan Password Lama</div>);
-    } else if (newPass === "") {
-      setLoad(false);
-      return alert.error(<div className="notif">Masukkan Password Baru</div>);
-    } else if (confPass === "") {
-      setLoad(false);
-      return alert.error(
-        <div className="notif">Masukkan Konfirmasi Password</div>
-      );
+    if (newPass.length < 6) {
+      return false;
+    } else if (confPass !== newPass) {
+      return false;
     }
+    setLoad(true);
 
     axios({
       method: "post",
@@ -92,6 +85,7 @@ export function ChangePassForm(props) {
                 placeholder="Konfirmasi Password"
                 type={typeInput === "text" ? "text" : "password"}
                 onInput={(e) => setOldPass(e.target.value)}
+                required
               ></Input>
             </FormGroup>
           </Col>
@@ -102,6 +96,7 @@ export function ChangePassForm(props) {
                 placeholder="Password"
                 type={typeInput === "text" ? "text" : "password"}
                 onInput={(e) => setNewPass(e.target.value)}
+                required
               ></Input>
             </FormGroup>
           </Col>
@@ -112,8 +107,20 @@ export function ChangePassForm(props) {
                 placeholder="Konfirmasi Password"
                 type={typeInput === "text" ? "text" : "password"}
                 onInput={(e) => setConfPass(e.target.value)}
+                required
               ></Input>
             </FormGroup>
+            {newPass?.length < 6 ? (
+              <h6 className="text-lowercase text-danger font-weight-normal">
+                Password Baru harus lebih dari 6 karakter
+              </h6>
+            ) : oldPass !== confPass ? (
+              <h6 className="text-lowercase text-danger font-weight-normal">
+                Password dan Konfirmasi Password Tidak Cocok
+              </h6>
+            ) : (
+              ""
+            )}
           </Col>
           <Col>
             <Button
@@ -130,13 +137,15 @@ export function ChangePassForm(props) {
 
         <div>
           {load === true ? (
-            <div className="float-right">
+            <div className="text-right">
               <Spinner></Spinner>
             </div>
           ) : (
-            <Button className="btn-round float-right" color="info" size="md">
-              Submit
-            </Button>
+            <div className="text-right">
+              <Button className="btn-round" color="info" size="md">
+                Submit
+              </Button>
+            </div>
           )}
         </div>
       </Form>

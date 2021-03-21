@@ -134,7 +134,7 @@ function MateriPage(props) {
                 {detailLesson?.chapter[currentChapter]?.judul_bab}
               </h1>
               <div className="line "></div>
-              <b className="text-konten">
+              <b className="text-konten font-weight-normal">
                 {ReactHtmlParser(detailLesson?.chapter[currentChapter]?.materi)}
               </b>
               <div className="line "></div>

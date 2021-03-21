@@ -11,6 +11,7 @@ import {
   Spinner,
   FormGroup,
   Form,
+  Card,
 } from "reactstrap";
 
 // core components
@@ -116,7 +117,7 @@ function ProfilePage(props) {
             <BackButton />
             <button
               type="button"
-              className={`btn ${
+              className={`ml-2 btn ${
                 typeList === "editProfile" ? "btn-info" : "btn-outline-info"
               }`}
               onClick={(e) => setTypeList("editProfile")}
@@ -126,7 +127,7 @@ function ProfilePage(props) {
             </button>
             <button
               type="button"
-              className={`btn ${
+              className={`btn ml-2 ${
                 typeList === "editProfile" ? "btn-outline-info" : "btn-info"
               }`}
               onClick={(e) => setTypeList("changePass")}
@@ -172,17 +173,19 @@ function ProfilePage(props) {
 
                         <div>
                           {load === true ? (
-                            <div className="float-right">
+                            <div className="text-right">
                               <Spinner></Spinner>
                             </div>
                           ) : (
-                            <Button
-                              className="btn-round float-right"
-                              color="info"
-                              size="md"
-                            >
-                              Submit
-                            </Button>
+                            <div className="text-right">
+                              <Button
+                                className="btn-round"
+                                color="info"
+                                size="md"
+                              >
+                                Submit
+                              </Button>
+                            </div>
                           )}
                         </div>
                       </Form>
@@ -192,106 +195,115 @@ function ProfilePage(props) {
                   return <ChangePassForm token={token} />;
               }
             })()}
+            <hr />
           </Container>
           {role === "user" ? (
             <Container>
               <h2>Sertifikat</h2>
               <Row>
                 <Col md="6" xl="4">
-                  <div className="media">
-                    <img
-                      width="35%"
-                      alt="..."
-                      className="rounded align-self-center mr-3"
-                      src={require("assets/img/cert-icon.png")}
-                    ></img>
-                    <div className="media-body mt-2">
-                      <h5>Nahwu</h5>
-                      <div className="date">Lulus : 18 April, 2020</div>
-                      <div className="download">
-                        Download :
-                        <Button className="btn-link" color="primary">
-                          PDF
-                        </Button>
-                        |
-                        <Button className="btn-link" color="primary">
-                          Image
-                        </Button>
+                  <Card>
+                    <div className="media p-2">
+                      <img
+                        width="30%"
+                        alt="..."
+                        className="rounded align-self-center mr-3 ml-2"
+                        src={require("assets/img/cert-icon.png")}
+                      ></img>
+                      <div className="media-body mt-2">
+                        <h5>Nahwu</h5>
+                        <div className="date">Lulus : 18 April, 2020</div>
+                        <div className="download">
+                          Download :
+                          <Button className="btn-link" color="primary">
+                            PDF
+                          </Button>
+                          |
+                          <Button className="btn-link" color="primary">
+                            Image
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Card>
                 </Col>
                 <Col md="6" xl="4">
-                  <div className="media">
-                    <img
-                      width="35%"
-                      alt="..."
-                      className="rounded align-self-center mr-3"
-                      src={require("assets/img/cert-icon.png")}
-                    ></img>
-                    <div className="media-body mt-2">
-                      <h5>Nahwu</h5>
-                      <div className="date">Lulus : 18 April, 2020</div>
-                      <div className="download">
-                        Download :
-                        <Button className="btn-link" color="primary">
-                          PDF
-                        </Button>
-                        |
-                        <Button className="btn-link" color="primary">
-                          Image
-                        </Button>
+                  <Card>
+                    <div className="media p-2">
+                      <img
+                        width="30%"
+                        alt="..."
+                        className="rounded align-self-center mr-3 ml-2"
+                        src={require("assets/img/cert-icon.png")}
+                      ></img>
+                      <div className="media-body mt-2">
+                        <h5>Nahwu</h5>
+                        <div className="date">Lulus : 18 April, 2020</div>
+                        <div className="download">
+                          Download :
+                          <Button className="btn-link" color="primary">
+                            PDF
+                          </Button>
+                          |
+                          <Button className="btn-link" color="primary">
+                            Image
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Card>
                 </Col>
                 <Col md="6" xl="4">
-                  <div className="media">
-                    <img
-                      width="35%"
-                      alt="..."
-                      className="rounded align-self-center mr-3"
-                      src={require("assets/img/cert-icon.png")}
-                    ></img>
-                    <div className="media-body mt-2">
-                      <h5>Nahwu</h5>
-                      <div className="date">Lulus : 18 April, 2020</div>
-                      <div className="download">
-                        Download :
-                        <Button className="btn-link" color="primary">
-                          PDF
-                        </Button>
-                        |
-                        <Button className="btn-link" color="primary">
-                          Image
-                        </Button>
+                  <Card>
+                    <div className="media p-2">
+                      <img
+                        width="30%"
+                        alt="..."
+                        className="rounded align-self-center mr-3 ml-2"
+                        src={require("assets/img/cert-icon.png")}
+                      ></img>
+                      <div className="media-body mt-2">
+                        <h5>Nahwu</h5>
+                        <div className="date">Lulus : 18 April, 2020</div>
+                        <div className="download">
+                          Download :
+                          <Button className="btn-link" color="primary">
+                            PDF
+                          </Button>
+                          |
+                          <Button className="btn-link" color="primary">
+                            Image
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Card>
                 </Col>
                 <Col md="6" xl="4">
-                  <div className="media">
-                    <img
-                      width="35%"
-                      alt="..."
-                      className="rounded align-self-center mr-3"
-                      src={require("assets/img/cert-icon.png")}
-                    ></img>
-                    <div className="media-body mt-2">
-                      <h5>Nahwu</h5>
-                      <div className="date">Lulus : 18 April, 2020</div>
-                      <div className="download">
-                        Download :
-                        <Button className="btn-link" color="primary">
-                          PDF
-                        </Button>
-                        |
-                        <Button className="btn-link" color="primary">
-                          Image
-                        </Button>
+                  <Card>
+                    <div className="media p-2">
+                      <img
+                        width="30%"
+                        alt="..."
+                        className="rounded align-self-center mr-3 ml-2"
+                        src={require("assets/img/cert-icon.png")}
+                      ></img>
+                      <div className="media-body mt-2">
+                        <h5>Nahwu</h5>
+                        <div className="date">Lulus : 18 April, 2020</div>
+                        <div className="download">
+                          Download :
+                          <Button className="btn-link" color="primary">
+                            PDF
+                          </Button>
+                          |
+                          <Button className="btn-link" color="primary">
+                            Image
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Card>
                 </Col>
               </Row>
             </Container>

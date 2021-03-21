@@ -52,6 +52,7 @@ function Quiz(props) {
       .then((response) => {
         setLoad(false);
         setQuestions(response.data.data);
+        secondsToHms(response.data.data.length * 30);
         console.log(response.data.data);
       })
       .catch((response) => {
@@ -79,14 +80,6 @@ function Quiz(props) {
       setShowScore(true);
     }
   };
-  // const countComplete = () => {
-  //   const nextQuestion = currentQuestion + 1;
-  //   if (nextQuestion < questions.length) {
-  //     setCurrentQuestion(nextQuestion);
-  //   } else {
-  //     setShowScore(true);
-  //   }
-  // };
 
   function confirmCancel() {
     // e.preventDefault();
@@ -106,8 +99,8 @@ function Quiz(props) {
 
   function confirmQuiz() {
     swal({
-      title: "Mulai Ujian",
-      text: "Apakah Kamu Yakin Untuk Memulai Ujian?",
+      title: "Mulai Quiz",
+      text: "Apakah Kamu Yakin Untuk Memulai Quiz?",
       icon: "warning",
       buttons: true,
 
@@ -123,6 +116,44 @@ function Quiz(props) {
   const reloadPage = () => {
     window.location.reload();
   };
+
+  function secondsToHms(d) {
+    d = Number(d);
+    // var h = Math.floor(d / 3600);
+    var m = Math.floor((d % 3600) / 60);
+    var s = Math.floor((d % 3600) % 60);
+
+    // var hDisplay = h > 0 ? h : 0;
+    var mDisplay = m > 0 ? m : 0;
+    var sDisplay = s > 0 ? s : 0;
+    // return hDisplay + mDisplay + sDisplay;
+    setMinutes(mDisplay);
+    setSeconds(sDisplay);
+  }
+
+  const [minutes, setMinutes] = useState(1);
+  const [seconds, setSeconds] = useState(2);
+  React.useEffect(() => {
+    if (showTerm === false) {
+      let myInterval = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
+        }
+        if (seconds === 0) {
+          if (minutes === 0) {
+            setMinutes(minutes - 1);
+            clearInterval(myInterval);
+          } else {
+            setMinutes(minutes - 1);
+            setSeconds(59);
+          }
+        }
+      }, 1000);
+      return () => {
+        clearInterval(myInterval);
+      };
+    }
+  });
 
   // useEffect(() => {
   //   try {
@@ -154,7 +185,7 @@ function Quiz(props) {
               <Button color="danger">Kembali Ke Kelas</Button>
             </Link>
           </div>
-        ) : showScore ? (
+        ) : showScore === true ? (
           <div className="section container">
             <Card>
               <CardBody>
@@ -173,18 +204,18 @@ function Quiz(props) {
                 <Row>
                   <Col>
                     <img
-                      width={averageScore < 60 ? "400rem" : "310rem"}
+                      width={averageScore < 70 ? "400rem" : "310rem"}
                       alt="..."
                       className="rounded float-right"
                       src={
-                        averageScore < 60
+                        averageScore < 70
                           ? require("assets/img/try-again.jpg")
                           : require("assets/img/suc3.png")
                       }
                     ></img>
                   </Col>
                   <Col className="mt-5">
-                    {averageScore < 60 ? (
+                    {averageScore < 70 ? (
                       <h3>Semangat, Ayo Coba Lagi!</h3>
                     ) : (
                       <h3>Selamat, Kamu Lolos!</h3>
@@ -193,10 +224,10 @@ function Quiz(props) {
                       Kamu Benar {score} dari {questions.length} Soal | Nilai{" "}
                       {averageScore}
                     </h5>
-                    {averageScore < 60 ? (
+                    {averageScore < 70 ? (
                       <span className="text-info">
-                        *Kamu Harus Memiliki Nilai Diatas 60 Untuk Mendapatkan
-                        Sertifikat
+                        *Kamu Harus Memiliki Nilai Setidaknya 70 Untuk
+                        Mendapatkan Sertifikat
                       </span>
                     ) : (
                       <span className="text-info">
@@ -208,7 +239,7 @@ function Quiz(props) {
                         <Link to="/bab">
                           <Button color="info">Pelajari Kelas Lainnya!</Button>
                         </Link>
-                        {averageScore < 60 ? (
+                        {averageScore < 70 ? (
                           <Button color="info" onClick={reloadPage}>
                             Coba Lagi
                           </Button>
@@ -235,24 +266,38 @@ function Quiz(props) {
               <Container>
                 <Row>
                   <Col>
-                    <h2 className="mt-4">
+                    <h2 className="mt-4 text-capitalize">
                       {showTerm === true ? (
-                        "Pendahuluan | Al-Qolam"
+                        `Pendahuluan | Quiz ${questions[currentQuestion]?.pelajaran} | ${questions?.length} Soal`
                       ) : (
                         <>
-                          Kelas {questions[currentQuestion]?.pelajaran} | Soal
-                          Ke {currentQuestion + 1} dari {questions.length}
+                          Quiz {questions[currentQuestion]?.pelajaran} | Soal Ke{" "}
+                          {currentQuestion + 1} dari {questions.length}
                         </>
                       )}
                     </h2>
                   </Col>
-                  <Col>
-                    <img
-                      width="100rem"
-                      alt="..."
-                      className="rounded-circle float-right"
-                      src={require("assets/img/brand-logo.png")}
-                    ></img>
+                  <Col md="3">
+                    <Row className="justify-content-end">
+                      {minutes < 0 ? (
+                        setShowScore(true)
+                      ) : (
+                        <h1
+                          className={`mt-4 ${
+                            minutes === 0 && seconds < 30 ? "text-danger" : ""
+                          }`}
+                        >
+                          {" "}
+                          {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+                        </h1>
+                      )}
+                      <img
+                        width="100rem"
+                        alt="..."
+                        className="rounded-circle float-right"
+                        src={require("assets/img/brand-logo.png")}
+                      ></img>
+                    </Row>
                   </Col>
                 </Row>
                 {showTerm === true ? (
@@ -260,22 +305,39 @@ function Quiz(props) {
                     <Row>
                       <Col md="8">
                         <ul>
-                          <li>Awali mengerjakan soal ujian dengan berdoa.</li>
+                          <li>Awali mengerjakan soal quiz dengan berdoa.</li>
                           <li>Pilih salah satu jawaban yang dianggap benar.</li>
                           <li>
-                            Kerjakan ujian dengan cermat dan bacalah pertanyaan
-                            dengan teliti, pahami makna dari soal tersebut,
-                            jangan terburu-buru.
+                            Kerjakan quiz dengan cermat dan bacalah pertanyaan
+                            dengan teliti.
                           </li>
-                          <li>
-                            Dilarang mencontek, kerjakan ujian dengan jujur,
-                            kerjakan soal ujian sesuai dengan keyakinan dan
-                            kemampuan Anda sendiri.
-                          </li>
-                          <li>
-                            Jika Nilai dibawah 60 maka peserta dianggap tidak
-                            lolos dan dapat mengulang ujian tersebut.
-                          </li>
+
+                          <span className="text-danger">
+                            Catatan Penting :{" "}
+                          </span>
+                          <span className="text-danger">
+                            <li>
+                              Satu soal diberikan waktu 30 detik untuk menjawab.
+                            </li>
+                            <li>
+                              Ketika Kamu meng-klik jawaban dari soal, maka
+                              otomatis akan lanjut ke soal berikutnya.
+                            </li>
+                            <li>Kamu tidak bisa kembali ke soal sebelumnya</li>
+                            <li>
+                              Jika waktu habis, maka langsung dialihkan ke
+                              halaman nilai.
+                            </li>
+                            <li>
+                              Jika Nilai dibawah 70 maka peserta dianggap tidak
+                              lolos.
+                            </li>
+                            <li>
+                              {" "}
+                              Peserta dapat mengulang berkali - kali quiz hingga
+                              lolos.
+                            </li>
+                          </span>
                         </ul>
                       </Col>
                     </Row>
@@ -311,11 +373,11 @@ function Quiz(props) {
                 <div className="d-flex justify-content-between">
                   <Button color="danger" onClick={() => confirmCancel()}>
                     <i className="now-ui-icons arrows-1_minimal-left"></i>{" "}
-                    Batalkan Ujian
+                    Batalkan Quiz
                   </Button>
                   {showTerm === true ? (
                     <Button color="info" onClick={() => confirmQuiz()}>
-                      Mulai Ujian{" "}
+                      Mulai Quiz{" "}
                       <i className="now-ui-icons arrows-1_minimal-right"></i>
                     </Button>
                   ) : (

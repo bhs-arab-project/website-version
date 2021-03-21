@@ -94,7 +94,8 @@ const MyQuizList = (props) => {
 
     let jsonAns = JSON.stringify(data);
 
-    console.log(indexes);
+    console.log("indexes", indexes);
+    console.log("jhs", data);
 
     if (indexes.length < 2) {
       setLoadSub(false);
@@ -102,18 +103,18 @@ const MyQuizList = (props) => {
       alert.error(<div className="notif">Isi Opsi Jawaban Minimal 2</div>);
       return false;
     } else if (
-      indexes[0].answerText === "" ||
-      indexes[1].answerText === "" ||
-      indexes[2].answerText === ""
+      data.list[0]?.answerText === "" ||
+      data.list[1]?.answerText === "" ||
+      data.list[2]?.answerText === ""
     ) {
       setLoadSub(false);
 
       alert.error(<div className="notif">Isi Bagian Yang Kosong!</div>);
       return false;
     } else if (
-      indexes[0].isCorrect === "" ||
-      indexes[1].isCorrect === "" ||
-      indexes[2].isCorrect === ""
+      data.list[0]?.isCorrect === "" ||
+      data.list[1]?.isCorrect === "" ||
+      data.list[2]?.isCorrect === ""
     ) {
       setLoadSub(false);
 
@@ -179,11 +180,6 @@ const MyQuizList = (props) => {
     console.log("ss");
   };
 
-  // if (singleQ) {
-  //   const q = JSON.parse(singleQ[0]?.answer_options).list;
-  //   console.log("q", q);
-  // }
-
   async function deleteQ(id) {
     // e.preventDefault();
     swal({
@@ -231,18 +227,29 @@ const MyQuizList = (props) => {
         <DetailHeader
           header={
             load === false
-              ? "Daftar Soal Ujian " + quizL[0]?.pelajaran
+              ? quizL[0]?.pelajaran === undefined
+                ? "Daftar Soal Ujian"
+                : "Daftar Soal Ujian " + quizL[0]?.pelajaran
               : undefined
           }
-          subHeader={quizL?.length + " Soal Tersedia Di Kelas Ini"}
+          subHeader={
+            quizL?.length === 0
+              ? "Soal Tidak Tersedia Di Kelas Ini"
+              : quizL?.length + " Soal Tersedia Di Kelas Ini"
+          }
           img={require("assets/img/quizlist.jpg")}
         />
         <Container className="mt-4">
-          <Row className="d-flex justify-content-between">
+          <Row className="d-flex">
             <BackButton />
-            <Link to={`/create-question`}>
+            <Link className="ml-2" to={`/create-question`}>
               <Button color="info" className="float-right">
                 <i className="now-ui-icons ui-1_simple-add"></i> Buat Soal
+              </Button>
+            </Link>
+            <Link className="ml-2" to={`/quiz/${id}`}>
+              <Button color="info" className="float-right">
+                Mulai Ujian
               </Button>
             </Link>
           </Row>
@@ -250,7 +257,7 @@ const MyQuizList = (props) => {
             quizL?.length === 0 ? (
               <div className="container">
                 <p className=" font-weight-bold text-dark">
-                  Pengajar Belum Membuat Materi Apapun Untuk Saat Ini.
+                  Pengajar Belum Membuat Soal Apapun Untuk Saat Ini.
                 </p>
                 <div
                   className={

@@ -15,7 +15,7 @@ import ShowAllLessonBeta from "./guru/ShowAllLesson2.js";
 import ListControl from "./admin/ListControl.js";
 
 function Index(props) {
-  const { userRole, token, userId } = props;
+  const { userRole, token, userId, name } = props;
   React.useEffect(() => {
     document.body.classList.add("index-page");
     document.body.classList.add("sidebar-collapse");
@@ -59,6 +59,7 @@ function Index(props) {
             userRole={userRole}
             token={token}
             userId={userId}
+            name={name}
           />
           {/* <HookButtonSwitch /> */}
           <TransparentFooter />

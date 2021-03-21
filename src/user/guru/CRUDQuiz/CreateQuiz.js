@@ -128,7 +128,7 @@ export default function CreateQuiz(props) {
         setLoad(false);
         alert.success(<div className="notif">Berhasil membuat Soal Quiz!</div>);
         //handle success
-        console.log(response);
+        fetchData();
       })
       .then(() => {
         document.getElementById("idForm").reset();

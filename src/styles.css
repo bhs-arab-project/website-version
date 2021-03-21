@@ -206,3 +206,7 @@ a.download:hover {
 .aButton {
   cursor: pointer;
 }
+
+p {
+  font-weight: normal;
+}

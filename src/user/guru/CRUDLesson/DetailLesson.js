@@ -102,35 +102,29 @@ const DetailLesson = (props) => {
             <Row>
               <Col>
                 <BackButton />
-              </Col>
-              {detailLesson?.chapter?.length === 0 ? (
-                <></>
-              ) : load === false ? (
-                <Col>
-                  <div
-                    class="myDiv rounded"
-                    style={{
-                      backgroundColor:
-                        detailLesson?.quiz?.length === 0
-                          ? "#FF3636"
-                          : "#2ba6cb",
+                <Link className="ml-2" to={`/create-chapter`}>
+                  <Button color="success">
+                    <i className="now-ui-icons ui-1_simple-add"></i> Buat Materi
+                  </Button>
+                </Link>
+                {load === true ? (
+                  <></>
+                ) : detailLesson?.quiz?.length !== 0 ? (
+                  <Link
+                    to={{
+                      pathname: `/quiz-list/${id}`,
                     }}
                   >
-                    <div class="bgImage">
-                      <h5>
-                        Quiz :{" "}
-                        {detailLesson?.quiz?.length === 0 ? (
-                          <>Belum Tersedia</>
-                        ) : (
-                          <>Tersedia</>
-                        )}
-                      </h5>
-                    </div>
-                  </div>
-                </Col>
-              ) : (
-                <></>
-              )}
+                    <Button className="ml-2" color="primary">
+                      Lihat Semua Soal Quiz
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button color="danger" disabled className="not-allowed ml-2">
+                    Quiz Tidak Tersedia
+                  </Button>
+                )}
+              </Col>
             </Row>
           </div>
           {load === false ? (
@@ -151,20 +145,7 @@ const DetailLesson = (props) => {
                     </>
                   )}
                 </p>
-                <div
-                  className={
-                    idUser === detailLesson?.user_id
-                      ? "d-flex justify-content-between"
-                      : "d-flex justify-content-end"
-                  }
-                >
-                  {idUser === detailLesson?.user_id ? (
-                    <Link to="/create-chapter">
-                      <Button color="info">Buat Materi</Button>
-                    </Link>
-                  ) : (
-                    <></>
-                  )}
+                <div className={"d-flex justify-content-end"}>
                   <img
                     width="250rem"
                     alt="..."
@@ -239,21 +220,6 @@ const DetailLesson = (props) => {
             )
           ) : (
             <MyBulletListLoader />
-          )}
-          {load === true ? (
-            <></>
-          ) : detailLesson?.quiz?.length !== 0 ? (
-            <div className="text-center">
-              <Link
-                to={{
-                  pathname: `/quiz-list/${id}`,
-                }}
-              >
-                <Button color="primary">Lihat Semua Soal Quiz</Button>
-              </Link>
-            </div>
-          ) : (
-            <></>
           )}
         </Container>
       </div>
