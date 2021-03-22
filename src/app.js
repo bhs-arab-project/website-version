@@ -25,7 +25,6 @@ import EditMateri from "./user/guru/CRUDMateri/EditMateri";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BabDetail from "./user/murid/Bab-detail.js";
 import MyQuizList from "user/guru/CRUDQuiz/Quizlist.js";
-import EditSoalQuiz from "user/guru/CRUDQuiz/EditQuiz.js";
 
 function App() {
   const { token, setToken } = useToken();
@@ -115,11 +114,6 @@ function App() {
             <Route
               path="/create-question"
               render={() => <CreateQuiz token={access_token} userId={id} />}
-            />
-
-            <Route
-              path="/edit-answer/:id"
-              render={() => <EditSoalQuiz token={access_token} userId={id} />}
             />
 
             <Route
