@@ -33,8 +33,9 @@ export default function EditMateri(props) {
 
   const [detailM, setDetailM] = useState();
   const [valButton, setValB] = useState("");
-  const [judulMateri, setJudulMateri] = useState();
-  const [materi, setMateri] = useState();
+  const [judulMateri, setJudulMateri] = useState("");
+  const [materi, setMateri] = useState("");
+  const [pelajaran, setPel] = useState("");
   const [lessonId, setLessonId] = useState();
   const [listLesson, setListLesson] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
@@ -61,6 +62,7 @@ export default function EditMateri(props) {
         setMateri(response.data.materi);
         setJudulMateri(response.data.judul_bab);
         setLessonId(response.data.lesson_id);
+        setPel(response.data.pelajaran);
         setValB(response.data.pelajaran);
       })
       .catch((error) => {
@@ -108,6 +110,7 @@ export default function EditMateri(props) {
         user_id: userId,
         judul_bab: judulMateri,
         materi: materi,
+        pelajaran: pelajaran,
       },
       headers: {
         ContentType: "multipart/form-data",
@@ -170,6 +173,7 @@ export default function EditMateri(props) {
                                   onClick={() => {
                                     setLessonId(list.id);
                                     setValB(list.pelajaran);
+                                    setPel(list.pelajaran);
                                   }}
                                 >
                                   {list.pelajaran}
