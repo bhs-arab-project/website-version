@@ -12,10 +12,12 @@ import CardBody from "reactstrap/lib/CardBody";
 import axios from "axios";
 import { API_URL } from "utils/constants";
 import DotLoad from "components/loader/dotLoader";
+import ReactHtmlParser from "react-html-parser";
 
 function Quiz(props) {
   let { id } = useParams();
   const [questions, setQuestions] = useState([]);
+  const [randomArr, setRandomArr] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const [showTerm, setShowTerm] = useState(true);
@@ -27,22 +29,7 @@ function Quiz(props) {
 
   const MyBulletListLoader = () => <DotLoad />;
 
-  // let questions = questions?.filter(function (oneQuiz) {
-  //   // eslint-disable-next-line
-  //   return oneQuiz.lesson_id == id;
-  // });
-
-  // const renderer = ({ hours, minutes, seconds, completed }) => {
-  //   if (!completed) {
-  //     return (
-  //       <span>
-  //         {hours}:{minutes}:{seconds}
-  //       </span>
-  //     );
-  //   }
-  // };
-
-  async function fetchData() {
+  function fetchData() {
     axios
       .get(`${API_URL}quiz?cari=${id}`, {
         headers: {
@@ -51,9 +38,13 @@ function Quiz(props) {
       })
       .then((response) => {
         setLoad(false);
-        setQuestions(response.data.data);
-        secondsToHms(response.data.data.length * 30);
-        console.log(response.data.data);
+        setQuestions(response.data.data.sort(() => Math.random() - 0.5));
+        secondsToHms(response.data.data.length * 60);
+        setRandomArr(
+          JSON.parse(response.data.data[0].answer_options).list.sort(
+            () => Math.random() - 0.5
+          )
+        );
       })
       .catch((response) => {
         console.log("errorQ", response);
@@ -76,6 +67,11 @@ function Quiz(props) {
     const nextQuestion = currentQuestion + 1;
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
+      setRandomArr(
+        JSON.parse(questions[currentQuestion + 1].answer_options).list.sort(
+          () => Math.random() - 0.5
+        )
+      );
     } else {
       setShowScore(true);
     }
@@ -133,6 +129,7 @@ function Quiz(props) {
 
   const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(2);
+
   React.useEffect(() => {
     if (showTerm === false) {
       let myInterval = setInterval(() => {
@@ -154,18 +151,6 @@ function Quiz(props) {
       };
     }
   });
-
-  // useEffect(() => {
-  //   try {
-  //     for (let index = 0; index < questions.length; index++) {
-  //       questions[index].answer_options = JSON.parse(
-  //         questions[index].answer_options
-  //       );
-  //     }
-  //     console.log(questions);
-  //   } catch (error) {}
-  // }, [questions]);
-
   return (
     <div>
       {load === false ? (
@@ -317,7 +302,7 @@ function Quiz(props) {
                           </span>
                           <span className="text-danger">
                             <li>
-                              Satu soal diberikan waktu 30 detik untuk menjawab.
+                              Satu soal diberikan waktu 1 Menit untuk menjawab.
                             </li>
                             <li>
                               Ketika Kamu meng-klik jawaban dari soal, maka
@@ -349,12 +334,15 @@ function Quiz(props) {
                       {/* <Countdown date={Date.now() + 10000} renderer={renderer} onComplete={completeCount}/> */}
                     </div>
                     <div className="question-text">
-                      <h5>{questions[currentQuestion]?.question_text}</h5>
+                      <h5>
+                        {ReactHtmlParser(
+                          questions[currentQuestion]?.question_text
+                        )}
+                      </h5>
+
                       {/* <span>{questions[currentQuestion]?.answer_options}</span> */}
                     </div>
-                    {JSON.parse(
-                      questions[currentQuestion]?.answer_options
-                    ).list?.map((data, index) => {
+                    {randomArr.map((data, index) => {
                       return (
                         <Row className="ml-1" key={index}>
                           <Button

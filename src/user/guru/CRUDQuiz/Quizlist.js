@@ -20,7 +20,9 @@ import TransparentFooter from "components/Footers/TransparentFooter";
 import BackButton from "utils/BackComponent";
 import { useForm } from "react-hook-form";
 import { useAlert } from "react-alert";
-
+import ReactHtmlParser from "react-html-parser";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const MyBulletListLoader = () => <BulletList />;
 
 const MyQuizList = (props) => {
@@ -89,13 +91,15 @@ const MyQuizList = (props) => {
     }
   }
 
+  console.log("singleQ", singleQ);
+
   const onSubmit = (data) => {
     setLoadSub(true);
 
     let jsonAns = JSON.stringify(data);
 
-    console.log("indexes", indexes);
-    console.log("jhs", data);
+    // console.log("indexes", indexes);
+    // console.log("jhs", data);
 
     if (indexes.length < 2) {
       setLoadSub(false);
@@ -150,7 +154,7 @@ const MyQuizList = (props) => {
       })
       .then(() => {
         fetchData();
-        setSingleQ([]);
+        // setSingleQ([]);
         setIndexes([]);
         setChange("list");
       })
@@ -160,24 +164,6 @@ const MyQuizList = (props) => {
         alert.error(<div className="notif">Gagal mengedit Soal Quiz</div>);
         console.log(error.response);
       });
-  };
-
-  const addOptionQ = () => {
-    setIndexes((prevIndexes) => [...prevIndexes, counter]);
-    setCounter((prevCounter) => prevCounter + 1);
-  };
-
-  const removeOptionQ = (index) => () => {
-    setIndexes((prevIndexes) => [
-      ...prevIndexes.filter((item) => item !== index),
-    ]);
-    setCounter((prevCounter) => prevCounter - 1);
-  };
-
-  const clearOptionQ = () => {
-    setIndexes([]);
-    setCounter(0);
-    console.log("ss");
   };
 
   async function deleteQ(id) {
@@ -280,14 +266,26 @@ const MyQuizList = (props) => {
                     <div className="card-body">
                       <div className="row">
                         <div className="col d-inline">
-                          <p className="font-weight-bold">
-                            Soal Ke - {index + 1} | {list.question_text} <hr />
-                          </p>
-                          <span>Opsi Jawaban : </span>
+                          <h4 className="font-weight-bold">
+                            Soal Ke - {index + 1} <hr />
+                          </h4>
+                          <h5 className="font-weight-bold">Soal Quiz : </h5>
+                          <span>{ReactHtmlParser(list?.question_text)}</span>
+                          <h5 className="font-weight-bold">Opsi Jawaban : </h5>
+
                           <ul>
                             {JSON.parse(list?.answer_options).list?.map(
                               (data, index) => {
-                                return <li key={index}>{data?.answerText}</li>;
+                                return (
+                                  <li key={index}>
+                                    {data?.answerText}
+                                    <span>
+                                      {data?.isCorrect === "true"
+                                        ? " ✔️"
+                                        : " ❌"}
+                                    </span>
+                                  </li>
+                                );
                               }
                             )}
                           </ul>
@@ -329,30 +327,25 @@ const MyQuizList = (props) => {
                     <div className="row">
                       <div className="col d-inline">
                         <h4 className="font-weight-bold">
-                          Edit Soal Ke - {listNum + 1} |{" "}
-                          {singleQ[0]?.question_text === undefined ? (
-                            <span className="font-weight-normal text-secondary">
-                              Memuat...
-                            </span>
-                          ) : (
-                            singleQ[0]?.question_text
-                          )}{" "}
-                          <hr />
+                          Edit Soal Ke - {listNum + 1}
                         </h4>
 
                         <Form onSubmit={handleSubmit(onSubmit)}>
-                          <FormGroup>
-                            <Label className="font-weight-bold">
-                              Soal Quiz
-                            </Label>
-                            <Input
-                              defaultValue={singleQ[0]?.question_text}
+                          <FormGroup className="font-weight-bold">
+                            <Label>Soal Quiz</Label>
+                            <CKEditor
                               required
-                              placeholder="Soal Quiz"
-                              type="text"
-                              onInput={(e) => setQuestionQ(e.target.value)}
-                            ></Input>
+                              className="font-weight-bold"
+                              editor={ClassicEditor}
+                              data={singleQ[0]?.question_text}
+                              defaultValue={singleQ[0]?.question_text}
+                              onChange={(event, editor) => {
+                                const data = editor.getData();
+                                setQuestionQ(data);
+                              }}
+                            />
                           </FormGroup>
+
                           <label className="font-weight-bold">
                             Opsi Jawaban :{" "}
                           </label>
@@ -361,99 +354,36 @@ const MyQuizList = (props) => {
                             const fieldName = `list[${index}]`;
                             return (
                               <fieldset name={fieldName} key={index}>
-                                <label>
+                                <FormGroup>
+                                  {" "}
+                                  <label
+                                    className={
+                                      fieldName === "list[0]"
+                                        ? "text-success"
+                                        : "text-danger"
+                                    }
+                                  >
+                                    {fieldName === "list[0]"
+                                      ? "Isi Jawaban Benar"
+                                      : "Isi Jawaban Salah"}
+                                  </label>
                                   <input
-                                    defaultValue={data.answerText}
                                     type="text"
+                                    defaultValue={data.answerText}
                                     className="form-control"
                                     name={`${fieldName}.answerText`}
                                     ref={register}
                                   />
-                                </label>
-
-                                <label className="ml-2">
-                                  {data.isCorrect === "true" ? (
-                                    <input
-                                      checked
-                                      className="mr-1"
-                                      type="radio"
-                                      value="true"
-                                      name={`${fieldName}.isCorrect`}
-                                      ref={register}
-                                    />
-                                  ) : (
-                                    <input
-                                      className="mr-1"
-                                      type="radio"
-                                      value="true"
-                                      name={`${fieldName}.isCorrect`}
-                                      ref={register}
-                                    />
-                                  )}
-                                  Jawaban Benar
-                                </label>
-                                <label className="ml-2 mr-2">
-                                  {data.isCorrect === "false" ? (
-                                    <input
-                                      checked
-                                      className="mr-1"
-                                      type="radio"
-                                      value="false"
-                                      name={`${fieldName}.isCorrect`}
-                                      ref={register}
-                                    />
-                                  ) : (
-                                    <input
-                                      className="mr-1"
-                                      type="radio"
-                                      value="false"
-                                      name={`${fieldName}.isCorrect`}
-                                      ref={register}
-                                    />
-                                  )}
-                                  Jawaban Salah
-                                </label>
-                                <button
-                                  className="btn btn-danger"
-                                  type="button"
-                                  onClick={removeOptionQ(index)}
-                                >
-                                  <i className="now-ui-icons ui-1_simple-remove"></i>
-                                </button>
+                                </FormGroup>
+                                <input
+                                  hidden
+                                  defaultValue={data.isCorrect}
+                                  name={`${fieldName}.isCorrect`}
+                                  ref={register}
+                                />
                               </fieldset>
                             );
                           })}
-
-                          {indexes.length === 3 ? (
-                            <>
-                              <span className="text-danger">
-                                *Kamu Hanya Bisa Membuat Maksimal 3 Opsi Jawaban
-                              </span>
-                              <br />
-                              <button
-                                disabled
-                                className="not-allowed btn btn-info"
-                              >
-                                Tambah Opsi Jawaban
-                              </button>
-                            </>
-                          ) : (
-                            <button
-                              type="button"
-                              className="btn btn-info"
-                              onClick={addOptionQ}
-                            >
-                              Tambah Opsi Jawaban
-                            </button>
-                          )}
-
-                          <button
-                            type="button"
-                            className="btn btn-danger"
-                            onClick={clearOptionQ}
-                          >
-                            Hapus Semua Opsi Jawaban
-                          </button>
 
                           {loadSub === true ? (
                             <Spinner></Spinner>

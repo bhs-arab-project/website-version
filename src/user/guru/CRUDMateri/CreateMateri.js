@@ -166,7 +166,9 @@ export default function CreateMateri(props) {
                             })
                           )
                         ) : (
-                          <DropdownItem disabled>Loading...</DropdownItem>
+                          <DropdownItem title="Loading..." disabled>
+                            Loading...
+                          </DropdownItem>
                         )}
                       </DropdownMenu>
                     </Dropdown>

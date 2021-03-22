@@ -141,23 +141,6 @@ export default function EditSoalQuiz(props) {
       });
   };
 
-  const addOptionQ = () => {
-    setIndexes((prevIndexes) => [...prevIndexes, counter]);
-    setCounter((prevCounter) => prevCounter + 1);
-  };
-
-  const removeOptionQ = (index) => () => {
-    setIndexes((prevIndexes) => [
-      ...prevIndexes.filter((item) => item !== index),
-    ]);
-    setCounter((prevCounter) => prevCounter - 1);
-  };
-
-  const clearOptionQ = () => {
-    setIndexes([]);
-    setCounter(0);
-  };
-
   console.log("indexes", indexes);
   return (
     <>
@@ -234,74 +217,35 @@ export default function EditSoalQuiz(props) {
                     const fieldName = `list[${index}]`;
                     return (
                       <fieldset name={fieldName} key={index}>
-                        <label>
-                          Opsi Jawaban
+                        <FormGroup>
+                          {" "}
+                          <label
+                            className={
+                              fieldName === "list[0]"
+                                ? "text-success"
+                                : "text-danger"
+                            }
+                          >
+                            {fieldName === "list[0]"
+                              ? "Isi Jawaban Benar"
+                              : "Isi Jawaban Salah"}
+                          </label>
                           <input
                             type="text"
                             className="form-control"
                             name={`${fieldName}.answerText`}
                             ref={register}
                           />
-                        </label>
-
-                        <label className="ml-2">
-                          <input
-                            className="mr-1"
-                            type="radio"
-                            value="true"
-                            name={`${fieldName}.isCorrect`}
-                            ref={register}
-                          />
-                          Jawaban Benar
-                        </label>
-                        <label className="ml-2 mr-2">
-                          <input
-                            className="mr-1"
-                            type="radio"
-                            value="false"
-                            name={`${fieldName}.isCorrect`}
-                            ref={register}
-                          />
-                          Jawaban Salah
-                        </label>
-                        <button
-                          className="btn btn-danger"
-                          type="button"
-                          onClick={removeOptionQ(index)}
-                        >
-                          Hapus Jawaban Ini
-                        </button>
+                        </FormGroup>
+                        <input
+                          hidden
+                          name={`${fieldName}.isCorrect`}
+                          ref={register}
+                        />
                       </fieldset>
                     );
                   })}
 
-                  {indexes.length === 3 ? (
-                    <>
-                      <span className="text-danger">
-                        *Kamu Hanya Bisa Membuat Maksimal 3 Opsi Jawaban
-                      </span>
-                      <br />
-                      <button disabled className="not-allowed btn btn-info">
-                        Tambah Opsi Jawaban
-                      </button>
-                    </>
-                  ) : (
-                    <button
-                      type="button"
-                      className="btn btn-info"
-                      onClick={addOptionQ}
-                    >
-                      Tambah Opsi Jawaban
-                    </button>
-                  )}
-
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={clearOptionQ}
-                  >
-                    Hapus Semua Opsi Jawaban
-                  </button>
                   {load === true ? (
                     <Spinner></Spinner>
                   ) : (

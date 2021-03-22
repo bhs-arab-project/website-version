@@ -22,22 +22,30 @@ import { API_URL } from "utils/constants";
 import { useAlert } from "react-alert";
 import TransparentFooter from "components/Footers/TransparentFooter";
 import BackButton from "../../../utils/BackComponent";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export default function CreateQuiz(props) {
   const alert = useAlert();
   const { token, userId } = props;
 
   const [valButton, setValB] = useState("Pilih Kelas");
-  const [listLesson, setListLesson] = useState();
-  const [pelajaran, setPel] = useState();
+  const [listLesson, setListLesson] = useState([]);
+  const [pelajaran, setPel] = useState("");
   const [lessonId, setLessonId] = useState("");
   const [questionQ, setQuestionQ] = useState("");
 
   // const [listQuiz, setListQuiz] = useState();
   const [load, setLoad] = useState(false);
+  const [loadSub, setLoadSub] = useState(false);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+  let filterListL = listLesson.filter(function (listL) {
+    // eslint-disable-next-line
+    return listL.user_id == userId;
+  });
 
   async function fetchData() {
     axios
@@ -49,6 +57,11 @@ export default function CreateQuiz(props) {
       .then((response) => {
         setLoad(false);
         setListLesson(response.data);
+        setIndexes([
+          { answerText: "", isCorrect: "true" },
+          { answerText: "", isCorrect: "false" },
+          { answerText: "", isCorrect: "false" },
+        ]);
       })
       .catch((error) => {
         let message = error.response;
@@ -57,32 +70,31 @@ export default function CreateQuiz(props) {
   }
 
   React.useEffect(() => {
-    setLoad(false);
+    setLoad(true);
     fetchData();
     // eslint-disable-next-line
   }, []);
-
-  let filterListL = listLesson?.filter(function (listL) {
-    // eslint-disable-next-line
-    return listL.user_id == userId;
-  });
 
   const [indexes, setIndexes] = React.useState([]);
   const [counter, setCounter] = React.useState(0);
   const { register, handleSubmit } = useForm();
 
+  // console.log("handleSubmit", handleSubmit);
+  console.log("index", indexes);
+
   const onSubmit = (data) => {
-    setLoad(true);
+    setLoadSub(true);
+    console.log("data", data);
 
     let jsonAns = JSON.stringify(data);
 
     if (lessonId === "") {
-      setLoad(false);
+      setLoadSub(false);
 
       alert.error(<div className="notif">Pilih Kelas Terlebih Dahulu</div>);
       return false;
     } else if (indexes.length < 2) {
-      setLoad(false);
+      setLoadSub(false);
 
       alert.error(<div className="notif">Isi Opsi Jawaban Minimal 2</div>);
       return false;
@@ -91,20 +103,9 @@ export default function CreateQuiz(props) {
       data.list[1]?.answerText === "" ||
       data.list[2]?.answerText === ""
     ) {
-      setLoad(false);
+      setLoadSub(false);
 
       alert.error(<div className="notif">Isi Bagian Yang Kosong!</div>);
-      return false;
-    } else if (
-      data.list[0]?.isCorrect === null ||
-      data.list[1]?.isCorrect === null ||
-      data.list[2]?.isCorrect === null
-    ) {
-      setLoad(false);
-
-      alert.error(
-        <div className="notif">Pilih Jawaban Yang Benar dan salah!</div>
-      );
       return false;
     }
 
@@ -125,7 +126,7 @@ export default function CreateQuiz(props) {
       },
     })
       .then(function (response) {
-        setLoad(false);
+        setLoadSub(false);
         alert.success(<div className="notif">Berhasil membuat Soal Quiz!</div>);
         //handle success
         fetchData();
@@ -134,28 +135,11 @@ export default function CreateQuiz(props) {
         document.getElementById("idForm").reset();
       })
       .catch(function (error) {
-        setLoad(false);
+        setLoadSub(false);
 
         alert.error(<div className="notif">Gagal membuat Soal Quiz</div>);
         console.log(error.response);
       });
-  };
-
-  const addOptionQ = () => {
-    setIndexes((prevIndexes) => [...prevIndexes, counter]);
-    setCounter((prevCounter) => prevCounter + 1);
-  };
-
-  const removeOptionQ = (index) => () => {
-    setIndexes((prevIndexes) => [
-      ...prevIndexes.filter((item) => item !== index),
-    ]);
-    setCounter((prevCounter) => prevCounter - 1);
-  };
-
-  const clearOptionQ = () => {
-    setIndexes([]);
-    setCounter(0);
   };
 
   return (
@@ -186,7 +170,7 @@ export default function CreateQuiz(props) {
                       <DropdownMenu>
                         {load === false ? (
                           filterListL?.length === 0 ? (
-                            <DropdownItem text className="text-danger" disabled>
+                            <DropdownItem className="text-danger" disabled>
                               Buat Kelas Terlebih Dahulu
                             </DropdownItem>
                           ) : (
@@ -208,7 +192,7 @@ export default function CreateQuiz(props) {
                             })
                           )
                         ) : (
-                          <DropdownItem text disabled>
+                          <DropdownItem title="Loading..." disabled>
                             Loading...
                           </DropdownItem>
                         )}
@@ -220,92 +204,63 @@ export default function CreateQuiz(props) {
                   </FormGroup>
                 </Col>
                 <Col lg="7" sm="10">
-                  <FormGroup>
+                  <FormGroup className="font-weight-bold">
                     <Label>Soal Quiz</Label>
-                    <Input
+                    <CKEditor
                       required
-                      placeholder="Soal Quiz"
-                      type="text"
-                      onInput={(e) => setQuestionQ(e.target.value)}
-                    ></Input>
+                      className="font-weight-bold"
+                      editor={ClassicEditor}
+                      data={questionQ}
+                      onChange={(event, editor) => {
+                        const data = editor.getData();
+                        setQuestionQ(data);
+                      }}
+                    />
                   </FormGroup>
-
-                  {indexes.map((index) => {
+                  {indexes.map((data, index) => {
                     const fieldName = `list[${index}]`;
                     return (
                       <fieldset name={fieldName} key={index}>
-                        <label>
-                          Opsi Jawaban
+                        <FormGroup>
+                          {" "}
+                          <label
+                            className={
+                              fieldName === "list[0]"
+                                ? "text-success"
+                                : "text-danger"
+                            }
+                          >
+                            {fieldName === "list[0]"
+                              ? "Isi Jawaban Benar"
+                              : "Isi Jawaban Salah"}
+                          </label>
                           <input
                             type="text"
+                            defaultValue={data.answerText}
                             className="form-control"
                             name={`${fieldName}.answerText`}
                             ref={register}
                           />
-                        </label>
-
-                        <label className="ml-2">
-                          <input
-                            className="mr-1"
-                            type="radio"
-                            value="true"
-                            name={`${fieldName}.isCorrect`}
-                            ref={register}
-                          />
-                          Jawaban Benar
-                        </label>
-                        <label className="ml-2 mr-2">
-                          <input
-                            className="mr-1"
-                            type="radio"
-                            value="false"
-                            name={`${fieldName}.isCorrect`}
-                            ref={register}
-                          />
-                          Jawaban Salah
-                        </label>
-                        <button
-                          className="btn btn-danger"
-                          type="button"
-                          onClick={removeOptionQ(index)}
-                        >
-                          <i className="now-ui-icons ui-1_simple-remove"></i>
-                        </button>
+                        </FormGroup>
+                        <input
+                          hidden
+                          defaultValue={data.isCorrect}
+                          name={`${fieldName}.isCorrect`}
+                          ref={register}
+                        />
                       </fieldset>
                     );
                   })}
 
-                  {indexes.length === 3 ? (
-                    <>
-                      <span className="text-danger">
-                        *Kamu Hanya Bisa Membuat Maksimal 3 Opsi Jawaban
-                      </span>
-                      <br />
-                      <button disabled className="not-allowed btn btn-info">
-                        Tambah Opsi Jawaban
-                      </button>
-                    </>
+                  {loadSub === true ? (
+                    <div>
+                      <Spinner className="float-right"></Spinner>
+                    </div>
                   ) : (
                     <button
-                      type="button"
-                      className="btn btn-info"
-                      onClick={addOptionQ}
+                      type="submit"
+                      className="btn btn-info btn-round float-right"
                     >
-                      Tambah Opsi Jawaban
-                    </button>
-                  )}
-
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={clearOptionQ}
-                  >
-                    Hapus Semua Opsi Jawaban
-                  </button>
-                  {load === true ? (
-                    <Spinner></Spinner>
-                  ) : (
-                    <button type="submit" className="btn btn-primary">
                       Submit
                     </button>
                   )}

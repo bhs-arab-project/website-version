@@ -188,17 +188,13 @@ export default function SignUpPage() {
                         autofocus
                       ></Input>
                       {/* eslint-disable-next-line */}
-                      <a
-                        href=""
-                        className="link aButton mt-2 ml-2"
-                        onClick={pwToggle}
-                      >
+                      <a className="link aButton mt-2 ml-2" onClick={pwToggle}>
                         <img
                           width="20rem"
                           src={
                             typeInput === "pw"
-                              ? "./locked.png"
-                              : "./unlocked.png"
+                              ? "./invisible-white.png"
+                              : "./visible-white.png"
                           }
                           alt="..."
                         />
@@ -223,8 +219,8 @@ export default function SignUpPage() {
                           width="20rem"
                           src={
                             typeInputC === "pw"
-                              ? "./locked.png"
-                              : "./unlocked.png"
+                              ? "./invisible-white.png"
+                              : "./visible-white.png"
                           }
                           alt="..."
                         />

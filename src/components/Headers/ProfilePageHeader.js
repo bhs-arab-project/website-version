@@ -88,10 +88,6 @@ function ProfilePageHeader(props) {
                 <h2>{listL?.length}</h2>
                 <p>Sertifikat</p>
               </div>
-              <div className="social-description">
-                <h2>5</h2>
-                <p>Progres Materi</p>
-              </div>
             </div>
           ) : props.roleUser === "teacher" ? (
             <div className="content">

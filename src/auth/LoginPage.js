@@ -156,8 +156,8 @@ export default function LoginPage({ setToken }) {
                           width="20rem"
                           src={
                             typeInput === "pw"
-                              ? "./locked.png"
-                              : "./unlocked.png"
+                              ? "./invisible-white.png"
+                              : "./visible-white.png"
                           }
                           alt="..."
                         />
