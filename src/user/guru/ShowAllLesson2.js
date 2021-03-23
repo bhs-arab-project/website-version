@@ -406,6 +406,7 @@ const ShowAllLessonBeta = (props) => {
                     placeholder="Nama Kelas"
                     type="text"
                     name="namaKelas"
+                    disabled={detailL?.pelajaran === undefined ? true : false}
                     onInput={(e) => setPelajaran(e.target.value)}
                   ></Input>
                 </FormGroup>
@@ -462,6 +463,7 @@ const ShowAllLessonBeta = (props) => {
                 <textarea
                   defaultValue={detailL?.deskripsi}
                   name="deskripsi"
+                  disabled={detailL?.pelajaran === undefined ? true : false}
                   onInput={(e) => setDeskripsi(e.target.value)}
                   className="form-control"
                   rows="5"
@@ -478,6 +480,7 @@ const ShowAllLessonBeta = (props) => {
                   className="btn-round float-right"
                   color="info"
                   size="md"
+                  disabled={detailL?.pelajaran === undefined ? true : false}
                 >
                   Submit
                 </Button>

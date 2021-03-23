@@ -51,11 +51,13 @@ function MateriPage(props) {
   const goNextChap = () => {
     const nextQuestion = currentChapter + 1;
     setCurrentCha(nextQuestion);
+    window.scrollTo(0, 0);
   };
 
   const previousChap = () => {
     const prevChap = currentChapter - 1;
     setCurrentCha(prevChap);
+    window.scrollTo(0, 0);
   };
 
   function startExam() {

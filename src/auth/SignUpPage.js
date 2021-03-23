@@ -45,7 +45,7 @@ export default function SignUpPage() {
   bodyFormData.set("name", name);
   bodyFormData.set("email", email);
   bodyFormData.set("password", password);
-  bodyFormData.set("role", "admin");
+  bodyFormData.set("role", "user");
 
   const handleSubmit = async (e) => {
     e.preventDefault();

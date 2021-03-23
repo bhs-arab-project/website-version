@@ -52,7 +52,6 @@ export function ChangePassForm(props) {
       .then(function (response) {
         setLoad(false);
         alert.success(<div className="notif">Berhasil Mengubah Password!</div>);
-        history.push("/");
 
         //handle success
         console.log(response);

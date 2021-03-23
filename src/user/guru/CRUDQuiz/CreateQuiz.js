@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form";
 import {
   Label,
   FormGroup,
-  Input,
   Container,
   Row,
   Col,
@@ -76,7 +75,6 @@ export default function CreateQuiz(props) {
   }, []);
 
   const [indexes, setIndexes] = React.useState([]);
-  const [counter, setCounter] = React.useState(0);
   const { register, handleSubmit } = useForm();
 
   // console.log("handleSubmit", handleSubmit);

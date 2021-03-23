@@ -148,7 +148,14 @@ export default function EditMateri(props) {
           <br />
           <div className="mt-2">
             <BackButton />
-            <h2>Edit Materi {detailM?.judul_bab}</h2>
+            <h2 className="text-capitalize">
+              Edit Materi{" "}
+              {detailM?.judul_bab === undefined ? (
+                <span className="text-secondary">Memuat...</span>
+              ) : (
+                detailM?.judul_bab
+              )}
+            </h2>
             <hr />
             <Form className="form" onSubmit={handleSubmit}>
               <Row>
@@ -195,9 +202,8 @@ export default function EditMateri(props) {
                   <FormGroup>
                     <Label>Judul Materi</Label>
                     <Input
-                      // data={detailM?.judul_bab}
                       defaultValue={judulMateri}
-                      // value={detailM?.judul_bab}
+                      disabled={detailM?.judul_bab === undefined ? true : false}
                       required
                       placeholder="Judul Materi"
                       type="text"
@@ -212,6 +218,7 @@ export default function EditMateri(props) {
                   <CKEditor
                     required
                     data={materi}
+                    disabled={detailM?.judul_bab === undefined ? true : false}
                     editor={ClassicEditor}
                     onChange={(event, editor) => {
                       const data = editor.getData();
@@ -230,6 +237,7 @@ export default function EditMateri(props) {
                   <Button
                     className="btn-round float-right"
                     color="info"
+                    disabled={detailM?.judul_bab === undefined ? true : false}
                     // onClick={(e) => e.preventDefault()}
                     size="md"
                   >

@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Container,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  Row,
-  Spinner,
-} from "reactstrap";
+import { Container, Form, FormGroup, Label, Row, Spinner } from "reactstrap";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import { API_URL } from "utils/constants";
 import { Link, useParams } from "react-router-dom";
@@ -80,7 +72,6 @@ const MyQuizList = (props) => {
     // eslint-disable-next-line
   }, [id]);
 
-  const [counter, setCounter] = React.useState(0);
   const [idEdit, setIdEdit] = React.useState(0);
   const { register, handleSubmit } = useForm();
 
@@ -90,8 +81,6 @@ const MyQuizList = (props) => {
       setQuestionQ(singleQ[0]?.question_text);
     }
   }
-
-  console.log("singleQ", singleQ);
 
   const onSubmit = (data) => {
     setLoadSub(true);
@@ -329,69 +318,85 @@ const MyQuizList = (props) => {
                         <h4 className="font-weight-bold">
                           Edit Soal Ke - {listNum + 1}
                         </h4>
+                        {singleQ[0]?.question_text === undefined ? (
+                          <h4 className="text-secondary">Memuat...</h4>
+                        ) : (
+                          <Form onSubmit={handleSubmit(onSubmit)}>
+                            <FormGroup className="font-weight-bold">
+                              <Label>Soal Quiz</Label>
+                              <CKEditor
+                                required
+                                className="font-weight-bold"
+                                editor={ClassicEditor}
+                                data={singleQ[0]?.question_text}
+                                defaultValue={singleQ[0]?.question_text}
+                                onChange={(event, editor) => {
+                                  const data = editor.getData();
+                                  setQuestionQ(data);
+                                }}
+                              />
+                            </FormGroup>
 
-                        <Form onSubmit={handleSubmit(onSubmit)}>
-                          <FormGroup className="font-weight-bold">
-                            <Label>Soal Quiz</Label>
-                            <CKEditor
-                              required
-                              className="font-weight-bold"
-                              editor={ClassicEditor}
-                              data={singleQ[0]?.question_text}
-                              defaultValue={singleQ[0]?.question_text}
-                              onChange={(event, editor) => {
-                                const data = editor.getData();
-                                setQuestionQ(data);
-                              }}
-                            />
-                          </FormGroup>
-
-                          <label className="font-weight-bold">
-                            Opsi Jawaban :{" "}
-                          </label>
-                          <br />
-                          {indexes.map((data, index) => {
-                            const fieldName = `list[${index}]`;
-                            return (
-                              <fieldset name={fieldName} key={index}>
-                                <FormGroup>
-                                  {" "}
-                                  <label
-                                    className={
-                                      fieldName === "list[0]"
-                                        ? "text-success"
-                                        : "text-danger"
-                                    }
-                                  >
-                                    {fieldName === "list[0]"
-                                      ? "Isi Jawaban Benar"
-                                      : "Isi Jawaban Salah"}
-                                  </label>
+                            <label className="font-weight-bold">
+                              Opsi Jawaban :{" "}
+                            </label>
+                            <br />
+                            {indexes.map((data, index) => {
+                              const fieldName = `list[${index}]`;
+                              return (
+                                <fieldset name={fieldName} key={index}>
+                                  <FormGroup>
+                                    {" "}
+                                    <label
+                                      className={
+                                        fieldName === "list[0]"
+                                          ? "text-success"
+                                          : "text-danger"
+                                      }
+                                    >
+                                      {fieldName === "list[0]"
+                                        ? "Isi Jawaban Benar"
+                                        : "Isi Jawaban Salah"}
+                                    </label>
+                                    <input
+                                      type="text"
+                                      defaultValue={data.answerText}
+                                      className="form-control"
+                                      name={`${fieldName}.answerText`}
+                                      ref={register}
+                                    />
+                                  </FormGroup>
                                   <input
-                                    type="text"
-                                    defaultValue={data.answerText}
-                                    className="form-control"
-                                    name={`${fieldName}.answerText`}
+                                    hidden
+                                    defaultValue={data.isCorrect}
+                                    name={`${fieldName}.isCorrect`}
                                     ref={register}
                                   />
-                                </FormGroup>
-                                <input
-                                  hidden
-                                  defaultValue={data.isCorrect}
-                                  name={`${fieldName}.isCorrect`}
-                                  ref={register}
-                                />
-                              </fieldset>
-                            );
-                          })}
+                                </fieldset>
+                              );
+                            })}
 
-                          {loadSub === true ? (
-                            <Spinner></Spinner>
-                          ) : (
-                            <button type="submit" className="btn btn-success">
-                              Submit
-                            </button>
-                          )}
+                            {loadSub === true ? (
+                              <Spinner></Spinner>
+                            ) : (
+                              <button type="submit" className="btn btn-success">
+                                Submit
+                              </button>
+                            )}
+                            <Button
+                              onClick={() => {
+                                setSingleQ([]);
+                                setIndexes([]);
+                                setChange("list");
+                              }}
+                              color="secondary"
+                              className="float-right"
+                            >
+                              Batal Edit
+                            </Button>
+                          </Form>
+                        )}
+                        {singleQ[0]?.question_text === undefined ? (
                           <Button
                             onClick={() => {
                               setSingleQ([]);
@@ -403,7 +408,9 @@ const MyQuizList = (props) => {
                           >
                             Batal Edit
                           </Button>
-                        </Form>
+                        ) : (
+                          <></>
+                        )}
                       </div>
                     </div>
                   </div>
