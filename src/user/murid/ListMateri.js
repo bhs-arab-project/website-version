@@ -20,6 +20,9 @@ import {
 import { Link } from "react-router-dom";
 import loaderListMateri from "components/loader/loaderListMateri";
 import { withAuthUser } from "./../../auth/RouteAccess";
+import { loadAnimation } from "lottie-web";
+import { defineLordIconElement } from "lord-icon-element";
+defineLordIconElement(loadAnimation);
 
 const ListMateri = () => {
   const [load, setLoad] = useState(true);

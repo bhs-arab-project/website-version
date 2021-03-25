@@ -144,41 +144,43 @@ function BabDetail() {
                 </div>
               </div>
             ) : (
-              detailLesson?.chapter?.map((list, index) => {
-                return (
-                  <div className="card rounded" key={index}>
-                    <div className="card-body">
-                      <div className="row">
-                        <div className="col-md-10 col-xs-2 col-sm-3 d-inline">
-                          <div className="row">
-                            <div className="col-md-1 col-xs-3 col-sm-2 mt-1">
-                              <img
-                                // width="50%"
-                                alt="..."
-                                className="rounded-circle "
-                                src={require("assets/img/book2.png")}
-                              ></img>
-                            </div>
-                            <div className="col-md-5 col-xs-4 col-sm-5 mt-3">
-                              {list.judul_bab}
+              detailLesson?.chapter
+                ?.sort((a, b) => (a.judul_bab > b.judul_bab ? 1 : -1))
+                .map((list, index) => {
+                  return (
+                    <div className="card rounded" key={index}>
+                      <div className="card-body">
+                        <div className="row">
+                          <div className="col-md-10 col-xs-2 col-sm-3 d-inline">
+                            <div className="row">
+                              <div className="col-md-1 col-xs-3 col-sm-2 mt-1">
+                                <img
+                                  // width="50%"
+                                  alt="..."
+                                  className="rounded-circle "
+                                  src={require("assets/img/book2.png")}
+                                ></img>
+                              </div>
+                              <div className="col-md-5 col-xs-4 col-sm-5 mt-3">
+                                {list.judul_bab}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="col-md-2 col-xs-1 col-sm-1 px-1 text-right d-inline">
-                          <Link
-                            to={{
-                              pathname: `/bab-materi/${id}`,
-                              state: { index },
-                            }}
-                          >
-                            <Button color="info">Mulai belajar</Button>
-                          </Link>
+                          <div className="col-md-2 col-xs-1 col-sm-1 px-1 text-right d-inline">
+                            <Link
+                              to={{
+                                pathname: `/bab-materi/${id}`,
+                                state: { index },
+                              }}
+                            >
+                              <Button color="info">Mulai belajar</Button>
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })
+                  );
+                })
             )
           ) : (
             <MyBulletListLoader />

@@ -14,6 +14,9 @@ import {
   Nav,
   Container,
 } from "reactstrap";
+import { loadAnimation } from "lottie-web";
+import { defineLordIconElement } from "lord-icon-element";
+defineLordIconElement(loadAnimation);
 
 function IndexNavbar() {
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");

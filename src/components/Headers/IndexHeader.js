@@ -1,5 +1,8 @@
 import React from "react";
 import { Container } from "reactstrap";
+import { loadAnimation } from "lottie-web";
+import { defineLordIconElement } from "lord-icon-element";
+defineLordIconElement(loadAnimation);
 
 function IndexHeader() {
   let pageHeader = React.createRef();
@@ -46,7 +49,11 @@ function IndexHeader() {
               <h4 className="text-capitalize">Anda Masuk Sebagai {role}</h4>
             )}
           </div>
-          <h6 className="category category-absolute">Scroll ke bawah</h6>
+
+          <h6 className="category category-absolute">
+            <lord-icon trigger="loop" src="/scroll-down.json"></lord-icon>
+            <br />
+          </h6>
         </Container>
       </div>
     </>

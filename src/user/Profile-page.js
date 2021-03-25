@@ -23,6 +23,9 @@ import { API_URL } from "utils/constants";
 import { useAlert } from "react-alert";
 import { ChangePassForm } from "../auth/ChangePassForm";
 import BackButton from "../utils/BackComponent";
+import { loadAnimation } from "lottie-web";
+import { defineLordIconElement } from "lord-icon-element";
+defineLordIconElement(loadAnimation);
 
 function ProfilePage(props) {
   const { role, name, emailUser, token, id } = props;
@@ -33,6 +36,7 @@ function ProfilePage(props) {
   const [nama, setNama] = useState(name);
   const [nameOnHeader, setNameH] = useState("");
   const [email, setEmail] = useState(emailUser);
+  const [confDel, setconfDel] = useState("");
 
   function fetchData() {
     axios
@@ -107,6 +111,49 @@ function ProfilePage(props) {
     e.preventDefault();
   };
 
+  const handleDeleteItSelf = async (e) => {
+    e.preventDefault();
+    setLoad(true);
+
+    if (
+      RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(email) === false
+    ) {
+      setLoad(false);
+      alert.error(<div className="notif">Isi Email Yang Valid</div>);
+      return false;
+    }
+
+    if (confDel === "") {
+      setLoad(false);
+      alert.error(<div className="notif">Isi Email Terlebih Dahulu</div>);
+      return false;
+    }
+
+    axios({
+      method: "delete",
+      url: `${API_URL}user/${id}`,
+
+      headers: {
+        ContentType: "multipart/form-data",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(function (response) {
+        setLoad(false);
+        localStorage.removeItem("token");
+        window.location.href = "/";
+        alert.success(<div className="notif">Berhasil Menghapus Profil!</div>);
+      })
+      .catch(function (error) {
+        setLoad(false);
+        alert.error(
+          <div className="notif">Gagal Menghapus Profil Silahkan Coba Lagi</div>
+        );
+        console.log(error);
+      });
+  };
+
   return (
     <>
       <IndexNavbar />
@@ -128,13 +175,111 @@ function ProfilePage(props) {
             <button
               type="button"
               className={`btn ml-2 ${
-                typeList === "editProfile" ? "btn-outline-info" : "btn-info"
+                typeList === "changePass" ? "btn-info" : "btn-outline-info"
               }`}
               onClick={(e) => setTypeList("changePass")}
             >
               <i className="now-ui-icons ow-ui-icons travel_info"></i> Ubah
               Password
             </button>
+            <button
+              type="button"
+              className={`btn ml-2 ${
+                typeList === "deleteItSelf"
+                  ? "btn-danger"
+                  : "btn-outline-danger"
+              }`}
+              onClick={(e) => setTypeList("deleteItSelf")}
+              data-toggle="modal"
+              data-target="#exampleModalCenter"
+            >
+              Hapus Akun Saya
+            </button>
+
+            {/* modal */}
+            <div
+              class="modal fade"
+              id="exampleModalCenter"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalCenterTitle"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <Form onSubmit={handleDeleteItSelf}>
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5
+                        class="modal-title text-danger"
+                        id="exampleModalLongTitle"
+                      >
+                        Menghapus Akun
+                      </h5>
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p className="font-weight-normal">
+                        Menghapus akun dapat mengakibatkan terhapusnya{" "}
+                        {role === "teacher" ? (
+                          <>
+                            seluruh data yang ada di akun ini, termasuk Kelas,
+                            Materi dan Quiz yang Anda buat{" "}
+                          </>
+                        ) : (
+                          <>Sertifikat</>
+                        )}
+                        . Jika anda ingin menghapus akun ini, silahkan ketik
+                        email anda untuk konfirmasi.{" "}
+                      </p>
+                      <FormGroup>
+                        <Label>Email</Label>
+                        <Input
+                          placeholder="Email"
+                          type="email"
+                          onInput={(e) => setconfDel(e.target.value)}
+                        ></Input>
+                      </FormGroup>
+                      {RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(
+                        confDel
+                      ) === false ? (
+                        <span className="text-danger">
+                          Masukkan Email Yang Valid
+                        </span>
+                      ) : confDel !== emailUser ? (
+                        <span className="text-danger">
+                          Email tidak cocok dengan email anda
+                        </span>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-info"
+                        data-dismiss="modal"
+                      >
+                        Batalkan
+                      </button>
+                      {load === true ? (
+                        <Spinner></Spinner>
+                      ) : (
+                        <button type="submit" class="btn btn-danger">
+                          Hapus Akun
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </Form>
+              </div>
+            </div>
             <br />
             {(() => {
               // eslint-disable-next-line
@@ -174,7 +319,10 @@ function ProfilePage(props) {
                         <div>
                           {load === true ? (
                             <div className="text-right">
-                              <Spinner></Spinner>
+                              <lord-icon
+                                trigger="loop"
+                                src="/loader.json"
+                              ></lord-icon>
                             </div>
                           ) : (
                             <div className="text-right">
