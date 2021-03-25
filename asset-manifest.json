@@ -1,0 +1,40 @@
+{
+  "files": {
+    "main.css": "/website-version/static/css/main.d6be3a2a.chunk.css",
+    "main.js": "/website-version/static/js/main.50eeb8e6.chunk.js",
+    "main.js.map": "/website-version/static/js/main.50eeb8e6.chunk.js.map",
+    "runtime-main.js": "/website-version/static/js/runtime-main.08586c08.js",
+    "runtime-main.js.map": "/website-version/static/js/runtime-main.08586c08.js.map",
+    "static/css/2.ceba968d.chunk.css": "/website-version/static/css/2.ceba968d.chunk.css",
+    "static/js/2.c114c0d3.chunk.js": "/website-version/static/js/2.c114c0d3.chunk.js",
+    "static/js/2.c114c0d3.chunk.js.map": "/website-version/static/js/2.c114c0d3.chunk.js.map",
+    "index.html": "/website-version/index.html",
+    "precache-manifest.b0b4643902cf15be553df045053fb301.js": "/website-version/precache-manifest.b0b4643902cf15be553df045053fb301.js",
+    "service-worker.js": "/website-version/service-worker.js",
+    "static/css/2.ceba968d.chunk.css.map": "/website-version/static/css/2.ceba968d.chunk.css.map",
+    "static/css/main.d6be3a2a.chunk.css.map": "/website-version/static/css/main.d6be3a2a.chunk.css.map",
+    "static/js/2.c114c0d3.chunk.js.LICENSE.txt": "/website-version/static/js/2.c114c0d3.chunk.js.LICENSE.txt",
+    "static/media/bab-detail-bg.png": "/website-version/static/media/bab-detail-bg.0f180ac6.png",
+    "static/media/bab-header.jpg": "/website-version/static/media/bab-header.d33fe600.jpg",
+    "static/media/book2.png": "/website-version/static/media/book2.9f9ba164.png",
+    "static/media/books.png": "/website-version/static/media/books.cfe7f4d8.png",
+    "static/media/cert-icon.png": "/website-version/static/media/cert-icon.e0126a68.png",
+    "static/media/class.jpg": "/website-version/static/media/class.47ba7c4c.jpg",
+    "static/media/header2.jpg": "/website-version/static/media/header2.f8092093.jpg",
+    "static/media/muslim.png": "/website-version/static/media/muslim.bc2f0f40.png",
+    "static/media/my-bab.jpg": "/website-version/static/media/my-bab.fcab4841.jpg",
+    "static/media/my-babex.jpg": "/website-version/static/media/my-babex.55cd6690.jpg",
+    "static/media/now-ui-kit.scss?v=1.4.0": "/website-version/static/media/nucleo-outline.8ebec31f.woff2",
+    "static/media/pnf.png": "/website-version/static/media/pnf.7e0ee156.png",
+    "static/media/quizlist.jpg": "/website-version/static/media/quizlist.454f3d4d.jpg",
+    "static/media/suc3.png": "/website-version/static/media/suc3.ca4cc788.png",
+    "static/media/try-again.jpg": "/website-version/static/media/try-again.a81af102.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.08586c08.js",
+    "static/css/2.ceba968d.chunk.css",
+    "static/js/2.c114c0d3.chunk.js",
+    "static/css/main.d6be3a2a.chunk.css",
+    "static/js/main.50eeb8e6.chunk.js"
+  ]
+}
