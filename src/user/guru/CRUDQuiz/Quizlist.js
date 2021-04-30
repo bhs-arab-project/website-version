@@ -377,9 +377,12 @@ const MyQuizList = (props) => {
                             })}
 
                             {loadSub === true ? (
-                              <Spinner></Spinner>
+                              <Spinner className="float-right"></Spinner>
                             ) : (
-                              <button type="submit" className="btn btn-success">
+                              <button
+                                type="submit"
+                                className="btn btn-success btn-round float-right"
+                              >
                                 Submit
                               </button>
                             )}
@@ -389,8 +392,8 @@ const MyQuizList = (props) => {
                                 setIndexes([]);
                                 setChange("list");
                               }}
-                              color="secondary"
-                              className="float-right"
+                              color="danger"
+                              className="float-left"
                             >
                               Batal Edit
                             </Button>
@@ -403,8 +406,8 @@ const MyQuizList = (props) => {
                               setIndexes([]);
                               setChange("list");
                             }}
-                            color="secondary"
-                            className="float-right"
+                            color="danger"
+                            className="float-left"
                           >
                             Batal Edit
                           </Button>

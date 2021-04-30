@@ -113,21 +113,27 @@ function ProfilePage(props) {
 
   const handleDeleteItSelf = async (e) => {
     e.preventDefault();
-    setLoad(true);
 
     if (
-      RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(email) === false
+      RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(confDel) === false
     ) {
-      setLoad(false);
       alert.error(<div className="notif">Isi Email Yang Valid</div>);
       return false;
     }
 
+    if (confDel !== email) {
+      alert.error(
+        <div className="notif">Email Tidak cocok dengan email anda</div>
+      );
+      return false;
+    }
+
     if (confDel === "") {
-      setLoad(false);
       alert.error(<div className="notif">Isi Email Terlebih Dahulu</div>);
       return false;
     }
+
+    setLoad(true);
 
     axios({
       method: "delete",

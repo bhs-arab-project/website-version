@@ -207,11 +207,11 @@ export default function SignUpPage() {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
-                        validations={[required]}
                         placeholder="Konfirmasi Password"
                         type={typeInputC === "text" ? "text" : "password"}
                         onInput={(e) => setConfPass(e.target.value)}
                         autofocus
+                        required
                       ></Input>
                       {/* eslint-disable-next-line */}
                       <a className="link aButton mt-2 ml-2" onClick={pwToggleC}>
